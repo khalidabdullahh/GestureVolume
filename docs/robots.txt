@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://khalidabdullahh.github.io/GestureVolume/sitemap.xml
+Sitemap: https://gesturevolume.vercel.app/sitemap.xml

@@ -3,8 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gesture Volume — On-Screen Gesture Volume Control for Android</title>
-    <meta name="description" content="Control your Android device volume with a simple circular gesture. Ideal for broken volume buttons. 100% offline, private, zero ads.">
+
+    <!-- Primary Meta SEO Tags -->
+    <title>Gesture Volume — Control Android Volume with a Circle Gesture | Broken Volume Button Fix</title>
+    <meta name="title" content="Gesture Volume — Control Android Volume with a Circle Gesture | Broken Volume Button Fix">
+    <meta name="description" content="Gesture Volume is a free, privacy-first Android system utility designed for broken physical volume buttons. Draw a simple circle anywhere on your screen to adjust volume. 100% offline, zero ads, open source.">
+    <meta name="keywords" content="broken volume button android, gesture volume, virtual volume control android, circle gesture volume, broken volume key android fix, screen volume slider, android accessibility volume utility, no ads volume control, open source android volume, khalid abdullah">
+    <meta name="author" content="Khalid Abdullah">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://khalidabdullahh.github.io/GestureVolume/">
+
+    <!-- Open Graph / Facebook / LinkedIn Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://khalidabdullahh.github.io/GestureVolume/">
+    <meta property="og:site_name" content="Gesture Volume">
+    <meta property="og:title" content="Gesture Volume — Control Android Volume with a Circle Gesture">
+    <meta property="og:description" content="The ultimate Android utility for broken volume buttons. Draw a circle anywhere on top of any app to control volume. 100% offline, open source, zero ads.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/khalidabdullahh/GestureVolume/main/docs/assets/og-preview.png">
+
+    <!-- Twitter Cards Meta Tags -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://khalidabdullahh.github.io/GestureVolume/">
+    <meta property="twitter:title" content="Gesture Volume — On-Screen Gesture Volume Control for Android">
+    <meta property="twitter:description" content="Broken volume buttons? Draw ⭕ on your screen to adjust volume over any app. Free, open source & 100% private.">
+    <meta property="twitter:image" content="https://raw.githubusercontent.com/khalidabdullahh/GestureVolume/main/docs/assets/og-preview.png">
+
+    <!-- Google Rich Snippet Structured Data (SoftwareApplication + FAQPage) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Gesture Volume",
+          "operatingSystem": "Android 8.0 and up (Android 8.0 - 15+)",
+          "applicationCategory": "UtilitiesApplication",
+          "applicationSubCategory": "System Utility",
+          "description": "Android system utility for on-screen volume control via intuitive circle gestures. Ideal for broken or unresponsive physical volume buttons.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "Khalid Abdullah",
+            "url": "https://github.com/khalidabdullahh"
+          },
+          "downloadUrl": "https://github.com/khalidabdullahh/GestureVolume/releases",
+          "featureList": [
+            "Draw circle gesture anywhere over any app",
+            "Swipe vertically up/down to adjust media volume",
+            "Modern temporary volume HUD with auto-dismiss",
+            "No permanent floating buttons or edge clutters",
+            "100% Offline with zero internet permissions",
+            "Zero ads, zero tracking, open-source"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Why does Gesture Volume need Accessibility Service permission?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Android requires Accessibility Services to detect touch gestures globally across foreground apps and display the temporary volume HUD overlay. Gesture Volume uses this strictly for circle gesture detection and never inspects or collects user text or private screen content."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does it work if my phone volume buttons are completely broken?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! That is the core purpose of Gesture Volume. It connects directly to Android's native AudioManager API to change media volume on-screen without requiring any physical buttons."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is Gesture Volume completely free and open-source?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, Gesture Volume is 100% free, open-source under Apache 2.0 license, contains zero ads, zero tracking, and requires no account."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,6 +122,8 @@
                         accent: {
                             cyan: '#00cec9',
                             green: '#10b981',
+                            amber: '#f59e0b',
+                            bmc: '#FFDD00'
                         }
                     }
                 }
@@ -68,39 +158,59 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .phone-mockup {
-            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(108, 92, 231, 0.2);
+        .bmc-button {
+            background: #FFDD00;
+            color: #000000;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        .bmc-button:hover {
+            background: #FFE433;
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px -5px rgba(255, 221, 0, 0.4);
         }
     </style>
 </head>
 <body class="bg-brand-dark text-slate-100 antialiased selection:bg-brand-600 selection:text-white">
 
     <!-- Navbar -->
-    <nav class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/5 bg-brand-dark/80">
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/5 bg-brand-dark/85">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-cyan flex items-center justify-center shadow-lg shadow-brand-600/30">
-                    <i data-lucide="volume-2" class="w-5 h-5 text-white"></i>
-                </div>
-                <div>
-                    <span class="text-xl font-bold tracking-tight text-white">Gesture<span class="text-accent-cyan">Volume</span></span>
-                    <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-xs font-semibold rounded-full bg-brand-600/20 text-brand-400 border border-brand-500/30">v1.0.0</span>
-                </div>
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-cyan flex items-center justify-center shadow-lg shadow-brand-600/30 group-hover:scale-105 transition-transform">
+                        <i data-lucide="volume-2" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold tracking-tight text-white">Gesture<span class="text-accent-cyan">Volume</span></span>
+                        <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-xs font-semibold rounded-full bg-brand-600/20 text-brand-400 border border-brand-500/30">v1.0.0</span>
+                    </div>
+                </a>
             </div>
 
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
                 <a href="#features" class="hover:text-white transition-colors">Features</a>
                 <a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a>
                 <a href="#simulator" class="hover:text-white transition-colors">Interactive Demo</a>
+                <a href="#sponsor" class="hover:text-white transition-colors flex items-center gap-1.5 text-accent-amber">
+                    <i data-lucide="heart" class="w-3.5 h-3.5 fill-current"></i> Sponsor
+                </a>
                 <a href="#privacy" class="hover:text-white transition-colors">Privacy</a>
                 <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
             </div>
 
             <div class="flex items-center gap-3">
-                <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-all border border-white/10" title="GitHub Repository">
+                <!-- Buy Me a Coffee Button -->
+                <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bmc-button text-xs font-bold shadow-md">
+                    <i data-lucide="coffee" class="w-4 h-4"></i>
+                    <span>Buy Me a Coffee</span>
+                </a>
+
+                <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-all border border-white/10" title="GitHub Repository & Sponsors">
                     <i data-lucide="github" class="w-5 h-5"></i>
                 </a>
-                <a href="./downloads/GestureVolume-v1.0.0.apk" download class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-500 hover:to-brand-600 text-white font-semibold text-sm shadow-lg shadow-brand-600/25 transition-all hover:scale-[1.02] active:scale-[0.98]">
+
+                <a href="./downloads/GestureVolume-v1.0.0.apk" download class="flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-500 hover:to-brand-600 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-brand-600/25 transition-all hover:scale-[1.02] active:scale-[0.98]">
                     <i data-lucide="download" class="w-4 h-4"></i>
                     <span>Download APK</span>
                 </a>
@@ -110,7 +220,6 @@
 
     <!-- Hero Section -->
     <section class="relative pt-36 pb-20 md:pt-44 md:pb-32 overflow-hidden">
-        <!-- Glow Orbs -->
         <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-600/15 rounded-full blur-[120px] pointer-events-none"></div>
         <div class="absolute top-1/3 right-10 w-[400px] h-[400px] bg-accent-cyan/10 rounded-full blur-[100px] pointer-events-none"></div>
 
@@ -118,7 +227,7 @@
             <div class="text-center max-w-3xl mx-auto mb-12">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-600/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider mb-6">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5 text-accent-cyan"></i>
-                    Broken Physical Buttons? Problem Solved.
+                    Broken Physical Buttons? Instant On-Screen Solution.
                 </div>
                 
                 <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.15] mb-6">
@@ -126,7 +235,7 @@
                 </h1>
 
                 <p class="text-lg sm:text-xl text-slate-300 leading-relaxed font-normal mb-10">
-                    Draw ⭕ anywhere over any app to activate on-screen volume control. Slide up/down to adjust, then watch it disappear automatically. No permanent buttons, no edges, 100% offline.
+                    Draw ⭕ anywhere over any application to activate on-screen volume control. Slide vertically up or down to adjust, then watch it disappear automatically. No permanent buttons, no edges, 100% offline.
                 </p>
 
                 <!-- CTA Buttons -->
@@ -135,9 +244,10 @@
                         <i data-lucide="download" class="w-5 h-5 text-accent-cyan"></i>
                         <span>Download APK (Free)</span>
                     </a>
-                    <a href="#simulator" class="w-full sm:w-auto flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 hover:text-white font-semibold text-base border border-white/10 transition-all">
-                        <i data-lucide="play-circle" class="w-5 h-5 text-brand-400"></i>
-                        <span>Try Web Simulator</span>
+                    
+                    <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bmc-button text-base">
+                        <i data-lucide="coffee" class="w-5 h-5"></i>
+                        <span>Support / Buy Me a Coffee</span>
                     </a>
                 </div>
 
@@ -146,7 +256,7 @@
                     <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-accent-green"></i> 100% Offline</span>
                     <span class="flex items-center gap-1.5"><i data-lucide="ban" class="w-4 h-4 text-accent-cyan"></i> No Ads & No Tracking</span>
                     <span class="flex items-center gap-1.5"><i data-lucide="cpu" class="w-4 h-4 text-brand-400"></i> Zero Idle Battery Drain</span>
-                    <span class="flex items-center gap-1.5"><i data-lucide="smartphone" class="w-4 h-4 text-indigo-400"></i> Android 8.0 - 15+</span>
+                    <span class="flex items-center gap-1.5"><i data-lucide="code" class="w-4 h-4 text-amber-400"></i> Open Source (Apache 2.0)</span>
                 </div>
             </div>
 
@@ -181,18 +291,15 @@
                             </div>
                         </div>
 
-                        <!-- Mini Interactive Phone Mockup -->
+                        <!-- Mini Phone Mockup -->
                         <div class="flex justify-center">
                             <div class="w-[280px] h-[480px] bg-slate-950 rounded-[40px] border-4 border-slate-800 p-4 shadow-2xl relative flex flex-col justify-between overflow-hidden">
-                                <!-- Phone Notch/Island -->
                                 <div class="w-24 h-4 bg-slate-800 rounded-full mx-auto mb-2"></div>
                                 
-                                <!-- Screen Background Simulation -->
                                 <div class="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-950/80 to-slate-900/90 -z-10 flex items-center justify-center">
                                     <div class="w-36 h-36 rounded-full border-2 border-dashed border-brand-500/30 animate-spin" style="animation-duration: 20s;"></div>
                                 </div>
 
-                                <!-- Floating Volume HUD Card -->
                                 <div class="my-auto bg-[#1c1f2e] border border-white/10 rounded-2xl p-4 shadow-2xl animate-pulse">
                                     <div class="flex items-center justify-between mb-3">
                                         <div class="flex items-center gap-2">
@@ -206,7 +313,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Gesture Instruction Graphic -->
                                 <div class="text-center py-2 bg-slate-900/80 backdrop-blur rounded-xl border border-white/5">
                                     <span class="text-[11px] font-medium text-slate-400">⭕ Draw Circle → ↕ Swipe</span>
                                 </div>
@@ -229,17 +335,14 @@
             </div>
 
             <div class="max-w-2xl mx-auto glass-card rounded-3xl p-6 border border-white/10 relative shadow-2xl">
-                <!-- Canvas Area -->
                 <div class="relative w-full h-80 bg-slate-950/80 rounded-2xl border-2 border-dashed border-slate-700/60 overflow-hidden cursor-crosshair flex items-center justify-center" id="canvas-container">
                     <canvas id="gesture-canvas" class="absolute inset-0 w-full h-full"></canvas>
                     
-                    <!-- Guidance watermark -->
                     <div id="canvas-hint" class="pointer-events-none text-center select-none text-slate-500 text-sm">
                         <i data-lucide="circle-dot" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
                         <span>Click/Touch and Draw a Circle Here</span>
                     </div>
 
-                    <!-- Simulated Volume HUD -->
                     <div id="simulated-hud" class="absolute top-8 pointer-events-none hidden opacity-0 transition-opacity duration-200 bg-[#1c1f2e] border border-white/15 rounded-2xl px-6 py-4 shadow-2xl w-64">
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center gap-2">
@@ -254,7 +357,6 @@
                     </div>
                 </div>
 
-                <!-- Canvas Controls & Stats -->
                 <div class="flex items-center justify-between mt-4 text-xs">
                     <div class="flex items-center gap-2">
                         <span id="status-badge" class="px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 font-medium">Ready</span>
@@ -268,18 +370,67 @@
         </div>
     </section>
 
+    <!-- Support & Sponsor Section -->
+    <section id="sponsor" class="py-20 relative bg-gradient-to-b from-brand-dark via-brand-900/30 to-brand-dark">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-3xl p-8 sm:p-14 border border-amber-500/30 text-center relative overflow-hidden shadow-2xl">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-accent-amber text-xs font-bold uppercase tracking-wider mb-6">
+                    <i data-lucide="heart" class="w-3.5 h-3.5 fill-current"></i>
+                    Support Open Source Development
+                </div>
+
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+                    Love Gesture Volume? Back the Project!
+                </h2>
+
+                <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed mb-8">
+                    Gesture Volume is 100% free, offline, ad-free, and open-source. If this utility saves you from broken buttons or makes your Android experience smoother, consider supporting future development and maintenance!
+                </p>
+
+                <!-- Sponsor Options Grid -->
+                <div class="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                    <!-- Buy Me a Coffee -->
+                    <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-6 rounded-2xl bg-amber-400/10 border border-amber-400/30 hover:border-amber-400 text-slate-200 hover:text-white transition-all hover:scale-105 group">
+                        <div class="w-12 h-12 rounded-xl bmc-button flex items-center justify-center mb-3 shadow-md">
+                            <i data-lucide="coffee" class="w-6 h-6 text-black"></i>
+                        </div>
+                        <span class="font-bold text-base text-amber-300 mb-1">Buy Me a Coffee</span>
+                        <span class="text-xs text-slate-400">One-time coffee tip</span>
+                    </a>
+
+                    <!-- GitHub Sponsors -->
+                    <a href="https://github.com/sponsors/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-6 rounded-2xl bg-pink-500/10 border border-pink-500/30 hover:border-pink-500 text-slate-200 hover:text-white transition-all hover:scale-105 group">
+                        <div class="w-12 h-12 rounded-xl bg-pink-500 text-white flex items-center justify-center mb-3 shadow-md shadow-pink-500/30">
+                            <i data-lucide="heart" class="w-6 h-6 fill-current"></i>
+                        </div>
+                        <span class="font-bold text-base text-pink-400 mb-1">GitHub Sponsors</span>
+                        <span class="text-xs text-slate-400">Recurring or custom pledge</span>
+                    </a>
+
+                    <!-- Ko-Fi -->
+                    <a href="https://ko-fi.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-6 rounded-2xl bg-sky-500/10 border border-sky-500/30 hover:border-sky-500 text-slate-200 hover:text-white transition-all hover:scale-105 group">
+                        <div class="w-12 h-12 rounded-xl bg-sky-500 text-white flex items-center justify-center mb-3 shadow-md shadow-sky-500/30">
+                            <i data-lucide="credit-card" class="w-6 h-6"></i>
+                        </div>
+                        <span class="font-bold text-base text-sky-400 mb-1">Ko-fi Support</span>
+                        <span class="text-xs text-slate-400">Zero fees contribution</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- How It Works Section -->
     <section id="how-it-works" class="py-20 bg-slate-900/40 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-16">
                 <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">How Gesture Volume Works</h2>
                 <p class="text-slate-300 text-sm sm:text-base">
-                    Three natural steps. No need to switch apps or look for buttons.
+                    Three natural steps. No need to switch apps or search for hardware buttons.
                 </p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Step 1 -->
                 <div class="glass-card rounded-2xl p-8 glass-card-hover border border-white/10 relative">
                     <div class="w-12 h-12 rounded-xl bg-brand-600/20 border border-brand-500/30 flex items-center justify-center text-brand-400 font-bold text-xl mb-6">
                         1
@@ -290,7 +441,6 @@
                     </p>
                 </div>
 
-                <!-- Step 2 -->
                 <div class="glass-card rounded-2xl p-8 glass-card-hover border border-white/10 relative">
                     <div class="w-12 h-12 rounded-xl bg-accent-cyan/20 border border-accent-cyan/30 flex items-center justify-center text-accent-cyan font-bold text-xl mb-6">
                         2
@@ -301,7 +451,6 @@
                     </p>
                 </div>
 
-                <!-- Step 3 -->
                 <div class="glass-card rounded-2xl p-8 glass-card-hover border border-white/10 relative">
                     <div class="w-12 h-12 rounded-xl bg-accent-green/20 border border-accent-green/30 flex items-center justify-center text-accent-green font-bold text-xl mb-6">
                         3
@@ -457,9 +606,9 @@
                         <i data-lucide="download" class="w-5 h-5"></i>
                         <span>Download APK (v1.0.0)</span>
                     </a>
-                    <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-8 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-base border border-white/10 transition-all">
-                        <i data-lucide="github" class="w-5 h-5"></i>
-                        <span>GitHub Repository</span>
+                    <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 px-8 py-4 rounded-2xl bmc-button font-bold text-base">
+                        <i data-lucide="coffee" class="w-5 h-5"></i>
+                        <span>Buy Me a Coffee</span>
                     </a>
                 </div>
             </div>
@@ -473,8 +622,14 @@
                 <span class="font-bold text-slate-300">Gesture Volume</span>
                 <span>• Privacy-First Android Utility</span>
             </div>
-            <div>
-                Created with ❤️ by <a href="https://github.com/khalidabdullahh" target="_blank" class="text-brand-400 hover:underline">khalidabdullahh</a>
+            <div class="flex items-center gap-4 text-xs">
+                <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" class="text-accent-amber hover:underline flex items-center gap-1">
+                    <i data-lucide="coffee" class="w-3.5 h-3.5"></i> Sponsor
+                </a>
+                <span>•</span>
+                <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" class="text-slate-400 hover:text-white">GitHub</a>
+                <span>•</span>
+                <span>Created with ❤️ by <a href="https://github.com/khalidabdullahh" target="_blank" class="text-brand-400 hover:underline">khalidabdullahh</a></span>
             </div>
         </div>
     </footer>

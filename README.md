@@ -1,39 +1,66 @@
-# Gesture Volume
+# Gesture Volume — Android On-Screen Volume Gesture Utility
 
 <p align="center">
-  <b>A lightweight, privacy-first Android system utility for on-screen volume control via intuitive circle gestures.</b>
+  <b>The ultimate lightweight, privacy-first Android system utility for on-screen volume control via intuitive circle gestures. Designed for devices with broken, unreliable, or inaccessible physical volume buttons.</b>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Platform-Android_8.0+_(API_26+)-brightgreen.svg" alt="Platform">
-  <img src="https://img.shields.io/badge/Target_SDK-35_(Android_15)-blue.svg" alt="Target SDK">
-  <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License">
-  <img src="https://img.shields.io/badge/Privacy-100%25_Offline_•_Zero_Tracking-success.svg" alt="Privacy">
+  <a href="https://github.com/khalidabdullahh/GestureVolume/releases"><img src="https://img.shields.io/badge/Platform-Android_8.0+_(API_26+)-brightgreen.svg?style=for-the-badge&logo=android" alt="Platform"></a>
+  <a href="https://github.com/khalidabdullahh/GestureVolume/releases"><img src="https://img.shields.io/badge/Target_SDK-35_(Android_15)-blue.svg?style=for-the-badge" alt="Target SDK"></a>
+  <a href="https://buymeacoffee.com/khalidabdullahh"><img src="https://img.shields.io/badge/Buy_Me_A_Coffee-Support-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee"></a>
+  <a href="https://github.com/sponsors/khalidabdullahh"><img src="https://img.shields.io/badge/Sponsor-GitHub_Sponsors-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="GitHub Sponsors"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge" alt="License"></a>
+</p>
+
+<p align="center">
+  🌐 <b>Live Web Landing Page & Simulator:</b> <a href="https://khalidabdullahh.github.io/GestureVolume/">https://khalidabdullahh.github.io/GestureVolume/</a>
 </p>
 
 ---
 
-## 📌 Overview
+## 📌 Problem & Solution
 
-**Gesture Volume** is designed for users whose physical volume buttons are broken, unresponsive, inaccessible, or inconvenient. Inspired by media player controls (such as MX Player and VLC), Gesture Volume works **system-wide across any foreground application**:
+**The Problem:**
+Physical volume buttons wear out, break, get stuck, or are awkwardly placed on tablets and large phones. Existing apps either force permanent screen-blocking floating buttons, annoying edge swipes that trigger accidentally, or require opening an app every time you want to change volume.
 
-1. **Draw a Circle (⭕)** anywhere on your screen over any app.
-2. **Gesture Mode Activates Temporarily** — no permanent floating button, no permanent overlay, no edge triggers.
-3. **Swipe Vertically (↑ / ↓)** to adjust media volume.
-4. **Modern Temporary HUD** displays the current volume level and percentage.
-5. **Auto-Dismiss** — after a brief moment of inactivity (default 3s), the HUD smoothly fades out and gesture mode resets to idle.
+**The Gesture Volume Solution:**
+1. **Draw a Circle (⭕)** anywhere on your screen over any app (YouTube, Netflix, Chrome, Games, Social Media).
+2. **Gesture Mode Activates Temporarily** — no permanent buttons, no edge activation.
+3. **Swipe Vertically (↑ / ↓)** to smoothly adjust media volume.
+4. **Modern Temporary HUD** displays volume level, icon, and numeric percentage.
+5. **Auto-Dismiss** — after 3 seconds of inactivity, everything smoothly fades away into zero memory usage.
+
+---
+
+## ☕ Support & Sponsor This Project
+
+Gesture Volume is 100% free, offline, ad-free, and open-source. If this project helps you or you want to support continuous maintenance and new features, please consider supporting!
+
+<p align="center">
+  <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width="180">
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/sponsors/khalidabdullahh" target="_blank">
+    <img src="https://img.shields.io/badge/Sponsor_on_GitHub-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor on GitHub" height="48">
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://ko-fi.com/khalidabdullahh" target="_blank">
+    <img src="https://img.shields.io/badge/Support_on_Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-fi" height="48">
+  </a>
+</p>
 
 ---
 
 ## 🚀 Key Features
 
-- **No Permanent Floating Buttons**: Leaves your screen 100% clean during normal usage.
-- **Global In-App Activation**: Works seamlessly over YouTube, Chrome, Games, Social Media, Gallery, and video players.
-- **Robust Geometric Gesture Engine**: Differentiates intentional circles from swipes, taps, and random scribbles using multi-factor geometric verification (aspect ratio, radius variance, angular sweep, and closure).
-- **Smooth AudioManager Integration**: Directly controls Android's native `STREAM_MUSIC` within authentic hardware bounds.
-- **Tactile Haptic Feedback**: Delivers subtle vibration clicks when gestures trigger or reach volume boundaries.
-- **Modern Jetpack Compose UI**: Features Material 3 dark aesthetics, an onboarding setup flow, a live dashboard, a settings screen, and an interactive test sandbox.
-- **100% Offline & Private**: Zero network access, zero analytics, zero trackers, and zero ads.
+- **Zero Permanent Screen Clutter**: No persistent floating bubbles or edges.
+- **Global In-App Activation**: Works seamlessly across any foreground Android application.
+- **High-Precision Geometric Engine**: Distinguishes intentional circles from straight lines, taps, and random scribbles using multi-factor verification (aspect ratio, radius coefficient of variation, perimeter closure, angular winding sum, and directional consistency).
+- **Smooth AudioManager Integration**: Native `STREAM_MUSIC` control respecting real device limits.
+- **Subtle Haptic Feedback**: Tactile vibration clicks on gesture activation and 0%/100% boundaries.
+- **Modern Jetpack Compose UI**: Material 3 dark aesthetic, onboarding flow, live dashboard, interactive sandbox, and full settings customization.
+- **100% Offline & Privacy First**: Zero internet permissions, zero analytics, zero trackers, and zero ads.
 
 ---
 
@@ -47,9 +74,9 @@ Gesture Volume adheres strictly to Google Play's Accessibility and User Data pol
 | `android.permission.VIBRATE` | Provides subtle, tactile click sensations upon gesture recognition and volume step changes. |
 
 ### 🔒 Privacy Commitments
-- **No Text / Content Scraping**: `canRetrieveWindowContent` is explicitly set to `false`. The app does **not** read screen contents, messages, keystrokes, or passwords.
-- **No Internet Access**: The application does **not** request the `android.permission.INTERNET` permission and functions entirely offline (including in Airplane Mode).
-- **No Persistent Background Processing**: In idle mode, the app performs zero continuous computation or background wake-locks.
+- **No Text / Screen Scraping**: `canRetrieveWindowContent` is explicitly set to `false`. The app does **not** read screen contents, messages, keystrokes, or passwords.
+- **No Internet Access**: The application does **not** request `android.permission.INTERNET` and functions completely offline.
+- **Zero Idle Battery Drain**: Event-driven architecture with zero background loops or wake-locks.
 
 ---
 
@@ -59,83 +86,48 @@ Gesture Volume adheres strictly to Google Play's Accessibility and User Data pol
 com.gesturevolume.app/
 ├── data/
 │   ├── model/               # GestureConfig, VolumeState, HudPosition
-│   └── preferences/         # DataStore preferences for sensitivity and HUD customization
+│   └── preferences/         # DataStore preferences
 ├── domain/
-│   ├── gesture/
-│   │   ├── CircleGestureRecognizer.kt   # Mathematical circle detection engine
-│   │   ├── TouchPoint.kt                # Point sampling & spatial metrics
-│   │   ├── GestureState.kt              # State machine states & events
-│   │   └── GestureStateMachine.kt       # State machine logic
-│   └── volume/
-│       ├── VolumeController.kt          # Interface for volume management
-│       └── VolumeMapper.kt              # Vertical pixel displacement to volume steps
+│   ├── gesture/             # CircleGestureRecognizer, GestureStateMachine, TouchPoint
+│   └── volume/              # VolumeController interface, VolumeMapper
 ├── system/
-│   ├── accessibility/
-│   │   ├── GestureAccessibilityService.kt # Android AccessibilityService
-│   │   └── ServiceStateHolder.kt          # Reactive service connection state
-│   ├── overlay/
-│   │   ├── OverlayManager.kt            # TYPE_ACCESSIBILITY_OVERLAY window manager
-│   │   └── VolumeHudView.kt             # Animated temporary HUD
-│   └── volume/
-│       └── AndroidVolumeController.kt   # AudioManager wrapper (STREAM_MUSIC)
+│   ├── accessibility/       # GestureAccessibilityService, ServiceStateHolder
+│   ├── overlay/             # OverlayManager, VolumeHudView
+│   └── volume/              # AndroidVolumeController (AudioManager STREAM_MUSIC)
 ├── ui/
-│   ├── dashboard/           # Main hub with service status and volume monitor
-│   ├── onboarding/          # One-time guided setup and permission flow
-│   ├── settings/            # Customization for sensitivity, timeout, HUD position
-│   ├── test/                # Interactive gesture test sandbox
-│   ├── theme/               # Material 3 dark palette, typography, shapes
-│   └── MainActivity.kt      # Single-Activity entry point with Navigation Compose
+│   ├── dashboard/           # DashboardScreen
+│   ├── onboarding/          # OnboardingScreen
+│   ├── settings/            # SettingsScreen
+│   ├── test/                # TestGestureScreen
+│   ├── theme/               # Material 3 Color, Type, Theme
+│   └── MainActivity.kt      # Single-Activity entry point
 └── util/
-    ├── AccessibilityHelper.kt           # Verification of Accessibility settings
-    └── HapticFeedbackHelper.kt          # Vibration effects
+    ├── AccessibilityHelper.kt
+    └── HapticFeedbackHelper.kt
 ```
 
 ---
 
-## 🧪 Circle Gesture Detection Algorithm
-
-The `CircleGestureRecognizer` applies a multi-stage evaluation pipeline:
-1. **Spatial Resampling**: Normalizes raw touch points to equidistant samples ($12\text{px}$ intervals).
-2. **Bounding Box & Aspect Ratio**: Ensures dimensions $W \ge 60\text{px}, H \ge 60\text{px}$ with aspect ratio $\min(W,H)/\max(W,H) \ge 0.50$.
-3. **Centroid & Radius Uniformity**: Computes centroid $(\bar{x}, \bar{y})$ and radius coefficient of variation $\sigma_r / R \le 0.35$.
-4. **Perimeter Closure**: Measures distance from start to end point relative to mean radius ($D_{end} / R \le 0.70$).
-5. **Angular Sweep (Winding Number)**: Evaluates cumulative signed angles $\sum \Delta \theta \approx \pm 2\pi$ ($4.2 \text{ rad} \le |\Theta| \le 9.0 \text{ rad}$) and verifies $>70\%$ rotational direction consistency.
-6. **Path vs Circumference**: Compares stroke length $L$ to expected $2\pi R$.
-
----
-
-## 📦 Building & Installation
+## 📦 Building & Running
 
 ### Requirements
 - **JDK**: Java 17 or Java 21 (e.g. Android Studio JBR)
 - **Android SDK**: Build Tools 34.0.0+, Platform SDK 35 (Android 15)
 
-### Commands
-
-#### Run Unit Tests
 ```bash
+# Run unit tests
 ./gradlew test
-```
 
-#### Build Debug APK
-```bash
+# Build debug APK
 ./gradlew assembleDebug
-```
-Output APK: `app/build/outputs/apk/debug/app-debug.apk`
 
-#### Build Release APK
-```bash
+# Build release APK
 ./gradlew assembleRelease
 ```
-Output APK: `app/build/outputs/apk/release/app-release-unsigned.apk`
 
 ---
 
-## 📱 How to Use
+## 📄 License & Attribution
 
-1. **Install and Open Gesture Volume**.
-2. **Grant Accessibility Permission**: Follow the onboarding prompt to enable the **Gesture Volume Service** under *Accessibility Settings*.
-3. **Close the App**: Use your device normally.
-4. **Draw a Circle (⭕)** anywhere on screen over any application.
-5. **Swipe Up (↑) or Down (↓)** to adjust volume.
-6. The HUD automatically disappears after 3 seconds of inactivity.
+Licensed under the [Apache License, Version 2.0](LICENSE).  
+Created with ❤️ by [Khalid Abdullah](https://github.com/khalidabdullahh).
