@@ -1,0 +1,6 @@
+<resources>
+    <style name="Theme.GestureVolume" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">@color/background_dark</item>
+        <item name="android:navigationBarColor">@color/background_dark</item>
+    </style>
+</resources>

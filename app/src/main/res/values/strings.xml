@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Gesture Volume</string>
+    <string name="accessibility_service_label">Gesture Volume Service</string>
+    <string name="accessibility_service_description">Gesture Volume detects a circular touch gesture to activate temporary on-screen volume control when physical buttons are inaccessible or broken. It does not inspect, read, or collect personal information, text, or screen content.</string>
+</resources>
