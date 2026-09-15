@@ -102,6 +102,10 @@ def generate_seo_html(page, all_pages):
     {json.dumps(schema_json, indent=2)}
     </script>
 
+    <!-- Adsterra Monetization Scripts -->
+    <script src="https://pl31353171.profitableratecpmnetwork.com/7f/50/a1/7f50a1dcf9ff2c3d5e62e54b2423d934.js"></script>
+    <script src="https://pl31353173.profitableratecpmnetwork.com/72/e6/9e/72e69e989f254acdf8c56621e74251c5.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -241,12 +245,18 @@ def generate_seo_html(page, all_pages):
                 <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
                     <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-green"></i> <strong>Zero Network Access:</strong> No internet permission declared in AndroidManifest.</li>
                     <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-green"></i> <strong>No Text/Screen Scraping:</strong> Window content retrieval is disabled.</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-green"></i> <strong>Zero Ads & Trackers:</strong> No third-party analytics or background telemetry.</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-green"></i> <strong>Zero Ads & Trackers in App:</strong> No third-party analytics or background telemetry in the Android APK.</li>
                 </ul>
             </section>
         </article>
 
-        <section class="mt-12 pt-6 border-t border-white/10">
+        <!-- Adsterra Native Banner -->
+        <div class="glass-card rounded-2xl p-4 my-8 border border-white/10 text-center overflow-hidden">
+            <script async="async" data-cfasync="false" src="https://pl31353172.profitableratecpmnetwork.com/c79f722a3f3666d76dd66f079c665e42/invoke.js"></script>
+            <div id="container-c79f722a3f3666d76dd66f079c665e42"></div>
+        </div>
+
+        <section class="mt-8 pt-6 border-t border-white/10">
             <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
                 <i data-lucide="book-open" class="w-4 h-4 text-brand-400"></i>
                 Related Troubleshooting Guides
@@ -320,6 +330,10 @@ def generate_directory_index(all_pages):
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{BASE_URL}/seo/">
 
+    <!-- Adsterra Monetization Scripts -->
+    <script src="https://pl31353171.profitableratecpmnetwork.com/7f/50/a1/7f50a1dcf9ff2c3d5e62e54b2423d934.js"></script>
+    <script src="https://pl31353173.profitableratecpmnetwork.com/72/e6/9e/72e69e989f254acdf8c56621e74251c5.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -372,6 +386,12 @@ def generate_directory_index(all_pages):
 
         <div class="grid md:grid-cols-2 gap-6 sm:gap-8">
             {cat_html}
+        </div>
+
+        <!-- Adsterra Native Banner -->
+        <div class="glass-card rounded-2xl p-4 mt-12 border border-white/10 text-center overflow-hidden">
+            <script async="async" data-cfasync="false" src="https://pl31353172.profitableratecpmnetwork.com/c79f722a3f3666d76dd66f079c665e42/invoke.js"></script>
+            <div id="container-c79f722a3f3666d76dd66f079c665e42"></div>
         </div>
     </main>
 
