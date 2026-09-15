@@ -5,9 +5,8 @@ import android.graphics.PixelFormat
 import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
-import android.view.MotionEvent
-import android.view.View
 import android.view.WindowManager
+import com.gesturevolume.app.data.model.EdgeSide
 import com.gesturevolume.app.data.model.GestureConfig
 import com.gesturevolume.app.data.model.HudPosition
 import com.gesturevolume.app.data.model.VolumeState
@@ -20,8 +19,8 @@ class OverlayManager(private val context: Context) {
     private var hudView: VolumeHudView? = null
     private var isHudAttached = false
 
-    private var touchDetectorView: View? = null
-    private var isTouchDetectorAttached = false
+    private var edgeHandleView: EdgeHandleView? = null
+    private var isEdgeHandleAttached = false
 
     fun showHud(volumeState: VolumeState, config: GestureConfig) {
         mainHandler.post {
@@ -40,7 +39,7 @@ class OverlayManager(private val context: Context) {
                 }
 
                 val yOffset = when (config.hudPosition) {
-                    HudPosition.TOP -> 120
+                    HudPosition.TOP -> dpToPx(50f).toInt()
                     else -> 0
                 }
 
@@ -98,49 +97,106 @@ class OverlayManager(private val context: Context) {
         }
     }
 
-    fun attachTouchOverlay(onTouch: (MotionEvent) -> Boolean) {
+    fun attachEdgeHandle(
+        config: GestureConfig,
+        onVolumeSwipe: (stepDelta: Int) -> Unit,
+        onShowHudRequested: () -> Unit,
+        onGestureFinished: () -> Unit
+    ) {
         mainHandler.post {
-            if (isTouchDetectorAttached) return@post
+            if (isEdgeHandleAttached) {
+                updateEdgeHandle(config)
+                return@post
+            }
 
-            val view = object : View(context) {
-                override fun onTouchEvent(event: MotionEvent): Boolean {
-                    return onTouch(event)
-                }
+            val view = EdgeHandleView(
+                context = context,
+                onVolumeSwipe = onVolumeSwipe,
+                onShowHudRequested = onShowHudRequested,
+                onGestureFinished = onGestureFinished
+            )
+            view.updateConfig(config)
+
+            val widthPx = dpToPx(28f).toInt()
+            val heightPx = dpToPx(config.edgeLengthDp.toFloat()).toInt()
+
+            val gravity = if (config.edgeSide == EdgeSide.RIGHT) {
+                Gravity.END or Gravity.CENTER_VERTICAL
+            } else {
+                Gravity.START or Gravity.CENTER_VERTICAL
             }
 
             val params = WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT,
+                widthPx,
+                heightPx,
                 WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
-                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-                        WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
                 PixelFormat.TRANSLUCENT
-            )
+            ).apply {
+                this.gravity = gravity
+                this.y = dpToPx(config.edgeYOffsetDp.toFloat()).toInt()
+            }
 
             try {
                 windowManager.addView(view, params)
-                touchDetectorView = view
-                isTouchDetectorAttached = true
+                edgeHandleView = view
+                isEdgeHandleAttached = true
             } catch (_: Exception) {}
         }
     }
 
-    fun detachTouchOverlay() {
+    fun updateEdgeHandle(config: GestureConfig) {
         mainHandler.post {
-            if (isTouchDetectorAttached && touchDetectorView != null) {
+            if (isEdgeHandleAttached && edgeHandleView != null) {
+                edgeHandleView?.updateConfig(config)
+
+                val widthPx = dpToPx(28f).toInt()
+                val heightPx = dpToPx(config.edgeLengthDp.toFloat()).toInt()
+
+                val gravity = if (config.edgeSide == EdgeSide.RIGHT) {
+                    Gravity.END or Gravity.CENTER_VERTICAL
+                } else {
+                    Gravity.START or Gravity.CENTER_VERTICAL
+                }
+
+                val params = WindowManager.LayoutParams(
+                    widthPx,
+                    heightPx,
+                    WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+                    PixelFormat.TRANSLUCENT
+                ).apply {
+                    this.gravity = gravity
+                    this.y = dpToPx(config.edgeYOffsetDp.toFloat()).toInt()
+                }
+
                 try {
-                    windowManager.removeViewImmediate(touchDetectorView)
+                    windowManager.updateViewLayout(edgeHandleView, params)
                 } catch (_: Exception) {}
-                touchDetectorView = null
-                isTouchDetectorAttached = false
+            }
+        }
+    }
+
+    fun detachEdgeHandle() {
+        mainHandler.post {
+            if (isEdgeHandleAttached && edgeHandleView != null) {
+                try {
+                    windowManager.removeViewImmediate(edgeHandleView)
+                } catch (_: Exception) {}
+                edgeHandleView = null
+                isEdgeHandleAttached = false
             }
         }
     }
 
     fun cleanup() {
         hideHud()
-        detachTouchOverlay()
+        detachEdgeHandle()
+    }
+
+    private fun dpToPx(dp: Float): Float {
+        return dp * context.resources.displayMetrics.density
     }
 }

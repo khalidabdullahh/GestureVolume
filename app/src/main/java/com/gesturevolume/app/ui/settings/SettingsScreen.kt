@@ -92,8 +92,8 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Gesture Settings Section
-        SettingsSectionHeader(title = "Gesture Recognition", icon = Icons.Default.Tune)
+        // Edge Handle Section
+        SettingsSectionHeader(title = "Edge Trigger Handle", icon = Icons.Default.Tune)
 
         Card(
             modifier = Modifier.fillMaxWidth(),
@@ -101,30 +101,62 @@ fun SettingsScreen(
             colors = CardDefaults.cardColors(containerColor = DarkSurface)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                // Circle Sensitivity
+                // Edge Side Selection (Right / Left)
+                Text(
+                    text = "Screen Edge Placement",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Choose which side of your screen displays the subtle volume handle.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    com.gesturevolume.app.data.model.EdgeSide.entries.forEach { side ->
+                        val isSelected = config.edgeSide == side
+                        FilterChip(
+                            selected = isSelected,
+                            onClick = { onUpdateConfig(config.copy(edgeSide = side)) },
+                            label = { Text(if (side == com.gesturevolume.app.data.model.EdgeSide.RIGHT) "Right Edge" else "Left Edge") },
+                            colors = FilterChipDefaults.filterChipColors(
+                                selectedContainerColor = PrimaryPurple,
+                                selectedLabelColor = TextPrimary,
+                                containerColor = DarkSurfaceVariant,
+                                labelColor = TextSecondary
+                            )
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                // Handle Opacity
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Circle Sensitivity Threshold",
+                        text = "Handle Transparency",
                         style = MaterialTheme.typography.titleMedium
                     )
                     Text(
-                        text = "${(config.circleSensitivity * 100).toInt()}%",
+                        text = "${(config.edgeOpacity * 100).toInt()}%",
                         color = PrimaryPurple,
                         fontWeight = FontWeight.Bold
                     )
                 }
                 Text(
-                    text = "Higher threshold reduces accidental triggers; lower is more lenient.",
+                    text = "Lower opacity makes the handle blend subtly with wallpapers and videos.",
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Slider(
-                    value = config.circleSensitivity,
-                    onValueChange = { onUpdateConfig(config.copy(circleSensitivity = it)) },
-                    valueRange = 0.55f..0.85f,
+                    value = config.edgeOpacity,
+                    onValueChange = { onUpdateConfig(config.copy(edgeOpacity = it)) },
+                    valueRange = 0.15f..1.0f,
                     steps = 5,
                     colors = SliderDefaults.colors(
                         thumbColor = PrimaryPurple,
@@ -141,7 +173,7 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    text = "Time before the volume session expires and HUD fades away.",
+                    text = "Time before the volume HUD fades away after finger release.",
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(8.dp))

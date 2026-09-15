@@ -299,11 +299,11 @@ fun DashboardScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                GuideRow(number = "1", text = "Draw a circle gesture anywhere over any active application.")
+                GuideRow(number = "1", text = "Touch the subtle edge handle on the side of your screen over any app.")
                 Spacer(modifier = Modifier.height(8.dp))
-                GuideRow(number = "2", text = "Swipe finger up to increase volume, swipe down to decrease.")
+                GuideRow(number = "2", text = "Swipe finger upward to raise volume, swipe downward to lower volume.")
                 Spacer(modifier = Modifier.height(8.dp))
-                GuideRow(number = "3", text = "Lift finger — temporary HUD fades and dismisses automatically.")
+                GuideRow(number = "3", text = "Lift finger — the HUD smoothly auto-dismisses after 3 seconds.")
             }
         }
 
