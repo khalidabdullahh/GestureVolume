@@ -122,8 +122,9 @@ class EdgeHandleView(
                     accumulatedDeltaY += deltaY
                     startY = currentY
 
-                    // Sensitivity step calculation
-                    val thresholdPx = dpToPx(18f) / currentConfig.swipeSensitivity
+                    // Sensitivity step calculation (faster and responsive)
+                    val sens = currentConfig.swipeSensitivity.coerceIn(0.4f, 3.0f)
+                    val thresholdPx = dpToPx(12f) / sens
                     if (abs(accumulatedDeltaY) >= thresholdPx) {
                         val steps = (accumulatedDeltaY / thresholdPx).toInt()
                         if (steps != 0) {

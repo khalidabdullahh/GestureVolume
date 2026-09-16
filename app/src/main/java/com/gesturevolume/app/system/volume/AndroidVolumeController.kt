@@ -74,9 +74,13 @@ class AndroidVolumeController(private val context: Context) : VolumeController {
         val max = getMax().coerceAtLeast(min + 1)
         val target = (current + deltaLevels).coerceIn(min, max)
 
-        if (target != current) {
+        if (deltaLevels != 0) {
             try {
-                // Flag 0 prevents default stock system volume UI from flickering
+                val direction = if (deltaLevels > 0) AudioManager.ADJUST_RAISE else AudioManager.ADJUST_LOWER
+                val steps = kotlin.math.abs(deltaLevels)
+                for (i in 0 until steps) {
+                    audioManager.adjustStreamVolume(streamType, direction, 0)
+                }
                 audioManager.setStreamVolume(streamType, target, 0)
             } catch (_: Exception) {}
         }
