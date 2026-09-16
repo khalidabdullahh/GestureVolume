@@ -148,7 +148,12 @@ def generate_seo_html(page, all_pages):
             </a>
 
             <div class="flex items-center gap-3">
-                <a href="../seo/" class="text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition-colors">Directory</a>
+                <a href="../seo/" class="text-xs sm:text-sm font-semibold text-slate-100 hover:text-accent-cyan transition-colors">Directory</a>
+                <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-all border border-white/20 flex items-center justify-center" title="GitHub Repository">
+                    <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                    </svg>
+                </a>
                 <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bmc-btn text-xs font-bold shadow-sm">
                     <i data-lucide="coffee" class="w-3.5 h-3.5 text-black"></i>
                     <span>Buy Coffee</span>
@@ -162,15 +167,15 @@ def generate_seo_html(page, all_pages):
     </header>
 
     <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10">
-        <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
+        <nav class="flex items-center gap-2 text-xs text-slate-300 mb-6">
             <a href="../" class="hover:text-white">Home</a>
             <span>/</span>
             <a href="./" class="hover:text-white">Directory</a>
             <span>/</span>
-            <span class="text-brand-400 line-clamp-1">{html.escape(page["title"])}</span>
+            <span class="text-brand-300 font-semibold line-clamp-1">{html.escape(page["title"])}</span>
         </nav>
 
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-600/15 border border-brand-500/20 text-brand-400 text-xs font-bold uppercase tracking-wider mb-4">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-600/20 border border-brand-500/30 text-brand-300 text-xs font-bold uppercase tracking-wider mb-4">
             <i data-lucide="wrench" class="w-3.5 h-3.5 text-accent-cyan"></i>
             {category} • {brand}
         </div>
@@ -179,7 +184,7 @@ def generate_seo_html(page, all_pages):
             {html.escape(title)}
         </h1>
 
-        <p class="text-sm sm:text-base text-slate-300 leading-relaxed mb-8">
+        <p class="text-sm sm:text-base text-slate-100 font-medium leading-relaxed mb-8">
             {html.escape(desc)}
         </p>
 
@@ -187,7 +192,7 @@ def generate_seo_html(page, all_pages):
             <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
                 <div>
                     <h3 class="text-lg sm:text-xl font-bold text-white mb-1.5">Fix Broken Volume in 60 Seconds</h3>
-                    <p class="text-slate-300 text-xs sm:text-sm">Download the free Gesture Volume APK. No floating screen bubbles, zero ads, no root required.</p>
+                    <p class="text-slate-200 text-xs sm:text-sm">Download the free Gesture Volume APK. No floating screen bubbles, zero ads, no root required.</p>
                 </div>
                 <a href="../downloads/GestureVolume-v1.0.0.apk" download="GestureVolume-v1.0.0.apk" class="w-full sm:w-auto shrink-0 flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan hover:from-brand-500 hover:to-accent-cyan text-white font-bold text-sm shadow-lg shadow-brand-600/30 transition-all hover:scale-105">
                     <i data-lucide="download" class="w-4 h-4"></i>
@@ -196,8 +201,8 @@ def generate_seo_html(page, all_pages):
             </div>
         </div>
 
-        <article class="space-y-6 text-slate-300 text-sm sm:text-base leading-relaxed">
-            <section class="glass-card rounded-2xl p-5 sm:p-7 border border-white/5 space-y-3">
+        <article class="space-y-6 text-slate-200 text-sm sm:text-base leading-relaxed">
+            <section class="glass-card rounded-2xl p-5 sm:p-7 border border-white/10 space-y-3">
                 <h2 class="text-xl font-bold text-white flex items-center gap-2">
                     <i data-lucide="alert-circle" class="w-5 h-5 text-accent-amber"></i>
                     The Hardware Volume Rocker Problem
@@ -210,7 +215,7 @@ def generate_seo_html(page, all_pages):
                 </p>
             </section>
 
-            <section class="glass-card rounded-2xl p-5 sm:p-7 border border-white/5 space-y-4">
+            <section class="glass-card rounded-2xl p-5 sm:p-7 border border-white/10 space-y-4">
                 <h2 class="text-xl font-bold text-white flex items-center gap-2">
                     <i data-lucide="check-circle-2" class="w-5 h-5 text-accent-green"></i>
                     How Gesture Volume Solves It Permanently
@@ -219,30 +224,30 @@ def generate_seo_html(page, all_pages):
                     Unlike older assistive-touch apps that place a permanent screen-blocking bubble, <strong>Gesture Volume remains 100% invisible</strong> until you need it:
                 </p>
                 <div class="grid sm:grid-cols-3 gap-3.5 pt-1">
-                    <div class="p-4 rounded-xl bg-slate-950/60 border border-white/5 text-center">
-                        <div class="w-7 h-7 rounded-full bg-brand-600/20 text-brand-400 font-bold mx-auto mb-2 flex items-center justify-center text-xs">1</div>
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-white/10 text-center">
+                        <div class="w-7 h-7 rounded-full bg-brand-600/25 text-brand-300 font-bold mx-auto mb-2 flex items-center justify-center text-xs">1</div>
                         <span class="font-bold text-white text-xs block mb-1">Touch Edge Handle</span>
-                        <span class="text-[11px] text-slate-400">Touch the subtle edge handle on the side of your screen over any app.</span>
+                        <span class="text-[11px] text-slate-300">Touch the subtle edge handle on the side of your screen over any app.</span>
                     </div>
-                    <div class="p-4 rounded-xl bg-slate-950/60 border border-white/5 text-center">
-                        <div class="w-7 h-7 rounded-full bg-accent-cyan/20 text-accent-cyan font-bold mx-auto mb-2 flex items-center justify-center text-xs">2</div>
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-white/10 text-center">
+                        <div class="w-7 h-7 rounded-full bg-accent-cyan/25 text-accent-cyan font-bold mx-auto mb-2 flex items-center justify-center text-xs">2</div>
                         <span class="font-bold text-white text-xs block mb-1">Swipe Up / Down (↕)</span>
-                        <span class="text-[11px] text-slate-400">Slide finger upward to increase volume, downward to decrease.</span>
+                        <span class="text-[11px] text-slate-300">Slide finger upward to increase volume, downward to decrease.</span>
                     </div>
-                    <div class="p-4 rounded-xl bg-slate-950/60 border border-white/5 text-center">
-                        <div class="w-7 h-7 rounded-full bg-accent-green/20 text-accent-green font-bold mx-auto mb-2 flex items-center justify-center text-xs">3</div>
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-white/10 text-center">
+                        <div class="w-7 h-7 rounded-full bg-accent-green/25 text-accent-green font-bold mx-auto mb-2 flex items-center justify-center text-xs">3</div>
                         <span class="font-bold text-white text-xs block mb-1">Auto-Dismiss</span>
-                        <span class="text-[11px] text-slate-400">HUD fades away after 3s of inactivity with zero idle battery drain.</span>
+                        <span class="text-[11px] text-slate-300">HUD fades away after 3s of inactivity with zero idle battery drain.</span>
                     </div>
                 </div>
             </section>
 
-            <section class="glass-card rounded-2xl p-5 sm:p-7 border border-white/5 space-y-3">
+            <section class="glass-card rounded-2xl p-5 sm:p-7 border border-white/10 space-y-3">
                 <h2 class="text-xl font-bold text-white flex items-center gap-2">
                     <i data-lucide="shield" class="w-5 h-5 text-accent-cyan"></i>
                     100% Privacy & Zero-Network Commitment
                 </h2>
-                <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+                <ul class="space-y-2 text-xs sm:text-sm text-slate-200">
                     <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-green"></i> <strong>Zero Network Access:</strong> No internet permission declared in AndroidManifest.</li>
                     <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-green"></i> <strong>No Text/Screen Scraping:</strong> Window content retrieval is disabled.</li>
                     <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-green"></i> <strong>Zero Ads & Trackers in App:</strong> No third-party analytics or background telemetry in the Android APK.</li>
@@ -266,23 +271,26 @@ def generate_seo_html(page, all_pages):
             </div>
         </section>
 
-        <section class="mt-10 glass-card rounded-2xl p-6 border border-amber-500/20 text-center">
+        <section class="mt-10 glass-card rounded-2xl p-6 border border-amber-500/30 text-center">
             <span class="text-xs font-bold text-accent-amber uppercase tracking-wider block mb-1.5">Free & Open Source</span>
             <h4 class="text-base font-bold text-white mb-1.5">Did this fix your volume problem?</h4>
-            <p class="text-xs text-slate-400 mb-4 max-w-md mx-auto">Support independent open-source development with a small coffee tip!</p>
+            <p class="text-xs text-slate-200 mb-4 max-w-md mx-auto">Support independent open-source development with a small coffee tip!</p>
             <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bmc-btn text-xs font-bold shadow-sm">
                 <i data-lucide="coffee" class="w-3.5 h-3.5 text-black"></i> Buy Me a Coffee
             </a>
         </section>
     </main>
 
-    <footer class="py-8 border-t border-white/5 text-center text-slate-500 text-xs">
+    <footer class="py-8 border-t border-white/10 text-center text-slate-300 text-xs font-medium">
         <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div><span class="font-bold text-slate-300">Gesture Volume</span> • Free Open-Source Android Utility</div>
+            <div><span class="font-bold text-white">Gesture Volume</span> • Free Open-Source Android Utility</div>
             <div class="flex items-center gap-4">
-                <a href="../" class="hover:text-white">Home</a>
-                <a href="../seo/" class="hover:text-white">All Guides (100)</a>
-                <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" class="hover:text-white">GitHub</a>
+                <a href="../" class="text-slate-200 hover:text-white">Home</a>
+                <a href="../seo/" class="text-slate-200 hover:text-white">All Guides (100)</a>
+                <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" class="text-slate-200 hover:text-white font-semibold">GitHub</a>
+            </div>
+        </div>
+    </footer>
             </div>
         </div>
     </footer>
@@ -368,7 +376,12 @@ def generate_directory_index(all_pages):
                 <span class="text-lg font-bold text-white tracking-tight">Gesture<span class="text-accent-cyan">Volume</span></span>
             </a>
             <div class="flex items-center gap-3">
-                <a href="../" class="text-sm font-medium text-slate-300 hover:text-white">Home</a>
+                <a href="../" class="text-sm font-semibold text-slate-100 hover:text-white">Home</a>
+                <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-all border border-white/20 flex items-center justify-center" title="GitHub Repository">
+                    <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                    </svg>
+                </a>
                 <a href="../downloads/GestureVolume-v1.0.0.apk" download class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs sm:text-sm">Download APK</a>
             </div>
         </div>
@@ -379,7 +392,7 @@ def generate_directory_index(all_pages):
             <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
                 Knowledge <span class="gradient-text">Hub</span>
             </h1>
-            <p class="text-slate-300 text-sm sm:text-base">
+            <p class="text-slate-100 font-medium text-sm sm:text-base">
                 100 comprehensive guides, brand-specific solutions, and symptom tutorials for on-screen volume control.
             </p>
         </div>
@@ -395,10 +408,10 @@ def generate_directory_index(all_pages):
         </div>
     </main>
 
-    <footer class="py-8 border-t border-white/5 text-center text-slate-500 text-xs">
+    <footer class="py-8 border-t border-white/10 text-center text-slate-300 text-xs font-medium">
         <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div><span class="font-bold text-slate-300">Gesture Volume</span> • 100 SEO Guides Directory</div>
-            <a href="../" class="text-brand-400 hover:underline">Back to Main Landing Page</a>
+            <div><span class="font-bold text-white">Gesture Volume</span> • 100 SEO Guides Directory</div>
+            <a href="../" class="text-brand-300 hover:underline font-semibold">Back to Main Landing Page</a>
         </div>
     </footer>
     <script>lucide.createIcons();</script>
