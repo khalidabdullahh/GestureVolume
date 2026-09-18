@@ -52,7 +52,6 @@ class GesturePreferences(private val context: Context) {
         }
 
         GestureConfig(
-            circleSensitivity = preferences[KEY_CIRCLE_SENSITIVITY] ?: 0.70f,
             timeoutSeconds = preferences[KEY_TIMEOUT_SECONDS] ?: 3,
             swipeSensitivity = preferences[KEY_SWIPE_SENSITIVITY] ?: 1.0f,
             showPercentage = preferences[KEY_SHOW_PERCENTAGE] ?: true,
@@ -61,7 +60,7 @@ class GesturePreferences(private val context: Context) {
             edgeSide = edgeSide,
             edgeOpacity = preferences[KEY_EDGE_OPACITY] ?: 0.55f,
             edgeLengthDp = preferences[KEY_EDGE_LENGTH_DP] ?: 120,
-            edgeYOffsetDp = preferences[KEY_EDGE_Y_OFFSET_DP] ?: 0
+            edgeYOffsetDp = preferences[KEY_EDGE_Y_OFFSET_DP] ?: -120
         )
     }
 
@@ -73,7 +72,6 @@ class GesturePreferences(private val context: Context) {
 
     suspend fun updateConfig(config: GestureConfig) {
         context.dataStore.edit { preferences ->
-            preferences[KEY_CIRCLE_SENSITIVITY] = config.circleSensitivity
             preferences[KEY_TIMEOUT_SECONDS] = config.timeoutSeconds
             preferences[KEY_SWIPE_SENSITIVITY] = config.swipeSensitivity
             preferences[KEY_SHOW_PERCENTAGE] = config.showPercentage

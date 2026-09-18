@@ -138,7 +138,7 @@ fun DashboardScreen(
                             color = TextPrimary
                         )
                         Text(
-                            text = if (isServiceActive) "Circle gesture recognition running" else "Enable Accessibility Service",
+                            text = if (isServiceActive) "Edge gesture volume control running" else "Enable Accessibility Service",
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }

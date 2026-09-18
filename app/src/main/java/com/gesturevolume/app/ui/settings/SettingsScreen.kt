@@ -133,6 +133,78 @@ fun SettingsScreen(
 
                 Spacer(modifier = Modifier.height(14.dp))
 
+                // Vertical Position Placement (Presets)
+                Text(
+                    text = "Vertical Position (Avoid Keyboards / Send Buttons)",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Position the handle higher up to avoid Messenger, WhatsApp, and keyboard action buttons.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    val presets = listOf(
+                        "Top" to -240,
+                        "Upper" to -120,
+                        "Center" to 0,
+                        "Lower" to 120,
+                        "Bottom" to 240
+                    )
+                    presets.forEach { (label, offset) ->
+                        val isSelected = config.edgeYOffsetDp == offset
+                        FilterChip(
+                            selected = isSelected,
+                            onClick = { onUpdateConfig(config.copy(edgeYOffsetDp = offset)) },
+                            label = { Text(label, fontSize = 12.sp) },
+                            colors = FilterChipDefaults.filterChipColors(
+                                selectedContainerColor = PrimaryPurple,
+                                selectedLabelColor = TextPrimary,
+                                containerColor = DarkSurfaceVariant,
+                                labelColor = TextSecondary
+                            )
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Fine-tune Vertical Position Slider
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Fine-Tune Height (Y-Offset)",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Text(
+                        text = when {
+                            config.edgeYOffsetDp < -50 -> "Upper (${config.edgeYOffsetDp}dp)"
+                            config.edgeYOffsetDp > 50 -> "Lower (+${config.edgeYOffsetDp}dp)"
+                            else -> "Center (0dp)"
+                        },
+                        color = PrimaryPurple,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Slider(
+                    value = config.edgeYOffsetDp.toFloat(),
+                    onValueChange = { onUpdateConfig(config.copy(edgeYOffsetDp = it.toInt())) },
+                    valueRange = -350f..350f,
+                    colors = SliderDefaults.colors(
+                        thumbColor = PrimaryPurple,
+                        activeTrackColor = PrimaryPurple,
+                        inactiveTrackColor = DarkSurfaceVariant
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
                 // Handle Opacity
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -341,7 +413,7 @@ fun SettingsScreen(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Required to recognize the circle gesture globally and show the temporary HUD over other apps.",
+                    text = "Required to display the subtle edge gesture handle and overlay the temporary volume HUD across apps.",
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(12.dp))

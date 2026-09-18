@@ -101,7 +101,7 @@ fun OnboardingScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Control your device volume with a simple circular gesture, even when physical buttons are broken or inconvenient.",
+                text = "Control your device volume with smooth screen-edge swipe gestures, even when physical buttons are broken or inaccessible.",
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(horizontal = 12.dp)
@@ -113,8 +113,8 @@ fun OnboardingScreen(
             OnboardingStepItem(
                 stepNumber = "1",
                 icon = Icons.Default.GraphicEq,
-                title = "Draw a Circle Anywhere",
-                description = "Draw a circle over any app to activate temporary volume gesture mode."
+                title = "Subtle Frosted Edge Handle",
+                description = "A compact, unobtrusive pill handle rests on your screen edge and expands when touched."
             )
 
             Spacer(modifier = Modifier.height(14.dp))
@@ -123,7 +123,7 @@ fun OnboardingScreen(
                 stepNumber = "2",
                 icon = Icons.AutoMirrored.Filled.VolumeUp,
                 title = "Swipe Up / Down",
-                description = "Slide your finger up to increase volume, down to decrease. Modern HUD appears instantly."
+                description = "Slide your finger upward to increase volume, downward to decrease. Modern HUD appears instantly."
             )
 
             Spacer(modifier = Modifier.height(14.dp))
@@ -132,7 +132,7 @@ fun OnboardingScreen(
                 stepNumber = "3",
                 icon = Icons.Default.Lock,
                 title = "100% Private & Offline",
-                description = "No internet required. No text or screen content is ever read or transmitted."
+                description = "Zero internet permission required. No data or screen content is ever read or transmitted."
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -166,7 +166,7 @@ fun OnboardingScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = "Android Accessibility Service is used solely to detect the circle gesture globally across apps and display the volume HUD.",
+                        text = "Android Accessibility Service is used solely to display the edge gesture trigger handle and overlay the temporary volume HUD across apps.",
                         style = MaterialTheme.typography.bodyMedium
                     )
 
