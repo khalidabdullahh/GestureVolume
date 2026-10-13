@@ -16,3 +16,10 @@ local.properties
 app/build/
 __pycache__/
 *.pyc
+
+# Keystores & release artifacts
+*.keystore
+*.jks
+local.properties
+release/
+
