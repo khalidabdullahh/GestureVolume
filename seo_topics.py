@@ -30,7 +30,7 @@ PAGES = [
         "title": "Xiaomi Redmi Broken Volume Button Solution — Gesture Volume Control",
         "category": "Device Fixes",
         "brand": "Xiaomi",
-        "desc": "Fix Xiaomi Redmi volume rocker issues without opening the phone. Draw a simple on-screen circle to adjust volume smoothly in MIUI / HyperOS.",
+        "desc": "Fix Xiaomi Redmi volume rocker issues without opening the phone. Tap a tiny on-screen handle to open the volume bar in MIUI / HyperOS.",
         "keywords": "redmi volume button broken, xiaomi volume key not working, hyperos volume gesture, redmi note volume fix"
     },
     {
@@ -62,7 +62,7 @@ PAGES = [
         "title": "Google Pixel Volume Button Fell Off or Stuck — How to Control Volume",
         "category": "Device Fixes",
         "brand": "Google Pixel",
-        "desc": "Did your Google Pixel 7, 8, or 9 volume key fall off or get stuck? Control volume seamlessly on stock Android with circle gestures.",
+        "desc": "Did your Google Pixel 7, 8, or 9 volume key fall off or get stuck? Control volume seamlessly on stock Android with a tap-to-open on-screen handle.",
         "keywords": "google pixel volume button fell off, pixel 7 volume key loose, pixel 8 volume button broken, android 14 pixel volume gesture"
     },
     {
@@ -296,7 +296,7 @@ PAGES = [
         "title": "Control Volume on Cracked Screen Android Phones Without Hardware Buttons",
         "category": "Symptom Guides",
         "brand": "Android",
-        "desc": "How to draw simple circle gestures to adjust volume even on damaged touchscreens and cracked glass.",
+        "desc": "How to open the volume bar with one tap on a small edge handle, even on damaged touchscreens and cracked glass.",
         "keywords": "control volume cracked screen android, broken glass volume slider, damaged screen volume key"
     },
     {
@@ -336,7 +336,7 @@ PAGES = [
         "title": "One-Handed Volume Control for Large Screen Android Phones & Foldables",
         "category": "Symptom Guides",
         "brand": "Android",
-        "desc": "Don't stretch your fingers to the top of 6.8-inch screens. Draw a circle anywhere with your thumb to change volume.",
+        "desc": "Don't stretch your fingers to the top of 6.8-inch screens. Tap the edge handle with your thumb to open the volume bar.",
         "keywords": "one hand volume control android, large screen volume gesture, foldable phone volume control"
     },
     {
@@ -344,7 +344,7 @@ PAGES = [
         "title": "Android Volume Button Loose or Wobbly — Prevent Further Wear & Tear",
         "category": "Symptom Guides",
         "brand": "Android",
-        "desc": "Save your fragile volume rocker from total failure by switching to frictionless on-screen circle gestures.",
+        "desc": "Save your fragile volume rocker from total failure by switching to a frictionless on-screen tap handle.",
         "keywords": "loose volume button android, save physical volume buttons, prevent volume button wear android"
     },
     {
@@ -384,7 +384,7 @@ PAGES = [
         "title": "Control Volume on Android While Wearing Gloves or in Cold Weather",
         "category": "Symptom Guides",
         "brand": "Android",
-        "desc": "How touchscreen-compatible gloves can easily trigger circle gestures without fumbling with tiny side buttons.",
+        "desc": "How touchscreen-compatible gloves can easily tap the edge handle without fumbling with tiny side buttons.",
         "keywords": "control volume wearing gloves android, winter volume gesture, glove mode volume control"
     },
     {
@@ -432,7 +432,7 @@ PAGES = [
         "title": "Easy Volume Control for Elderly & Seniors with Stiff or Weak Hands",
         "category": "Symptom Guides",
         "brand": "Android",
-        "desc": "How simple on-screen circle gestures help seniors with arthritis or dexterity issues change volume easily.",
+        "desc": "How a simple one-tap on-screen handle helps seniors with arthritis or dexterity issues change volume easily.",
         "keywords": "accessible volume control seniors, arthritis volume button alternative, senior friendly android volume"
     },
     {
@@ -463,7 +463,7 @@ PAGES = [
     },
     {
         "slug": "netflix-prime-video-on-screen-volume-gesture",
-        "title": "Netflix & Prime Video On-Screen Volume Control via Circle Gestures",
+        "title": "Netflix & Prime Video On-Screen Volume Control via Tap Handle",
         "category": "Media & Apps",
         "brand": "Netflix",
         "desc": "Adjust movie sound level in Netflix, Amazon Prime Video, Disney+, and HBO Max without reaching for hardware buttons.",
@@ -490,7 +490,7 @@ PAGES = [
         "title": "Spotify & YouTube Music Gesture Volume Control Over Any Screen",
         "category": "Media & Apps",
         "brand": "Spotify",
-        "desc": "Change background music volume in Spotify, Apple Music, and YouTube Music with a quick circle gesture on any screen.",
+        "desc": "Change background music volume in Spotify, Apple Music, and YouTube Music with one tap on the edge handle, on any screen.",
         "keywords": "spotify gesture volume android, youtube music volume slider, background music volume control"
     },
     {
@@ -546,7 +546,7 @@ PAGES = [
         "title": "Facebook Watch Video Volume Gesture Control on Android",
         "category": "Media & Apps",
         "brand": "Facebook",
-        "desc": "Instantly adjust unexpectedly loud Facebook video clips with a quick circle gesture on your screen.",
+        "desc": "Instantly adjust unexpectedly loud Facebook video clips with one tap on the edge handle.",
         "keywords": "facebook video volume gesture, fb watch volume slider android, facebook reels volume fix"
     },
     {
@@ -594,7 +594,7 @@ PAGES = [
         "title": "Workout & Fitness App Music Volume Gesture Control (Nike / Strava)",
         "category": "Media & Apps",
         "brand": "Fitness",
-        "desc": "Change training playlist sound with sweaty hands or on armband mounts using easy circle gestures.",
+        "desc": "Change training playlist sound with sweaty hands or on armband mounts using one easy tap.",
         "keywords": "workout volume gesture android, strava music volume, fitness armband volume control"
     },
     {
@@ -660,7 +660,7 @@ PAGES = [
         "title": "Gesture Volume vs Volume Notification Bar Buttons (Which is Better?)",
         "category": "App Comparisons",
         "brand": "Android",
-        "desc": "Detailed comparison: Why on-screen circle gestures beat pulling down notification shades every time you need audio changes.",
+        "desc": "Detailed comparison: Why an on-screen tap handle beats pulling down notification shades every time you need audio changes.",
         "keywords": "gesture volume vs volume notification, notification shade volume slider, best volume control method android"
     },
     {
@@ -673,11 +673,11 @@ PAGES = [
     },
     {
         "slug": "why-circle-gesture-is-better-than-edge-swipe-volume",
-        "title": "Why Circle Gesture Activation is Better Than Edge Swipe Volume",
+        "title": "Tap-to-Open Volume Handle vs Edge Swipe Volume",
         "category": "App Comparisons",
         "brand": "Android",
-        "desc": "Edge swipes conflict with Android back navigation gestures. Learn why circle recognition eliminates accidental triggers.",
-        "keywords": "circle gesture vs edge swipe, edge volume control conflict, back gesture conflict fix"
+        "desc": "Edge swipes conflict with Android back navigation gestures. Learn why a small tap-to-open handle avoids accidental triggers.",
+        "keywords": "tap handle vs edge swipe, edge volume control conflict, back gesture conflict fix"
     },
     {
         "slug": "top-open-source-android-volume-control-utilities",
@@ -772,8 +772,8 @@ PAGES = [
         "title": "How to Test Volume Gesture Recognition in Interactive Practice Sandbox",
         "category": "App Comparisons",
         "brand": "Testing",
-        "desc": "Learn how to use Gesture Volume's built-in sandbox to practice circle drawing and tune sensitivity thresholds.",
-        "keywords": "test gesture volume sandbox, tune circle sensitivity android, interactive volume test"
+        "desc": "Learn how to use Gesture Volume's built-in sandbox to practice swiping the handle and tune sensitivity.",
+        "keywords": "test gesture volume sandbox, tune swipe sensitivity android, interactive volume test"
     },
     {
         "slug": "customizing-volume-hud-position-top-center-sides",

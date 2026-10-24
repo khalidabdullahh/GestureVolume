@@ -12,7 +12,7 @@
         },
         {
           "key": "Content-Disposition",
-          "value": "attachment; filename=\"GestureVolume-v1.0.0.apk\""
+          "value": "attachment; filename=\"GestureVolume.apk\""
         },
         {
           "key": "Cache-Control",
@@ -33,7 +33,7 @@
         },
         {
           "key": "Content-Disposition",
-          "value": "attachment; filename=\"GestureVolume-v1.0.0.apk\""
+          "value": "attachment; filename=\"GestureVolume.apk\""
         },
         {
           "key": "Cache-Control",

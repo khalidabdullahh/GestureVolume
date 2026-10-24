@@ -12,8 +12,8 @@ android {
         applicationId = "com.gesturevolume.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 3
+        versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -21,14 +21,21 @@ android {
         }
     }
 
+    // Release keystore: CI passes KEYSTORE_PATH (+ secrets); locally app/release.keystore is used.
+    // If no keystore is available the release build falls back to the debug key so it still builds.
+    val releaseKeystoreFile = System.getenv("KEYSTORE_PATH")?.let { file(it) } ?: file("release.keystore")
+    val hasReleaseKeystore = releaseKeystoreFile.exists()
+
     signingConfigs {
-        create("release") {
-            storeFile = file("release.keystore")
-            storePassword = "gesturevolumepass"
-            keyAlias = "gesturevolume"
-            keyPassword = "gesturevolumepass"
-            enableV1Signing = true
-            enableV2Signing = true
+        if (hasReleaseKeystore) {
+            create("release") {
+                storeFile = releaseKeystoreFile
+                storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "gesturevolumepass"
+                keyAlias = System.getenv("KEY_ALIAS") ?: "gesturevolume"
+                keyPassword = System.getenv("KEY_PASSWORD") ?: "gesturevolumepass"
+                enableV1Signing = true
+                enableV2Signing = true
+            }
         }
     }
 
@@ -36,7 +43,7 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName(if (hasReleaseKeystore) "release" else "debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

@@ -1,7 +1,7 @@
 # Gesture Volume — Android On-Screen Volume Gesture Utility
 
 <p align="center">
-  <b>The ultimate lightweight, privacy-first Android system utility for on-screen volume control via intuitive circle gestures. Designed for devices with broken, unreliable, or inaccessible physical volume buttons.</b>
+  <b>The ultimate lightweight, privacy-first Android system utility for on-screen volume control via a tiny tap-to-open edge handle. Designed for devices with broken, unreliable, or inaccessible physical volume buttons.</b>
 </p>
 
 <p align="center">
@@ -9,7 +9,7 @@
   <a href="https://github.com/khalidabdullahh/GestureVolume/releases"><img src="https://img.shields.io/badge/Target_SDK-35_(Android_15)-blue.svg?style=for-the-badge" alt="Target SDK" /></a>
   <a href="https://buymeacoffee.com/khalidabdullahh"><img src="https://img.shields.io/badge/Buy_Me_A_Coffee-Support-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee" /></a>
   <a href="https://github.com/sponsors/khalidabdullahh"><img src="https://img.shields.io/badge/Sponsor-GitHub_Sponsors-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="GitHub Sponsors" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge" alt="License" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Source--Available-blue.svg?style=for-the-badge" alt="License" /></a>
 </p>
 
 <p align="center">
@@ -56,7 +56,7 @@ Gesture Volume is 100% free, offline, ad-free, and open-source. If this project 
 
 - **Zero Permanent Screen Clutter**: No persistent floating bubbles or edges.
 - **Global In-App Activation**: Works seamlessly across any foreground Android application.
-- **High-Precision Geometric Engine**: Distinguishes intentional circles from straight lines, taps, and random scribbles using multi-factor verification (aspect ratio, radius coefficient of variation, perimeter closure, angular winding sum, and directional consistency).
+- **Tap or Swipe**: Tap the handle to open the native volume bar, or swipe it up/down to change volume directly. Taps are told apart from swipes using the system touch slop.
 - **Smooth AudioManager Integration**: Native `STREAM_MUSIC` control respecting real device limits.
 - **Subtle Haptic Feedback**: Tactile vibration clicks on gesture activation and 0%/100% boundaries.
 - **Modern Jetpack Compose UI**: Material 3 dark aesthetic, onboarding flow, live dashboard, interactive sandbox, and full settings customization.
@@ -70,7 +70,7 @@ Gesture Volume adheres strictly to Google Play's Accessibility and User Data pol
 
 | Permission / Capability | Purpose |
 | :--- | :--- |
-| `android.permission.BIND_ACCESSIBILITY_SERVICE` | Used solely to detect the circle gesture over active applications and display the temporary volume HUD overlay via `WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY`. |
+| `android.permission.BIND_ACCESSIBILITY_SERVICE` | Used solely to draw the touch handle over active applications and show the temporary volume HUD overlay via `WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY`. |
 | `android.permission.VIBRATE` | Provides subtle, tactile click sensations upon gesture recognition and volume step changes. |
 
 ### 🔒 Privacy Commitments

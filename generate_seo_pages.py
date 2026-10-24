@@ -43,7 +43,7 @@ def generate_seo_html(page, all_pages):
                     "url": BASE_URL
                 },
                 "datePublished": "2026-09-14",
-                "dateModified": "2026-09-15"
+                "dateModified": "2026-10-24"
             },
             {
                 "@type": "BreadcrumbList",
@@ -90,13 +90,13 @@ def generate_seo_html(page, all_pages):
     <meta property="og:title" content="{html.escape(title)}">
     <meta property="og:description" content="{html.escape(desc)}">
     <meta property="og:site_name" content="Gesture Volume">
-    <meta property="og:image" content="https://raw.githubusercontent.com/khalidabdullahh/GestureVolume/main/docs/assets/og-preview.png">
+    <meta property="og:image" content="https://raw.githubusercontent.com/khalidabdullahh/GestureVolume/main/docs/assets/feature_banner_1024x500.png">
 
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{canonical_url}">
     <meta property="twitter:title" content="{html.escape(title)}">
     <meta property="twitter:description" content="{html.escape(desc)}">
-    <meta property="twitter:image" content="https://raw.githubusercontent.com/khalidabdullahh/GestureVolume/main/docs/assets/og-preview.png">
+    <meta property="twitter:image" content="https://raw.githubusercontent.com/khalidabdullahh/GestureVolume/main/docs/assets/feature_banner_1024x500.png">
 
     <script type="application/ld+json">
     {json.dumps(schema_json, indent=2)}
@@ -158,9 +158,9 @@ def generate_seo_html(page, all_pages):
                     <i data-lucide="coffee" class="w-3.5 h-3.5 text-black"></i>
                     <span>Buy Coffee</span>
                 </a>
-                <a href="../downloads/GestureVolume-v1.0.0.apk" download="GestureVolume-v1.0.0.apk" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs sm:text-sm shadow-md transition-all">
+                <a href="../downloads/GestureVolume-latest.apk" download="GestureVolume.apk" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs sm:text-sm shadow-md transition-all">
                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                    <span>Download APK (1.1 MB)</span>
+                    <span>Download APK</span>
                 </a>
             </div>
         </div>
@@ -192,11 +192,11 @@ def generate_seo_html(page, all_pages):
             <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
                 <div>
                     <h3 class="text-lg sm:text-xl font-bold text-white mb-1.5">Fix Broken Volume in 60 Seconds</h3>
-                    <p class="text-slate-200 text-xs sm:text-sm">Download the free Gesture Volume APK. No floating screen bubbles, zero ads, no root required.</p>
+                    <p class="text-slate-200 text-xs sm:text-sm">Download the free Gesture Volume APK. Tap a slim edge handle to open your volume bar. Zero ads in the app, no root required.</p>
                 </div>
-                <a href="../downloads/GestureVolume-v1.0.0.apk" download="GestureVolume-v1.0.0.apk" class="w-full sm:w-auto shrink-0 flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan hover:from-brand-500 hover:to-accent-cyan text-white font-bold text-sm shadow-lg shadow-brand-600/30 transition-all hover:scale-105">
+                <a href="../downloads/GestureVolume-latest.apk" download="GestureVolume.apk" class="w-full sm:w-auto shrink-0 flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan hover:from-brand-500 hover:to-accent-cyan text-white font-bold text-sm shadow-lg shadow-brand-600/30 transition-all hover:scale-105">
                     <i data-lucide="download" class="w-4 h-4"></i>
-                    <span>Download APK (1.1 MB)</span>
+                    <span>Download APK</span>
                 </a>
             </div>
         </div>
@@ -221,23 +221,23 @@ def generate_seo_html(page, all_pages):
                     How Gesture Volume Solves It Permanently
                 </h2>
                 <p>
-                    Unlike older assistive-touch apps that place a permanent screen-blocking bubble, <strong>Gesture Volume remains 100% invisible</strong> until you need it:
+                    Unlike bulky assistive-touch bubbles, <strong>Gesture Volume uses one slim handle on your screen edge</strong> that shrinks to a faint line when you are not using it:
                 </p>
                 <div class="grid sm:grid-cols-3 gap-3.5 pt-1">
                     <div class="p-4 rounded-xl bg-slate-950/80 border border-white/10 text-center">
                         <div class="w-7 h-7 rounded-full bg-brand-600/25 text-brand-300 font-bold mx-auto mb-2 flex items-center justify-center text-xs">1</div>
-                        <span class="font-bold text-white text-xs block mb-1">Touch Edge Handle</span>
-                        <span class="text-[11px] text-slate-300">Touch the subtle edge handle on the side of your screen over any app.</span>
+                        <span class="font-bold text-white text-xs block mb-1">Tap the Handle</span>
+                        <span class="text-[11px] text-slate-300">Tap the slim white handle on the edge of your screen, over any app.</span>
                     </div>
                     <div class="p-4 rounded-xl bg-slate-950/80 border border-white/10 text-center">
                         <div class="w-7 h-7 rounded-full bg-accent-cyan/25 text-accent-cyan font-bold mx-auto mb-2 flex items-center justify-center text-xs">2</div>
-                        <span class="font-bold text-white text-xs block mb-1">Swipe Up / Down (↕)</span>
-                        <span class="text-[11px] text-slate-300">Slide finger upward to increase volume, downward to decrease.</span>
+                        <span class="font-bold text-white text-xs block mb-1">Native Volume Bar</span>
+                        <span class="text-[11px] text-slate-300">Android's own volume bar opens, just like pressing a hardware key. You can also swipe the handle up or down.</span>
                     </div>
                     <div class="p-4 rounded-xl bg-slate-950/80 border border-white/10 text-center">
                         <div class="w-7 h-7 rounded-full bg-accent-green/25 text-accent-green font-bold mx-auto mb-2 flex items-center justify-center text-xs">3</div>
-                        <span class="font-bold text-white text-xs block mb-1">Auto-Dismiss</span>
-                        <span class="text-[11px] text-slate-300">HUD fades away after 3s of inactivity with zero idle battery drain.</span>
+                        <span class="font-bold text-white text-xs block mb-1">Auto-Inactive</span>
+                        <span class="text-[11px] text-slate-300">The handle shrinks back to a faint line after about 3 seconds, with zero idle battery drain.</span>
                     </div>
                 </div>
             </section>
@@ -272,9 +272,9 @@ def generate_seo_html(page, all_pages):
         </section>
 
         <section class="mt-10 glass-card rounded-2xl p-6 border border-amber-500/30 text-center">
-            <span class="text-xs font-bold text-accent-amber uppercase tracking-wider block mb-1.5">Free & Open Source</span>
+            <span class="text-xs font-bold text-accent-amber uppercase tracking-wider block mb-1.5">Free Android Utility</span>
             <h4 class="text-base font-bold text-white mb-1.5">Did this fix your volume problem?</h4>
-            <p class="text-xs text-slate-200 mb-4 max-w-md mx-auto">Support independent open-source development with a small coffee tip!</p>
+            <p class="text-xs text-slate-200 mb-4 max-w-md mx-auto">Support independent development with a small coffee tip!</p>
             <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bmc-btn text-xs font-bold shadow-sm">
                 <i data-lucide="coffee" class="w-3.5 h-3.5 text-black"></i> Buy Me a Coffee
             </a>
@@ -283,7 +283,7 @@ def generate_seo_html(page, all_pages):
 
     <footer class="py-8 border-t border-white/10 text-center text-slate-300 text-xs font-medium">
         <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div><span class="font-bold text-white">Gesture Volume</span> • Free Open-Source Android Utility</div>
+            <div><span class="font-bold text-white">Gesture Volume</span> • Free Android Utility</div>
             <div class="flex items-center gap-4">
                 <a href="../" class="text-slate-200 hover:text-white">Home</a>
                 <a href="../seo/" class="text-slate-200 hover:text-white">All Guides (100)</a>
@@ -382,7 +382,7 @@ def generate_directory_index(all_pages):
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
                     </svg>
                 </a>
-                <a href="../downloads/GestureVolume-v1.0.0.apk" download class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs sm:text-sm">Download APK</a>
+                <a href="../downloads/GestureVolume-latest.apk" download class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs sm:text-sm">Download APK</a>
             </div>
         </div>
     </header>
