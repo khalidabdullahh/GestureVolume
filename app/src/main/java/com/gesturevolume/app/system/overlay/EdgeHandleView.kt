@@ -11,16 +11,17 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import com.gesturevolume.app.data.model.EdgeSide
 import com.gesturevolume.app.data.model.GestureConfig
 import kotlin.math.abs
 
-private const val DOUBLE_TAP_WINDOW_MS = 280L
+private const val DOUBLE_TAP_WINDOW_MS = 200L
 
 @SuppressLint("ViewConstructor")
 class EdgeHandleView(
     context: Context,
-    private val onVolumeSwipe: (stepDelta: Int) -> Unit,
+    private val onVolumeSwipe: (deltaFraction: Float) -> Unit,
     private val onShowHudRequested: () -> Unit,
     private val onGestureFinished: () -> Unit,
     private val onTap: () -> Unit,
@@ -37,11 +38,12 @@ class EdgeHandleView(
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
     }
+    private val glowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
     private val pillRect = RectF()
+    private val glowRect = RectF()
 
     private var currentConfig = GestureConfig()
     private var startY = 0f
-    private var accumulatedDeltaY = 0f
     private var isInteracting = false
     private var downRawY = 0f
     private var isDragging = false
@@ -72,7 +74,7 @@ class EdgeHandleView(
     // Returns the handle to its compact inactive state a few seconds after the last use
     private val collapseRunnable = Runnable {
         isInteracting = false
-        animateExpansion(0.0f, durationMs = 240)
+        animateExpansion(0.0f, durationMs = 260)
         alpha = currentConfig.edgeOpacity
     }
 
@@ -104,11 +106,12 @@ class EdgeHandleView(
         invalidate()
     }
 
-    private fun animateExpansion(target: Float, durationMs: Long = 180) {
+    private fun animateExpansion(target: Float, durationMs: Long = 220) {
         expandAnimator?.cancel()
         expandAnimator = ValueAnimator.ofFloat(expandProgress, target).apply {
             duration = durationMs
-            interpolator = DecelerateInterpolator()
+            // Springy overshoot when waking up, smooth ease when going back to idle
+            interpolator = if (target > expandProgress) OvershootInterpolator(1.6f) else DecelerateInterpolator(1.4f)
             addUpdateListener {
                 expandProgress = it.animatedValue as Float
                 invalidate()
@@ -127,11 +130,13 @@ class EdgeHandleView(
         // Full size in active state: ~24dp width, ~114dp height
         val idleWidth = dpToPx(7f)
         val activeWidth = dpToPx(24f).coerceAtMost(fullWidth - dpToPx(2f))
-        val currentWidth = idleWidth + (activeWidth - idleWidth) * expandProgress
+        val currentWidth = (idleWidth + (activeWidth - idleWidth) * expandProgress)
+            .coerceIn(idleWidth * 0.8f, fullWidth - dpToPx(2f))
 
         val idleHeight = dpToPx(40f)
         val activeHeight = dpToPx(configSafeHeightDp()).coerceAtMost(fullHeight - dpToPx(4f))
-        val currentHeight = idleHeight + (activeHeight - idleHeight) * expandProgress
+        val currentHeight = (idleHeight + (activeHeight - idleHeight) * expandProgress)
+            .coerceIn(idleHeight * 0.8f, fullHeight - dpToPx(2f))
 
         val top = (fullHeight - currentHeight) / 2f
         val bottom = (fullHeight + currentHeight) / 2f
@@ -146,6 +151,15 @@ class EdgeHandleView(
         }
 
         val cornerRadius = currentWidth / 2f
+
+        // Soft glow behind the pill while it is awake
+        val glowAlpha = (50 * expandProgress).toInt().coerceIn(0, 255)
+        if (glowAlpha > 0) {
+            glowPaint.color = Color.argb(glowAlpha, 255, 255, 255)
+            val g = dpToPx(2.5f)
+            glowRect.set(pillRect.left - g, pillRect.top - g, pillRect.right + g, pillRect.bottom + g)
+            canvas.drawRoundRect(glowRect, cornerRadius + g, cornerRadius + g, glowPaint)
+        }
 
         // Translucent frosted white pill
         val baseAlpha = (160 + (85 * expandProgress)).toInt().coerceIn(0, 255)
@@ -189,9 +203,9 @@ class EdgeHandleView(
                 isDragging = false
                 downRawY = event.rawY
                 startY = event.rawY
-                accumulatedDeltaY = 0f
                 alpha = 1.0f
-                animateExpansion(1.0f, durationMs = 160)
+                // Instant, springy feedback the moment the finger lands
+                animateExpansion(1.0f, durationMs = 220)
                 return true
             }
 
@@ -204,23 +218,17 @@ class EdgeHandleView(
                     // Finger moved far enough: this is a swipe, not a tap
                     isDragging = true
                     startY = currentY
-                    accumulatedDeltaY = 0f
                     onShowHudRequested()
                     return true
                 }
 
-                val deltaY = startY - currentY // Upward = positive (volume up)
-                accumulatedDeltaY += deltaY
+                // Continuous mapping: a swipe over ~42% of the screen height covers the full volume range
+                val deltaY = startY - currentY // upward = positive
                 startY = currentY
-
                 val sens = currentConfig.swipeSensitivity.coerceIn(0.4f, 3.0f)
-                val thresholdPx = dpToPx(11f) / sens
-                if (abs(accumulatedDeltaY) >= thresholdPx) {
-                    val steps = (accumulatedDeltaY / thresholdPx).toInt()
-                    if (steps != 0) {
-                        onVolumeSwipe(steps)
-                        accumulatedDeltaY -= (steps * thresholdPx)
-                    }
+                val fullRangePx = resources.displayMetrics.heightPixels * 0.42f / sens
+                if (deltaY != 0f) {
+                    onVolumeSwipe(deltaY / fullRangePx)
                 }
                 return true
             }

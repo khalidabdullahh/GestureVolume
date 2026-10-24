@@ -76,11 +76,6 @@ class AndroidVolumeController(private val context: Context) : VolumeController {
 
         if (deltaLevels != 0) {
             try {
-                val direction = if (deltaLevels > 0) AudioManager.ADJUST_RAISE else AudioManager.ADJUST_LOWER
-                val steps = kotlin.math.abs(deltaLevels)
-                for (i in 0 until steps) {
-                    audioManager.adjustStreamVolume(streamType, direction, 0)
-                }
                 audioManager.setStreamVolume(streamType, target, 0)
             } catch (_: Exception) {}
         }

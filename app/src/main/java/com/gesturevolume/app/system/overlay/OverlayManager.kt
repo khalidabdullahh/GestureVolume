@@ -9,7 +9,6 @@ import android.view.View
 import android.view.WindowManager
 import com.gesturevolume.app.data.model.EdgeSide
 import com.gesturevolume.app.data.model.GestureConfig
-import com.gesturevolume.app.data.model.HudPosition
 import com.gesturevolume.app.data.model.VolumeState
 
 class OverlayManager(private val context: Context) {
@@ -28,43 +27,37 @@ class OverlayManager(private val context: Context) {
             if (hudView == null) {
                 hudView = VolumeHudView(context)
             }
-
-            hudView?.updateVolume(volumeState, config.showPercentage)
+            hudView?.setInitial(volumeState)
 
             if (!isHudAttached && hudView != null) {
-                val gravity = when (config.hudPosition) {
-                    HudPosition.TOP -> Gravity.TOP or Gravity.CENTER_HORIZONTAL
-                    HudPosition.CENTER -> Gravity.CENTER
-                    HudPosition.RIGHT -> Gravity.END or Gravity.CENTER_VERTICAL
-                    HudPosition.LEFT -> Gravity.START or Gravity.CENTER_VERTICAL
-                }
+                val isRight = config.edgeSide == EdgeSide.RIGHT
+                val sideGravity = if (isRight) Gravity.END else Gravity.START
 
-                val yOffset = when (config.hudPosition) {
-                    HudPosition.TOP -> dpToPx(50f).toInt()
-                    else -> 0
-                }
-
+                // Appears right beside the handle and follows its height
                 val params = WindowManager.LayoutParams(
                     WindowManager.LayoutParams.WRAP_CONTENT,
                     WindowManager.LayoutParams.WRAP_CONTENT,
                     WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
-                            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+                            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
                     PixelFormat.TRANSLUCENT
                 ).apply {
-                    this.gravity = gravity
-                    this.y = yOffset
+                    this.gravity = sideGravity or Gravity.CENTER_VERTICAL
+                    this.x = dpToPx(44f).toInt()
+                    this.y = dpToPx(config.edgeYOffsetDp.toFloat()).toInt()
                 }
 
                 hudView?.alpha = 0f
+                hudView?.translationX = if (isRight) dpToPx(14f) else -dpToPx(14f)
                 try {
                     windowManager.addView(hudView, params)
                     isHudAttached = true
-                    hudView?.animate()?.alpha(1f)?.setDuration(160)?.start()
+                    hudView?.animate()?.alpha(1f)?.translationX(0f)?.setDuration(140)?.start()
                 } catch (_: Exception) {}
             } else {
-                hudView?.animate()?.alpha(1f)?.setDuration(80)?.start()
+                hudView?.animate()?.alpha(1f)?.translationX(0f)?.setDuration(80)?.start()
             }
         }
     }
@@ -72,7 +65,7 @@ class OverlayManager(private val context: Context) {
     fun updateHud(volumeState: VolumeState, config: GestureConfig) {
         mainHandler.post {
             if (isHudAttached) {
-                hudView?.updateVolume(volumeState, config.showPercentage)
+                hudView?.updateVolume(volumeState)
             } else {
                 showHud(volumeState, config)
             }
@@ -84,7 +77,7 @@ class OverlayManager(private val context: Context) {
             if (isHudAttached && hudView != null) {
                 hudView?.animate()
                     ?.alpha(0f)
-                    ?.setDuration(220)
+                    ?.setDuration(160)
                     ?.withEndAction {
                         try {
                             if (isHudAttached && hudView != null) {
@@ -100,7 +93,7 @@ class OverlayManager(private val context: Context) {
 
     fun attachEdgeHandle(
         config: GestureConfig,
-        onVolumeSwipe: (stepDelta: Int) -> Unit,
+        onVolumeSwipe: (deltaFraction: Float) -> Unit,
         onShowHudRequested: () -> Unit,
         onGestureFinished: () -> Unit,
         onTap: () -> Unit,
@@ -122,7 +115,7 @@ class OverlayManager(private val context: Context) {
             )
             view.updateConfig(config)
 
-            val widthPx = dpToPx(28f).toInt()
+            val widthPx = dpToPx(32f).toInt()
             val heightPx = dpToPx(config.edgeLengthDp.toFloat()).toInt()
 
             val gravity = if (config.edgeSide == EdgeSide.RIGHT) {
@@ -136,7 +129,8 @@ class OverlayManager(private val context: Context) {
                 heightPx,
                 WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                        WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
                 PixelFormat.TRANSLUCENT
             ).apply {
                 this.gravity = gravity
@@ -156,7 +150,7 @@ class OverlayManager(private val context: Context) {
             if (isEdgeHandleAttached && edgeHandleView != null) {
                 edgeHandleView?.updateConfig(config)
 
-                val widthPx = dpToPx(28f).toInt()
+                val widthPx = dpToPx(32f).toInt()
                 val heightPx = dpToPx(config.edgeLengthDp.toFloat()).toInt()
 
                 val gravity = if (config.edgeSide == EdgeSide.RIGHT) {
@@ -170,7 +164,8 @@ class OverlayManager(private val context: Context) {
                     heightPx,
                     WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+                            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
                     PixelFormat.TRANSLUCENT
                 ).apply {
                     this.gravity = gravity

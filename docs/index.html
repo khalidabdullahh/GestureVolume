@@ -168,7 +168,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(6,7,12,.72);backdrop-fil
 .zone{position:absolute;top:calc(50% + var(--y));right:0;width:58px;height:170px;transform:translateY(-50%);display:flex;align-items:center;justify-content:flex-end;padding-right:3px;cursor:pointer;touch-action:none;z-index:4;outline:none}
 .phone.left .zone{right:auto;left:0;justify-content:flex-start;padding:0 0 0 3px}
 .handle{position:relative;width:7px;height:42px;border-radius:99px;background:rgba(255,255,255,var(--idle));box-shadow:0 0 0 1px rgba(255,255,255,.22);
-  transition:width .24s ease,height .24s ease,background .24s ease,box-shadow .24s ease}
+  transition:width .3s cubic-bezier(.34,1.56,.64,1),height .3s cubic-bezier(.34,1.56,.64,1),background .2s ease,box-shadow .2s ease}
 .handle.active{width:25px;height:118px;background:rgba(255,255,255,.97);box-shadow:0 0 28px rgba(255,255,255,.4)}
 .handle i{position:absolute;left:50%;width:10px;height:2px;margin-left:-5px;border-radius:2px;background:#1e293b;opacity:0;transition:opacity .2s}
 .handle i:nth-child(1){top:calc(50% - 7px)}.handle i:nth-child(2){top:50%;margin-top:-1px}.handle i:nth-child(3){top:calc(50% + 7px)}
@@ -181,6 +181,12 @@ header{position:sticky;top:0;z-index:60;background:rgba(6,7,12,.72);backdrop-fil
 .phone.left .hint{right:auto;left:38px}
 @keyframes nudge{50%{transform:translateX(6px)}}
 .phone.left .hint{animation-name:nudge-l}@keyframes nudge-l{50%{transform:translateX(-6px)}}
+.hud{position:absolute;top:calc(50% + var(--y));right:52px;transform:translateY(-50%) translateX(10px);opacity:0;z-index:6;pointer-events:none;text-align:center;transition:opacity .15s,transform .15s}
+.phone.left .hud{right:auto;left:52px;transform:translateY(-50%) translateX(-10px)}
+.hud.show{opacity:1;transform:translateY(-50%)}
+.hud small{display:block;font-size:.62rem;line-height:1;color:rgba(255,255,255,.9);text-shadow:0 1px 4px rgba(0,0,0,.6);min-height:.7rem}
+.hud b{display:block;font-size:1.9rem;line-height:1.05;font-weight:800;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.7);min-width:3.4rem;transition:transform .09s}
+.hud b.bump{transform:scale(1.08)}
 .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:9}
 .flash.go{animation:shot .5s ease-out}
 @keyframes shot{0%{opacity:.85}100%{opacity:0}}
@@ -330,6 +336,7 @@ footer a:hover{color:#fff}
           <div class="row"><em>Media Volume</em><span id="pct">30%</span></div>
           <div class="track"><div class="fill" id="fill"></div></div>
         </div>
+        <div class="hud" id="hud"><small id="hudArrow">&nbsp;</small><b id="hudPct">30%</b></div>
         <div class="flash" id="flash"></div>
         <div class="toast" id="toast">📸 Screenshot saved</div>
         <div class="zone" id="zone" role="button" tabindex="0" aria-label="Volume handle">
@@ -462,7 +469,7 @@ footer a:hover{color:#fff}
 (function(){
   var $=function(id){return document.getElementById(id)};
   var phone=$('phone'),zone=$('zone'),handle=$('handle'),sysbar=$('sysbar'),fill=$('fill'),pct=$('pct'),
-      hint=$('hint'),pulse=$('pulse'),dot=$('dot'),stateText=$('stateText');
+      hint=$('hint'),pulse=$('pulse'),hud=$('hud'),hudArrow=$('hudArrow'),hudPct=$('hudPct'),dot=$('dot'),stateText=$('stateText');
   var TIMEOUT=3000,volume=30,timer=null,tick=null,downY=0,lastY=0,dragging=false,down=false;
 
   function setVol(v){volume=Math.max(0,Math.min(100,v));fill.style.width=volume+'%';pct.textContent=volume+'%'}
@@ -477,7 +484,7 @@ footer a:hover{color:#fff}
     tick=setInterval(function(){left=Math.max(0,left-1);setState(true,left)},1000);
     timer=setTimeout(sleep,TIMEOUT);
   }
-  function sleep(){clearInterval(tick);handle.classList.remove('active');sysbar.classList.remove('show');setState(false)}
+  function sleep(){hud.classList.remove('show');clearInterval(tick);handle.classList.remove('active');sysbar.classList.remove('show');setState(false)}
 
   zone.addEventListener('pointerdown',function(e){
     down=true;dragging=false;downY=lastY=e.clientY;
@@ -487,11 +494,21 @@ footer a:hover{color:#fff}
   zone.addEventListener('pointermove',function(e){
     if(!down)return;
     if(!dragging&&Math.abs(e.clientY-downY)<6)return;
-    if(!dragging){dragging=true;sysbar.classList.add('show');hint.style.display='none';pulse.style.display='none'}
+    if(!dragging){dragging=true;sysbar.classList.remove('show');hudArrow.innerHTML='&nbsp;';hudPct.textContent=volume+'%';hud.classList.add('show');hint.style.display='none';pulse.style.display='none'}
     var dy=lastY-e.clientY;
-    if(Math.abs(dy)>=4){setVol(volume+Math.round(dy/4));lastY=e.clientY}
+    if(Math.abs(dy)>=3){
+      var before=volume;setVol(volume+Math.round(dy/3));lastY=e.clientY;
+      if(volume!==before){hudArrow.textContent=volume>before?'\u25B2':'\u25BC';hudPct.textContent=volume+'%';
+        hudPct.classList.add('bump');setTimeout(function(){hudPct.classList.remove('bump')},90)}
+    }
   });
   var pendingTap=null,flash=$('flash'),toast=$('toast');
+  function afterDrag(){
+    stopTimers();handle.classList.add('active');
+    var left=Math.round(TIMEOUT/1000);setState(true,left);
+    tick=setInterval(function(){left=Math.max(0,left-1);setState(true,left)},1000);
+    timer=setTimeout(sleep,TIMEOUT);
+  }
   function shot(){
     hint.style.display='none';pulse.style.display='none';
     flash.classList.remove('go');void flash.offsetWidth;flash.classList.add('go');
@@ -501,7 +518,7 @@ footer a:hover{color:#fff}
   }
   function end(){
     if(!down)return;down=false;
-    if(dragging){wake();return}
+    if(dragging){afterDrag();return}
     if(pendingTap){clearTimeout(pendingTap);pendingTap=null;shot();return}
     pendingTap=setTimeout(function(){pendingTap=null;wake()},280);
   }

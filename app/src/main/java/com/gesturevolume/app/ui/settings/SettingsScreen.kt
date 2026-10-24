@@ -312,62 +312,6 @@ fun SettingsScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // HUD Position
-                Text(
-                    text = "Swipe HUD Position (shown while dragging)",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    HudPosition.entries.forEach { position ->
-                        val isSelected = config.hudPosition == position
-                        FilterChip(
-                            selected = isSelected,
-                            onClick = { onUpdateConfig(config.copy(hudPosition = position)) },
-                            label = { Text(position.name.lowercase().replaceFirstChar { it.uppercase() }) },
-                            colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = PrimaryPurple,
-                                selectedLabelColor = TextPrimary,
-                                containerColor = DarkSurfaceVariant,
-                                labelColor = TextSecondary
-                            )
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Percentage Switch
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = "Show Percentage",
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        Text(
-                            text = "Display exact numeric percentage in HUD.",
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
-                    Switch(
-                        checked = config.showPercentage,
-                        onCheckedChange = { onUpdateConfig(config.copy(showPercentage = it)) },
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = TextPrimary,
-                            checkedTrackColor = PrimaryPurple
-                        )
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(14.dp))
-
                 // Haptic Feedback Switch
                 Row(
                     modifier = Modifier.fillMaxWidth(),

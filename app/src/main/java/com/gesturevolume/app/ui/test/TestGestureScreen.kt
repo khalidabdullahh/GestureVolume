@@ -2,6 +2,7 @@ package com.gesturevolume.app.ui.test
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -101,8 +102,8 @@ fun TestGestureScreen(
         }
     }
 
-    val handleWidth by animateDpAsState(if (isActive || isSwiping) 26.dp else 8.dp, label = "handleWidth")
-    val handleHeight by animateDpAsState(if (isActive || isSwiping) 120.dp else 44.dp, label = "handleHeight")
+    val handleWidth by animateDpAsState(if (isActive || isSwiping) 26.dp else 8.dp, animationSpec = spring(dampingRatio = 0.55f, stiffness = 500f), label = "handleWidth")
+    val handleHeight by animateDpAsState(if (isActive || isSwiping) 120.dp else 44.dp, animationSpec = spring(dampingRatio = 0.6f, stiffness = 450f), label = "handleHeight")
     val handleAlpha by animateFloatAsState(if (isActive || isSwiping) 0.96f else 0.55f, label = "handleAlpha")
 
     Column(
@@ -319,57 +320,12 @@ fun TestGestureScreen(
 
 @Composable
 private fun SimulatedVolumeHudCard(volumeState: VolumeState) {
-    Card(
-        modifier = Modifier
-            .width(260.dp)
-            .padding(16.dp),
-        shape = RoundedCornerShape(18.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1F2E)),
-        border = androidx.compose.foundation.BorderStroke(1.5.dp, Color(0xFF323854)),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                        contentDescription = null,
-                        tint = AccentCyan,
-                        modifier = Modifier.size(22.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Media Volume",
-                        color = TextPrimary,
-                        fontSize = 14.sp
-                    )
-                }
-                Text(
-                    text = "${volumeState.percentage}%",
-                    color = PrimaryPurple,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp
-                )
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            LinearProgressIndicator(
-                progress = { volumeState.progress },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(8.dp)
-                    .clip(RoundedCornerShape(4.dp)),
-                color = PrimaryPurple,
-                trackColor = DarkSurfaceVariant,
-                strokeCap = StrokeCap.Round
-            )
-        }
-    }
+    // Same look as the real swipe HUD: transparent, just the percentage
+    Text(
+        text = "${volumeState.percentage}%",
+        color = Color.White,
+        fontWeight = FontWeight.Bold,
+        fontSize = 44.sp,
+        modifier = Modifier.padding(16.dp)
+    )
 }
-
-

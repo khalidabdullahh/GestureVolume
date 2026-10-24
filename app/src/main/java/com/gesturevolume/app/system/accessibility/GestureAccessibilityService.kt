@@ -31,6 +31,7 @@ class GestureAccessibilityService : AccessibilityService() {
 
     private var currentConfig = GestureConfig()
     private var timeoutJob: Job? = null
+    private var swipeFraction = 0f
     private var screenReceiver: BroadcastReceiver? = null
 
     override fun onCreate() {
@@ -57,11 +58,12 @@ class GestureAccessibilityService : AccessibilityService() {
 
         overlayManager.attachEdgeHandle(
             config = currentConfig,
-            onVolumeSwipe = { stepDelta ->
-                handleVolumeStep(stepDelta)
+            onVolumeSwipe = { deltaFraction ->
+                handleVolumeSwipe(deltaFraction)
             },
             onShowHudRequested = {
                 val volState = volumeController.refreshCurrentVolume()
+                swipeFraction = volState.progress
                 if (currentConfig.hapticFeedback) {
                     hapticHelper.triggerGestureActivated()
                 }
@@ -104,11 +106,19 @@ class GestureAccessibilityService : AccessibilityService() {
         }
     }
 
-    private fun handleVolumeStep(stepDelta: Int) {
-        val previousVolume = volumeController.volumeState.value.currentVolume
-        val newState = volumeController.adjustVolume(stepDelta)
+    // Continuous swipe: the finger moves a fraction of the full range; the volume only changes
+    // (one system call, one haptic tick) when the whole level actually changes.
+    private fun handleVolumeSwipe(deltaFraction: Float) {
+        swipeFraction = (swipeFraction + deltaFraction).coerceIn(0f, 1f)
+        val state = volumeController.volumeState.value
+        val range = state.maxVolume - state.minVolume
+        if (range <= 0) return
 
-        if (newState.currentVolume != previousVolume && currentConfig.hapticFeedback) {
+        val target = state.minVolume + Math.round(swipeFraction * range)
+        if (target == state.currentVolume) return
+
+        val newState = volumeController.setVolume(target)
+        if (currentConfig.hapticFeedback) {
             if (newState.currentVolume == newState.maxVolume || newState.currentVolume == newState.minVolume) {
                 hapticHelper.triggerVolumeBoundary()
             } else {
