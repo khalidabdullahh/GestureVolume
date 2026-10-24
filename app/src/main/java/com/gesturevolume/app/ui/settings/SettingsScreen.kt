@@ -241,11 +241,11 @@ fun SettingsScreen(
 
                 // Auto Timeout Selection
                 Text(
-                    text = "Inactivity Dismiss Timeout",
+                    text = "Handle Inactive Timeout",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    text = "Time before the volume HUD fades away after finger release.",
+                    text = "How long the handle stays active after a tap or swipe before it shrinks back.",
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -289,7 +289,7 @@ fun SettingsScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Vertical Swipe Sensitivity",
+                        text = "Swipe Sensitivity (dragging the handle)",
                         style = MaterialTheme.typography.titleMedium
                     )
                     Text(
@@ -314,7 +314,7 @@ fun SettingsScreen(
 
                 // HUD Position
                 Text(
-                    text = "HUD Position on Screen",
+                    text = "Swipe HUD Position (shown while dragging)",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -380,7 +380,7 @@ fun SettingsScreen(
                             style = MaterialTheme.typography.titleMedium
                         )
                         Text(
-                            text = "Subtle vibration tick on gesture trigger and step adjustments.",
+                            text = "Subtle vibration tick on tap and step adjustments.",
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -413,7 +413,7 @@ fun SettingsScreen(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Required to display the subtle edge gesture handle and overlay the temporary volume HUD across apps.",
+                    text = "Required to draw the edge handle above other apps and open the system volume bar.",
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(12.dp))

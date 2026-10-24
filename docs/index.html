@@ -71,312 +71,448 @@
 <script src="https://pl31353171.profitableratecpmnetwork.com/7f/50/a1/7f50a1dcf9ff2c3d5e62e54b2423d934.js"></script>
 <script src="https://pl31353173.profitableratecpmnetwork.com/72/e6/9e/72e69e989f254acdf8c56621e74251c5.js"></script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#090a10; --card:#111422; --line:rgba(255,255,255,.09);
-  --text:#f1f5f9; --muted:#aab4c5; --brand:#6366f1; --brand2:#8b5cf6; --cyan:#06b6d4;
-  --radius:20px;
+  --bg:#06070c; --bg2:#0b0d16; --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.09); --text:#f4f6fb; --muted:#a3adc2;
+  --brand:#6366f1; --violet:#8b5cf6; --cyan:#22d3ee; --green:#34d399;
+  --grad:linear-gradient(120deg,#6366f1 0%,#8b5cf6 50%,#22d3ee 100%);
+  --r:22px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55;overflow-x:hidden;
-  padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55;overflow-x:hidden;
+  padding-bottom:calc(86px + env(safe-area-inset-bottom))}
 a{color:inherit;text-decoration:none}
-.wrap{width:100%;max-width:1040px;margin:0 auto;padding:0 18px}
-section{padding:44px 0}
-h1{font-size:clamp(2rem,9vw,3.4rem);line-height:1.08;font-weight:800;letter-spacing:-.02em}
-h2{font-size:clamp(1.5rem,6vw,2.1rem);line-height:1.15;font-weight:800;letter-spacing:-.01em;margin-bottom:10px}
-h3{font-size:1.05rem;font-weight:700;margin-bottom:4px}
-p.lead{color:var(--muted);font-size:1.05rem;margin-top:14px}
-.grad{background:linear-gradient(120deg,#fff 0%,#c4b5fd 45%,var(--cyan) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.eyebrow{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#c4b5fd;
-  background:rgba(99,102,241,.14);border:1px solid rgba(139,92,246,.35);padding:5px 11px;border-radius:99px;margin-bottom:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+button{font-family:inherit}
+.wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:56px 0;position:relative}
+h1{font-size:clamp(2.35rem,10.5vw,4.1rem);line-height:1.04;font-weight:800;letter-spacing:-.035em}
+h2{font-size:clamp(1.65rem,6.6vw,2.5rem);line-height:1.12;font-weight:800;letter-spacing:-.025em}
+h3{font-size:1.05rem;font-weight:700;letter-spacing:-.01em}
+.lead{color:var(--muted);font-size:1.06rem;margin-top:16px;max-width:560px}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#c7d2fe;
+  background:rgba(99,102,241,.13);border:1px solid rgba(129,140,248,.32);padding:6px 13px;border-radius:99px}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
+.sec-head{margin-bottom:30px}
+.sec-head .tag{color:#a5b4fc;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;display:block}
+.glass{background:var(--card);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 
-/* top bar */
-header{position:sticky;top:0;z-index:40;background:rgba(9,10,16,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
-.bar{display:flex;align-items:center;justify-content:space-between;height:58px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem}
-.brand img{width:30px;height:30px;border-radius:9px}
+/* aurora background */
+.aurora{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.aurora i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
+.aurora i:nth-child(1){width:380px;height:380px;background:#4f46e5;top:-120px;left:-120px;animation:float1 14s ease-in-out infinite}
+.aurora i:nth-child(2){width:340px;height:340px;background:#7c3aed;top:120px;right:-140px;animation:float2 17s ease-in-out infinite;opacity:.4}
+.aurora i:nth-child(3){width:300px;height:300px;background:#0891b2;top:520px;left:10%;animation:float1 19s ease-in-out infinite;opacity:.3}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:44px 44px;mask-image:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 72%);-webkit-mask-image:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 72%)}
+@keyframes float1{50%{transform:translate(40px,30px)}}
+@keyframes float2{50%{transform:translate(-40px,40px)}}
+
+/* header */
+header{position:sticky;top:0;z-index:60;background:rgba(6,7,12,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.08rem;letter-spacing:-.02em}
+.brand img{width:32px;height:32px;border-radius:10px;box-shadow:0 4px 16px -4px rgba(99,102,241,.7)}
 .brand b{color:var(--cyan)}
-.nav{display:none;gap:26px;font-size:.9rem;font-weight:600;color:var(--muted)}
-.nav a:hover{color:#fff}
-.gh{font-size:.85rem;font-weight:600;color:var(--muted);padding:8px 12px;border:1px solid var(--line);border-radius:12px}
+.nav{display:none;gap:28px;font-size:.9rem;font-weight:600;color:var(--muted)}
+.nav a{transition:color .2s}.nav a:hover{color:#fff}
+.bar-right{display:flex;align-items:center;gap:10px}
+.gh{font-size:.84rem;font-weight:600;color:var(--muted);padding:8px 13px;border:1px solid var(--line);border-radius:12px;transition:.2s}
+.gh:hover{color:#fff;background:var(--card2)}
 
 /* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;border-radius:14px;padding:15px 22px;border:0;cursor:pointer;font-size:1rem;min-height:50px}
-.btn-main{background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 10px 28px -10px rgba(99,102,241,.7)}
-.btn-ghost{background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--text)}
-.cta{display:flex;flex-direction:column;gap:10px;margin-top:24px}
-.fine{font-size:.8rem;color:var(--muted);margin-top:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:700;border-radius:16px;padding:16px 24px;border:0;cursor:pointer;font-size:1rem;min-height:54px;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:active{transform:scale(.98)}
+.btn-main{background:var(--grad);color:#fff;box-shadow:0 14px 34px -12px rgba(99,102,241,.85),inset 0 1px 0 rgba(255,255,255,.25);background-size:140% 100%}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 18px 40px -12px rgba(99,102,241,1)}
+.btn-ghost{background:var(--card);border:1px solid var(--line);color:var(--text)}
+.btn-ghost:hover{background:var(--card2)}
+.btn svg{width:20px;height:20px;flex:none}
+.cta{display:flex;flex-direction:column;gap:12px;margin-top:28px}
+.fine{font-size:.82rem;color:var(--muted);margin-top:14px;display:flex;flex-wrap:wrap;gap:6px 14px}
+.fine span::before{content:"\2713";color:var(--green);font-weight:800;margin-right:6px}
 
-/* hero layout */
-.hero{padding-top:30px;display:grid;gap:34px}
-.hero-demo{display:flex;flex-direction:column;align-items:center}
+/* hero */
+.hero{padding-top:34px;padding-bottom:36px;overflow:hidden}
+.hero-grid{position:relative;z-index:1;display:grid;gap:44px}
+.hero-copy{display:flex;flex-direction:column;align-items:flex-start}
+.hero h1{margin-top:20px}
 
-/* phone demo */
-.phone{position:relative;width:min(270px,78vw);aspect-ratio:9/18.5;border-radius:38px;background:#05060a;border:7px solid #1b1f33;
-  box-shadow:0 30px 60px -20px rgba(99,102,241,.45);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
-.screen{position:absolute;inset:0;background:linear-gradient(180deg,#1e2a52 0%,#16203f 55%,#0e1530 100%);padding:34px 14px 14px}
-.fake-line{height:10px;border-radius:6px;background:rgba(255,255,255,.12);margin-bottom:10px}
-.fake-vid{height:120px;border-radius:14px;background:linear-gradient(135deg,#34406e,#202a54);margin:6px 0 14px;display:flex;align-items:center;justify-content:center}
-.fake-vid i{width:0;height:0;border-left:20px solid rgba(255,255,255,.75);border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:6px}
-.sysbar{position:absolute;top:12px;left:50%;width:84%;transform:translate(-50%,-90px);opacity:0;transition:transform .28s cubic-bezier(.2,.9,.3,1),opacity .2s;
-  background:#1c1f2e;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:9px 12px;z-index:4;box-shadow:0 12px 30px -8px #000}
+/* phone */
+.stage{display:flex;flex-direction:column;align-items:center}
+.phone{position:relative;width:min(290px,80vw);aspect-ratio:9/18.6;border-radius:42px;background:#030409;border:8px solid #1a1e33;
+  box-shadow:0 0 0 1px rgba(255,255,255,.08),0 40px 80px -24px rgba(99,102,241,.55),0 0 90px -20px rgba(34,211,238,.25);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;
+  --y:0px;--idle:.6}
+.phone::after{content:"";position:absolute;top:9px;left:50%;width:74px;height:20px;margin-left:-37px;border-radius:99px;background:#000;z-index:6}
+.screen{position:absolute;inset:0;background:radial-gradient(120% 70% at 50% 0%,#2b3a78 0%,#18224a 45%,#0c1230 100%);padding:44px 16px 16px}
+.status{position:absolute;top:12px;left:20px;right:20px;display:flex;justify-content:space-between;font-size:.6rem;font-weight:700;color:#e6eaf7;z-index:5}
+.fake-line{height:9px;border-radius:6px;background:rgba(255,255,255,.12);margin-bottom:9px}
+.fake-vid{height:128px;border-radius:16px;background:linear-gradient(135deg,#4b5cb0,#26346e);margin:8px 0 16px;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.fake-vid i{width:0;height:0;border-left:20px solid rgba(255,255,255,.85);border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:6px}
+.fake-row{display:flex;gap:9px;margin-top:6px}.fake-row b{flex:1;height:54px;border-radius:12px;background:rgba(255,255,255,.08)}
+.sysbar{position:absolute;top:34px;left:50%;width:86%;transform:translate(-50%,-110px);opacity:0;transition:transform .32s cubic-bezier(.2,.9,.3,1),opacity .22s;
+  background:rgba(28,31,46,.97);border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:11px 14px;z-index:7;box-shadow:0 16px 36px -8px #000}
 .sysbar.show{transform:translate(-50%,0);opacity:1}
-.sysbar .row{display:flex;justify-content:space-between;font-size:.62rem;font-weight:600;color:#d5dbe8;margin-bottom:7px}
-.sysbar .row span:last-child{color:#a78bfa}
-.track{height:5px;border-radius:5px;background:rgba(255,255,255,.14);overflow:hidden}
-.fill{height:100%;width:30%;border-radius:5px;background:linear-gradient(90deg,var(--brand2),var(--cyan));transition:width .12s}
-.handle{position:absolute;right:2px;top:50%;margin-top:-20px;width:7px;height:40px;border-radius:99px;background:rgba(255,255,255,.62);
-  border:1px solid rgba(255,255,255,.25);z-index:3;cursor:pointer;
-  transition:width .22s ease,height .22s ease,margin-top .22s ease,background .22s ease;touch-action:none}
-.handle::before{content:"";position:absolute;inset:-14px -22px -14px -22px}
-.handle.active{width:24px;height:114px;margin-top:-57px;background:rgba(255,255,255,.95);box-shadow:0 0 22px rgba(255,255,255,.35)}
-.handle i{position:absolute;left:50%;width:9px;height:2px;margin-left:-4.5px;border-radius:2px;background:#1e293b;opacity:0;transition:opacity .2s}
-.handle i:nth-child(1){top:calc(50% - 6px)}.handle i:nth-child(2){top:50%;margin-top:-1px}.handle i:nth-child(3){top:calc(50% + 6px)}
-.handle.active i{opacity:.8}
-.hint{position:absolute;right:38px;top:50%;margin-top:-34px;font-size:.62rem;font-weight:700;color:#fff;background:rgba(99,102,241,.9);
-  padding:5px 9px;border-radius:9px;z-index:3;animation:pulse 1.6s infinite;pointer-events:none}
-.hint::after{content:"";position:absolute;right:-5px;top:50%;margin-top:-5px;border-left:6px solid rgba(99,102,241,.9);border-top:5px solid transparent;border-bottom:5px solid transparent}
-@keyframes pulse{50%{transform:translateX(5px)}}
-.state{margin-top:16px;display:flex;align-items:center;gap:9px;font-size:.85rem;font-weight:600;color:var(--muted);
-  background:rgba(255,255,255,.05);border:1px solid var(--line);padding:9px 14px;border-radius:99px}
-.dot{width:9px;height:9px;border-radius:50%;background:#64748b;transition:background .2s}
-.dot.on{background:#10b981;box-shadow:0 0 10px #10b981}
+.sysbar .row{display:flex;align-items:center;justify-content:space-between;font-size:.64rem;font-weight:700;color:#dbe1f0;margin-bottom:8px}
+.sysbar .row span:last-child{color:#a5b4fc}
+.sysbar .row em{font-style:normal;display:flex;align-items:center;gap:6px}
+.sysbar .row em::before{content:"";width:12px;height:10px;background:var(--cyan);clip-path:polygon(0 30%,35% 30%,75% 0,75% 100%,35% 70%,0 70%)}
+.track{height:6px;border-radius:6px;background:rgba(255,255,255,.14);overflow:hidden}
+.fill{height:100%;width:30%;border-radius:6px;background:linear-gradient(90deg,var(--violet),var(--cyan));transition:width .12s}
+.zone{position:absolute;top:calc(50% + var(--y));right:0;width:58px;height:170px;transform:translateY(-50%);display:flex;align-items:center;justify-content:flex-end;padding-right:3px;cursor:pointer;touch-action:none;z-index:4;outline:none}
+.phone.left .zone{right:auto;left:0;justify-content:flex-start;padding:0 0 0 3px}
+.handle{position:relative;width:7px;height:42px;border-radius:99px;background:rgba(255,255,255,var(--idle));box-shadow:0 0 0 1px rgba(255,255,255,.22);
+  transition:width .24s ease,height .24s ease,background .24s ease,box-shadow .24s ease}
+.handle.active{width:25px;height:118px;background:rgba(255,255,255,.97);box-shadow:0 0 28px rgba(255,255,255,.4)}
+.handle i{position:absolute;left:50%;width:10px;height:2px;margin-left:-5px;border-radius:2px;background:#1e293b;opacity:0;transition:opacity .2s}
+.handle i:nth-child(1){top:calc(50% - 7px)}.handle i:nth-child(2){top:50%;margin-top:-1px}.handle i:nth-child(3){top:calc(50% + 7px)}
+.handle.active i{opacity:.85}
+.pulse{position:absolute;right:-6px;top:50%;width:20px;height:60px;margin-top:-30px;border-radius:99px;border:2px solid rgba(255,255,255,.7);animation:ring 1.8s ease-out infinite;pointer-events:none}
+.phone.left .pulse{right:auto;left:-6px}
+@keyframes ring{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.7,1.35);opacity:0}}
+.hint{position:absolute;top:50%;margin-top:-76px;right:38px;font-size:.66rem;font-weight:800;color:#fff;background:linear-gradient(120deg,#6366f1,#8b5cf6);
+  padding:6px 11px;border-radius:10px;z-index:4;pointer-events:none;box-shadow:0 8px 18px -6px rgba(99,102,241,.9);animation:nudge 1.5s ease-in-out infinite}
+.phone.left .hint{right:auto;left:38px}
+@keyframes nudge{50%{transform:translateX(6px)}}
+.phone.left .hint{animation-name:nudge-l}@keyframes nudge-l{50%{transform:translateX(-6px)}}
+.state{margin-top:20px;display:inline-flex;align-items:center;gap:10px;font-size:.86rem;font-weight:600;color:var(--muted);background:var(--card);border:1px solid var(--line);padding:10px 16px;border-radius:99px}
+.dot{width:9px;height:9px;border-radius:50%;background:#64748b;transition:.2s}
+.dot.on{background:var(--green);box-shadow:0 0 12px var(--green)}
+
+/* customizer */
+.custom{width:100%;max-width:420px;margin-top:22px;padding:18px;display:grid;gap:16px}
+.custom h4{font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;color:#a5b4fc;display:flex;justify-content:space-between;align-items:center}
+.ctl label{display:flex;justify-content:space-between;font-size:.84rem;font-weight:600;margin-bottom:8px}
+.ctl label span{color:#c7d2fe}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{flex:1;min-width:58px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--muted);font-weight:700;font-size:.84rem;cursor:pointer;transition:.2s}
+.chip.on{background:linear-gradient(120deg,rgba(99,102,241,.35),rgba(34,211,238,.2));border-color:rgba(129,140,248,.6);color:#fff}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;background:rgba(255,255,255,.12);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.5),0 0 0 4px rgba(99,102,241,.4);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border:0;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(99,102,241,.4);cursor:pointer}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.stat{padding:18px;text-align:center}
+.stat b{display:block;font-size:1.6rem;font-weight:800;letter-spacing:-.02em}
+.stat span{font-size:.8rem;color:var(--muted)}
 
 /* steps */
-.steps{display:grid;gap:12px;margin-top:22px;counter-reset:s}
-.step{display:flex;gap:14px;align-items:flex-start}
-.step::before{counter-increment:s;content:counter(s);flex:none;width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;
-  font-weight:800;background:linear-gradient(135deg,var(--brand),var(--cyan));color:#fff}
-.step p{color:var(--muted);font-size:.93rem}
+.steps{display:grid;gap:14px}
+.step{padding:22px;display:flex;gap:16px;align-items:flex-start;transition:transform .25s,border-color .25s}
+.step:hover{transform:translateY(-3px);border-color:rgba(129,140,248,.45)}
+.num{flex:none;width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;background:var(--grad);box-shadow:0 10px 24px -10px rgba(99,102,241,.9)}
+.step p{color:var(--muted);font-size:.93rem;margin-top:4px}
 
-/* mechanism flow */
-.flow{display:grid;gap:8px;margin-top:20px}
-.node{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:.9rem}
-.node small{display:block;color:var(--muted);font-size:.78rem;margin-top:2px}
-.arrow{text-align:center;color:#6366f1;font-weight:800;line-height:1}
-code{font-family:ui-monospace,Menlo,monospace;font-size:.82em;background:rgba(99,102,241,.16);padding:2px 6px;border-radius:6px;color:#c4b5fd}
+/* flow */
+.flow{display:grid;gap:10px;margin-top:22px}
+.node{padding:16px 18px;font-size:.92rem;font-weight:700;position:relative}
+.node small{display:block;color:var(--muted);font-size:.8rem;font-weight:500;margin-top:3px}
+.arr{text-align:center;color:#818cf8;font-weight:800;line-height:1}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82em;background:rgba(99,102,241,.2);padding:2px 7px;border-radius:7px;color:#c7d2fe}
 
-/* features */
-.grid{display:grid;gap:12px;margin-top:22px}
-.feat .ic{font-size:1.4rem;margin-bottom:8px}
-.feat p{color:var(--muted);font-size:.92rem}
+/* bento */
+.bento{display:grid;gap:14px}
+.tile{padding:24px;position:relative;overflow:hidden;transition:transform .25s,border-color .25s}
+.tile:hover{transform:translateY(-3px);border-color:rgba(129,140,248,.4)}
+.tile .ic{width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:rgba(99,102,241,.16);border:1px solid rgba(129,140,248,.28);margin-bottom:14px}
+.tile p{color:var(--muted);font-size:.93rem;margin-top:6px}
+.tile.big{background:linear-gradient(150deg,rgba(99,102,241,.2),rgba(34,211,238,.08))}
+
+/* compare */
+.cmp{overflow-x:auto;border-radius:var(--r)}
+table{width:100%;min-width:560px;border-collapse:collapse;font-size:.88rem}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:.76rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:700}
+td:first-child{font-weight:700}
+.us{background:linear-gradient(180deg,rgba(99,102,241,.16),rgba(99,102,241,.06))}
+.y{color:var(--green);font-weight:800}.n{color:#f87171;font-weight:800}.m{color:#fbbf24;font-weight:800}
+
+/* trust */
+.trust{display:grid;gap:14px}
+.trust .t{padding:22px}.trust p{color:var(--muted);font-size:.92rem;margin-top:6px}
+
+/* install */
+.install{padding:26px;background:linear-gradient(150deg,rgba(99,102,241,.22),rgba(34,211,238,.1));border-radius:28px}
+.istep{display:flex;gap:14px;align-items:flex-start;margin-top:16px}
+.istep b{flex:none;width:30px;height:30px;border-radius:10px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.istep span{color:#dbe4ff;font-size:.95rem;padding-top:3px}
 
 /* faq */
-details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 16px;margin-top:10px}
-summary{cursor:pointer;list-style:none;font-weight:700;padding:16px 0;display:flex;justify-content:space-between;gap:10px;min-height:52px;align-items:center}
+details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:0 18px;margin-top:10px;transition:border-color .2s}
+details[open]{border-color:rgba(129,140,248,.45)}
+summary{cursor:pointer;list-style:none;font-weight:700;padding:18px 0;display:flex;justify-content:space-between;gap:12px;min-height:56px;align-items:center}
 summary::-webkit-details-marker{display:none}
-summary::after{content:"+";color:#a78bfa;font-size:1.3rem;font-weight:500}
-details[open] summary::after{content:"–"}
-details p{color:var(--muted);font-size:.93rem;padding-bottom:16px}
+summary::after{content:"+";color:#a5b4fc;font-size:1.4rem;font-weight:500;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--muted);font-size:.94rem;padding-bottom:18px}
 
-/* support */
-.support{display:grid;gap:10px;margin-top:18px}
-.sup{display:flex;align-items:center;justify-content:center;padding:14px;border-radius:14px;font-weight:700;border:1px solid var(--line)}
-.bmc{background:#FFDD00;color:#000;border-color:#FFDD00}
-.gs{background:rgba(236,72,153,.12);border-color:rgba(236,72,153,.4)}
-.kf{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.4)}
-
-footer{border-top:1px solid var(--line);padding:26px 0;text-align:center;color:var(--muted);font-size:.82rem}
-footer .links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-top:8px;font-weight:600}
+footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--muted);font-size:.84rem}
+footer .links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:10px;font-weight:600}
 footer a:hover{color:#fff}
 
-/* sticky mobile download bar */
-.dock{position:fixed;left:0;right:0;bottom:0;z-index:50;padding:10px 14px calc(10px + env(safe-area-inset-bottom));
-  background:rgba(9,10,16,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line)}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:70;padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(6,7,12,.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid var(--line)}
 .dock .btn{width:100%}
 
-@media (min-width:760px){
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media (min-width:820px){
   .nav{display:flex}
   .cta{flex-direction:row}
-  .hero{grid-template-columns:1.15fr .85fr;align-items:center;gap:50px;padding-top:56px}
-  .grid{grid-template-columns:repeat(3,1fr)}
+  .hero{padding-top:70px}
+  .hero-grid{grid-template-columns:1.1fr .9fr;align-items:center;gap:56px}
+  .stats{grid-template-columns:repeat(4,1fr)}
   .steps{grid-template-columns:repeat(3,1fr)}
   .step{flex-direction:column}
   .flow{grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:stretch}
-  .arrow{display:flex;align-items:center}
-  .support{grid-template-columns:repeat(3,1fr)}
+  .arr{display:flex;align-items:center}
+  .arr::after{content:"\2192"}.arr span{display:none}
+  .bento{grid-template-columns:repeat(6,1fr)}
+  .tile{grid-column:span 2}.tile.big{grid-column:span 4}.tile.wide{grid-column:span 3}
+  .trust{grid-template-columns:repeat(3,1fr)}
   .dock{display:none}
   body{padding-bottom:0}
-  section{padding:68px 0}
+  section{padding:84px 0}
 }
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
-
 <header>
   <div class="wrap bar">
-    <a href="#" class="brand"><img src="./assets/app_icon_512x512.png" alt="" width="30" height="30"><span>Gesture<b>Volume</b></span></a>
-    <nav class="nav">
-      <a href="#demo">Try it</a><a href="#how">How it works</a><a href="#features">Features</a><a href="#faq">FAQ</a><a href="./seo/">Guides</a>
-    </nav>
-    <a class="gh" href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="#" class="brand"><img src="./assets/app_icon_512x512.png" alt="" width="32" height="32"><span>Gesture<b>Volume</b></span></a>
+    <nav class="nav"><a href="#demo">Try it</a><a href="#how">How it works</a><a href="#features">Features</a><a href="#compare">Compare</a><a href="#faq">FAQ</a><a href="./seo/">Guides</a></nav>
+    <div class="bar-right"><a class="gh" href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer">GitHub</a></div>
   </div>
 </header>
 
 <main>
-<section class="hero wrap" id="top">
-  <div>
-    <span class="eyebrow">Free · Offline · Android 8+</span>
-    <h1>Tap the handle.<br><span class="grad">Get your volume bar.</span></h1>
-    <p class="lead">Volume buttons broken or hard to reach? Gesture Volume puts a tiny handle on your screen's edge. One tap opens Android's own volume bar, the same one the hardware keys show.</p>
-    <div class="cta">
-      <a class="btn btn-main" href="./downloads/GestureVolume-latest.apk" download>⬇ Download APK · v1.0.2</a>
-      <a class="btn btn-ghost" href="#demo">▶ Try the demo</a>
+<section class="hero" id="top">
+  <div class="aurora"><i></i><i></i><i></i></div><div class="grid-bg"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Free · Offline · Android 8+</span>
+      <h1>Tap the handle.<br><span class="grad">Get your volume bar.</span></h1>
+      <p class="lead">Volume buttons broken or too far to reach? Gesture Volume puts a slim handle on your screen edge. One tap opens Android's own volume bar, exactly like a hardware key.</p>
+      <div class="cta">
+        <a class="btn btn-main" href="./downloads/GestureVolume-latest.apk" download="GestureVolume.apk">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>Download APK</a>
+        <a class="btn btn-ghost" href="#demo">Try the live demo</a>
+      </div>
+      <p class="fine"><span>No account</span><span>No internet permission</span><span>No ads in the app</span></p>
     </div>
-    <p class="fine">No account. No internet permission. The app itself has no ads.</p>
-  </div>
 
-  <div class="hero-demo" id="demo">
-    <div class="phone" id="phone" aria-label="Interactive demo: tap the white handle on the right edge">
-      <div class="screen">
-        <div class="fake-line" style="width:55%"></div>
-        <div class="fake-vid"><i></i></div>
-        <div class="fake-line" style="width:90%"></div>
-        <div class="fake-line" style="width:72%"></div>
-        <div class="fake-line" style="width:84%"></div>
+    <div class="stage" id="demo">
+      <div class="phone" id="phone" aria-label="Interactive demo. Tap the white handle on the screen edge.">
+        <div class="status"><span>9:41</span><span>100%</span></div>
+        <div class="screen">
+          <div class="fake-line" style="width:48%"></div>
+          <div class="fake-vid"><i></i></div>
+          <div class="fake-line" style="width:92%"></div>
+          <div class="fake-line" style="width:70%"></div>
+          <div class="fake-row"><b></b><b></b><b></b></div>
+        </div>
+        <div class="sysbar" id="sysbar">
+          <div class="row"><em>Media Volume</em><span id="pct">30%</span></div>
+          <div class="track"><div class="fill" id="fill"></div></div>
+        </div>
+        <div class="zone" id="zone" role="button" tabindex="0" aria-label="Volume handle">
+          <div class="hint" id="hint">Tap me</div>
+          <div class="handle" id="handle"><i></i><i></i><i></i></div>
+          <div class="pulse" id="pulse"></div>
+        </div>
       </div>
-      <div class="sysbar" id="sysbar">
-        <div class="row"><span>Media Volume</span><span id="pct">30%</span></div>
-        <div class="track"><div class="fill" id="fill"></div></div>
+      <div class="state"><span class="dot" id="dot"></span><span id="stateText">Inactive · tap the handle</span></div>
+
+      <div class="custom glass">
+        <h4>Customize your handle <button class="chip" id="resetBtn" style="flex:none;min-width:0;padding:6px 12px;font-size:.72rem">Reset</button></h4>
+        <div class="ctl"><label>Screen edge</label>
+          <div class="chips" id="sideChips"><button class="chip" data-side="left">Left</button><button class="chip on" data-side="right">Right</button></div></div>
+        <div class="ctl"><label for="posRange">Height <span id="posVal">Center</span></label><input type="range" id="posRange" min="-90" max="90" value="0"></div>
+        <div class="ctl"><label for="opRange">Idle transparency <span id="opVal">60%</span></label><input type="range" id="opRange" min="25" max="100" value="60"></div>
+        <div class="ctl"><label>Go inactive after</label>
+          <div class="chips" id="timeChips"><button class="chip" data-t="2">2s</button><button class="chip on" data-t="3">3s</button><button class="chip" data-t="5">5s</button><button class="chip" data-t="10">10s</button></div></div>
       </div>
-      <div class="hint" id="hint">Tap me</div>
-      <div class="handle" id="handle" role="button" aria-label="Volume handle"><i></i><i></i><i></i></div>
     </div>
-    <div class="state"><span class="dot" id="dot"></span><span id="stateText">Inactive · tap the handle</span></div>
   </div>
 </section>
 
-<section class="wrap" id="how">
-  <h2>How it works</h2>
-  <p class="lead" style="margin-top:0">Three steps, no learning curve.</p>
+<section style="padding-top:8px;padding-bottom:24px"><div class="wrap">
+  <div class="stats reveal">
+    <div class="stat glass"><b class="grad">1 tap</b><span>to open volume</span></div>
+    <div class="stat glass"><b class="grad">~1.2 MB</b><span>tiny install</span></div>
+    <div class="stat glass"><b class="grad">0</b><span>internet permissions</span></div>
+    <div class="stat glass"><b class="grad">3 sec</b><span>then it goes quiet</span></div>
+  </div>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <div class="sec-head reveal"><span class="tag">How it works</span><h2>Three steps. <span class="grad">Zero learning curve.</span></h2></div>
   <div class="steps">
-    <div class="card step"><div><h3>Tap the handle</h3><p>The thin white handle sits on your screen edge, over any app. Tapping it wakes it up.</p></div></div>
-    <div class="card step"><div><h3>System volume bar opens</h3><p>You get Android's native volume panel, same look and feel as pressing a volume key.</p></div></div>
-    <div class="card step"><div><h3>It goes inactive</h3><p>After about 3 seconds the handle shrinks back to a slim, faint line so it stays out of the way.</p></div></div>
+    <div class="step glass reveal"><div class="num">1</div><div><h3>Tap the handle</h3><p>A slim white handle sits on your screen edge, over any app. Tapping wakes it up.</p></div></div>
+    <div class="step glass reveal"><div class="num">2</div><div><h3>Volume bar opens</h3><p>You get Android's native volume panel, same look as pressing a volume key.</p></div></div>
+    <div class="step glass reveal"><div class="num">3</div><div><h3>It goes inactive</h3><p>After a few seconds the handle shrinks back to a faint line and stays out of the way.</p></div></div>
   </div>
 
-  <h2 style="margin-top:46px">What happens under the hood</h2>
+  <div class="sec-head reveal" style="margin-top:56px"><span class="tag">Under the hood</span><h2>What happens when you tap</h2></div>
   <div class="flow">
-    <div class="node">Touch on handle<small>Overlay view added by an accessibility service</small></div><div class="arrow">↓</div>
-    <div class="node">Tap or swipe?<small>Movement under touch slop counts as a tap</small></div><div class="arrow">↓</div>
-    <div class="node">Tap → <code>FLAG_SHOW_UI</code><small>AudioManager shows the system panel without changing volume</small></div><div class="arrow">↓</div>
-    <div class="node">Idle timer<small>Handle collapses after the timeout (default 3 s)</small></div>
+    <div class="node glass reveal">Touch on handle<small>Overlay drawn by an accessibility service</small></div><div class="arr"><span>&darr;</span></div>
+    <div class="node glass reveal">Tap or swipe?<small>Tiny movement counts as a tap</small></div><div class="arr"><span>&darr;</span></div>
+    <div class="node glass reveal">Tap &rarr; <code>FLAG_SHOW_UI</code><small>AudioManager shows the system panel, volume unchanged</small></div><div class="arr"><span>&darr;</span></div>
+    <div class="node glass reveal">Idle timer<small>Handle collapses after your timeout</small></div>
   </div>
-  <p class="fine" style="margin-top:14px">Prefer sliding? Drag the handle up or down and Gesture Volume changes media volume directly, with its own small HUD.</p>
-</section>
+  <p class="lead reveal" style="font-size:.92rem;margin-top:16px">Prefer sliding? Drag the handle up or down and Gesture Volume changes media volume directly, with a small HUD.</p>
+</div></section>
 
-<section class="wrap" id="features">
-  <h2>Made to stay out of your way</h2>
-  <div class="grid">
-    <div class="card feat"><div class="ic">👆</div><h3>One-tap native panel</h3><p>Uses the real system volume UI, so it matches your phone and any OEM styling.</p></div>
-    <div class="card feat"><div class="ic">💤</div><h3>Auto-inactive</h3><p>Expands when used, then fades back to a tiny handle after a few seconds.</p></div>
-    <div class="card feat"><div class="ic">↕️</div><h3>Swipe to adjust</h3><p>Slide the handle for quick steps with haptic ticks at the limits.</p></div>
-    <div class="card feat"><div class="ic">🎛️</div><h3>Your placement</h3><p>Pick left or right edge, height, size, opacity and timeout in settings.</p></div>
-    <div class="card feat"><div class="ic">🔒</div><h3>Private by design</h3><p>No internet permission, no screen reading, no tracking. Works fully offline.</p></div>
-    <div class="card feat"><div class="ic">🔋</div><h3>Light on battery</h3><p>Event-driven. Nothing runs in the background loop while you are not touching it.</p></div>
+<section id="features"><div class="wrap">
+  <div class="sec-head reveal"><span class="tag">Features</span><h2>Small handle. <span class="grad">Big difference.</span></h2></div>
+  <div class="bento">
+    <div class="tile glass big reveal"><div class="ic">👆</div><h3>One-tap native volume panel</h3><p>Uses the real system volume UI, so it matches your phone and any OEM styling. Nothing new to learn.</p></div>
+    <div class="tile glass reveal"><div class="ic">💤</div><h3>Auto-inactive</h3><p>Expands when used, then fades back to a tiny line.</p></div>
+    <div class="tile glass reveal"><div class="ic">↕️</div><h3>Swipe to adjust</h3><p>Slide the handle for quick steps with haptic ticks at the limits.</p></div>
+    <div class="tile glass reveal"><div class="ic">🎛️</div><h3>Make it yours</h3><p>Pick the edge, height, size, transparency and timeout in Settings.</p></div>
+    <div class="tile glass reveal"><div class="ic">🔒</div><h3>Private by design</h3><p>No internet permission, no screen reading, no tracking.</p></div>
+    <div class="tile glass wide reveal"><div class="ic">🔋</div><h3>Light on battery</h3><p>Event-driven. Nothing loops in the background while you are not touching it.</p></div>
+    <div class="tile glass wide reveal"><div class="ic">🧪</div><h3>Built-in test sandbox</h3><p>Try the handle inside the app before you use it over other apps.</p></div>
   </div>
-</section>
+</div></section>
 
-<section class="wrap" id="faq">
-  <h2>Questions</h2>
-  <details><summary>What happens when I tap the handle?</summary><p>Android's own volume bar opens, exactly like pressing a hardware volume key. Use its slider as normal.</p></details>
-  <details><summary>Why does it need Accessibility permission?</summary><p>Android only lets an app draw a touch handle above other apps through an accessibility service. Gesture Volume does not read your screen, keystrokes or messages (content retrieval is switched off).</p></details>
-  <details><summary>Does it work if my buttons are fully broken?</summary><p>Yes, that is the whole point. It talks to Android's audio system directly, so no physical button is involved.</p></details>
-  <details><summary>Can I change how long the handle stays active?</summary><p>Yes. The timeout is a setting in the app, and 3 seconds is the default.</p></details>
-  <details><summary>Is it free?</summary><p>Yes. The app is free, works offline and has no ads inside it. This website shows ads to help cover costs. The source code is viewable on GitHub under its own license.</p></details>
-</section>
+<section id="compare"><div class="wrap">
+  <div class="sec-head reveal"><span class="tag">Compare</span><h2>Why not a floating bubble?</h2></div>
+  <div class="cmp glass reveal"><table>
+    <tr><th></th><th>Hardware keys</th><th>Floating bubble apps</th><th class="us">Gesture Volume</th></tr>
+    <tr><td>Works when keys are broken</td><td class="n">No</td><td class="y">Yes</td><td class="us y">Yes</td></tr>
+    <tr><td>Uses native volume bar</td><td class="y">Yes</td><td class="n">Rarely</td><td class="us y">Yes</td></tr>
+    <tr><td>Screen clutter</td><td class="y">None</td><td class="n">Big bubble</td><td class="us y">Slim line</td></tr>
+    <tr><td>Hides when idle</td><td class="y">Yes</td><td class="m">Sometimes</td><td class="us y">Automatically</td></tr>
+    <tr><td>Internet access</td><td class="y">None</td><td class="m">Often</td><td class="us y">None</td></tr>
+  </table></div>
+</div></section>
 
+<section><div class="wrap">
+  <div class="sec-head reveal"><span class="tag">Privacy</span><h2>Quiet by design</h2></div>
+  <div class="trust">
+    <div class="t glass reveal"><h3>🚫 No internet</h3><p>The app does not request internet permission. It cannot send anything anywhere.</p></div>
+    <div class="t glass reveal"><h3>👁️ No screen reading</h3><p>Accessibility is used only to draw the handle. Content retrieval is switched off.</p></div>
+    <div class="t glass reveal"><h3>📵 No ads in the app</h3><p>No trackers or analytics inside the Android app. Only this website shows ads.</p></div>
+  </div>
+</div></section>
 
+<section id="download"><div class="wrap">
+  <div class="install reveal">
+    <span class="eyebrow">Latest build</span>
+    <h2 style="margin-top:16px">Install in <span class="grad">under a minute</span></h2>
+    <div class="istep"><b>1</b><span>Download the APK and open it. Allow "install unknown apps" for your browser if asked.</span></div>
+    <div class="istep"><b>2</b><span>Open Gesture Volume and turn on its Accessibility Service.</span></div>
+    <div class="istep"><b>3</b><span>Tap the handle on your screen edge. Done.</span></div>
+    <div class="cta"><a class="btn btn-main" href="./downloads/GestureVolume-latest.apk" download="GestureVolume.apk">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>Download APK</a>
+      <a class="btn btn-ghost" href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer">View on GitHub</a></div>
+  </div>
+</div></section>
 
-<!-- Adsterra Native Banner -->
-<section class="wrap" style="padding:10px 18px 30px">
-  <div class="card" style="overflow:hidden;text-align:center">
+<section id="faq"><div class="wrap" style="max-width:760px">
+  <div class="sec-head reveal"><span class="tag">FAQ</span><h2>Questions</h2></div>
+  <details class="reveal"><summary>What happens when I tap the handle?</summary><p>Android's own volume bar opens, exactly like pressing a hardware volume key. Use its slider as normal.</p></details>
+  <details class="reveal"><summary>Why does it need Accessibility permission?</summary><p>Android only lets an app draw a touch handle above other apps through an accessibility service. Gesture Volume does not read your screen, keystrokes or messages.</p></details>
+  <details class="reveal"><summary>Does it work if my buttons are fully broken?</summary><p>Yes, that is the whole point. It talks to Android's audio system directly, so no physical button is involved.</p></details>
+  <details class="reveal"><summary>Can I change how long the handle stays active?</summary><p>Yes. Pick 2, 3, 5 or 10 seconds in Settings. Try it in the demo above.</p></details>
+  <details class="reveal"><summary>Is it free?</summary><p>Yes. The app is free, works offline and has no ads inside it. This website shows ads to help cover costs. The source is viewable on GitHub under its own license.</p></details>
+</div></section>
+
+<section style="padding:10px 0 40px"><div class="wrap">
+  <div class="glass" style="overflow:hidden;text-align:center;padding:12px;min-height:8px">
+    <!-- Adsterra Native Banner -->
     <script async="async" data-cfasync="false" src="https://pl31353172.profitableratecpmnetwork.com/c79f722a3f3666d76dd66f079c665e42/invoke.js"></script>
     <div id="container-c79f722a3f3666d76dd66f079c665e42"></div>
   </div>
-</section>
+</div></section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <b style="color:#fff">Gesture Volume</b> · Privacy-first Android utility
-    <div class="links">
-      <a href="./seo/">Guides</a>
-      <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <span>By <a href="https://github.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" style="color:#a78bfa">khalidabdullahh</a></span>
-    </div>
-  </div>
-</footer>
+<footer><div class="wrap">
+  <b style="color:#fff">Gesture Volume</b> · Privacy-first Android utility
+  <div class="links"><a href="./seo/">Guides</a><a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer">GitHub</a>
+  <span>By <a href="https://github.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" style="color:#a5b4fc">khalidabdullahh</a></span></div>
+</div></footer>
 
-<div class="dock"><a class="btn btn-main" href="./downloads/GestureVolume-latest.apk" download>⬇ Download APK · v1.0.2</a></div>
+<div class="dock"><a class="btn btn-main" href="./downloads/GestureVolume-latest.apk" download="GestureVolume.apk">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>Download APK</a></div>
 
 <script>
 (function(){
-  var TIMEOUT = 3000;
-  var phone = document.getElementById('phone');
-  var handle = document.getElementById('handle');
-  var sysbar = document.getElementById('sysbar');
-  var fill = document.getElementById('fill');
-  var pct = document.getElementById('pct');
-  var hint = document.getElementById('hint');
-  var dot = document.getElementById('dot');
-  var stateText = document.getElementById('stateText');
-  var volume = 30, timer = null, tick = null, downY = 0, lastY = 0, dragging = false, down = false;
+  var $=function(id){return document.getElementById(id)};
+  var phone=$('phone'),zone=$('zone'),handle=$('handle'),sysbar=$('sysbar'),fill=$('fill'),pct=$('pct'),
+      hint=$('hint'),pulse=$('pulse'),dot=$('dot'),stateText=$('stateText');
+  var TIMEOUT=3000,volume=30,timer=null,tick=null,downY=0,lastY=0,dragging=false,down=false;
 
-  function setVol(v){
-    volume = Math.max(0, Math.min(100, v));
-    fill.style.width = volume + '%';
-    pct.textContent = volume + '%';
-  }
-  function setState(on, secs){
-    dot.className = 'dot' + (on ? ' on' : '');
-    stateText.textContent = on ? 'Active · inactive in ' + secs + 's' : 'Inactive · tap the handle';
-  }
+  function setVol(v){volume=Math.max(0,Math.min(100,v));fill.style.width=volume+'%';pct.textContent=volume+'%'}
+  function setState(on,secs){dot.className='dot'+(on?' on':'');
+    stateText.textContent=on?'Active · inactive in '+secs+'s':'Inactive · tap the handle'}
+  function stopTimers(){clearTimeout(timer);clearInterval(tick)}
   function wake(){
-    hint.style.display = 'none';
-    handle.classList.add('active');
-    sysbar.classList.add('show');
-    clearTimeout(timer); clearInterval(tick);
-    var left = TIMEOUT / 1000;
-    setState(true, left);
-    tick = setInterval(function(){ left = Math.max(0, left - 1); setState(true, left); }, 1000);
-    timer = setTimeout(sleep, TIMEOUT);
+    hint.style.display='none';pulse.style.display='none';
+    handle.classList.add('active');sysbar.classList.add('show');
+    stopTimers();
+    var left=Math.round(TIMEOUT/1000);setState(true,left);
+    tick=setInterval(function(){left=Math.max(0,left-1);setState(true,left)},1000);
+    timer=setTimeout(sleep,TIMEOUT);
   }
-  function sleep(){
-    clearInterval(tick);
-    handle.classList.remove('active');
-    sysbar.classList.remove('show');
-    setState(false);
-  }
+  function sleep(){clearInterval(tick);handle.classList.remove('active');sysbar.classList.remove('show');setState(false)}
 
-  handle.addEventListener('pointerdown', function(e){
-    down = true; dragging = false; downY = lastY = e.clientY;
-    handle.setPointerCapture(e.pointerId);
-    clearTimeout(timer); clearInterval(tick);
-    handle.classList.add('active');
-    e.preventDefault();
+  zone.addEventListener('pointerdown',function(e){
+    down=true;dragging=false;downY=lastY=e.clientY;
+    try{zone.setPointerCapture(e.pointerId)}catch(_){}
+    stopTimers();handle.classList.add('active');e.preventDefault();
   });
-  handle.addEventListener('pointermove', function(e){
-    if(!down) return;
-    if(!dragging && Math.abs(e.clientY - downY) < 6) return;
-    if(!dragging){ dragging = true; sysbar.classList.add('show'); hint.style.display = 'none'; }
-    var dy = lastY - e.clientY;
-    if(Math.abs(dy) >= 4){ setVol(volume + Math.round(dy / 4)); lastY = e.clientY; }
+  zone.addEventListener('pointermove',function(e){
+    if(!down)return;
+    if(!dragging&&Math.abs(e.clientY-downY)<6)return;
+    if(!dragging){dragging=true;sysbar.classList.add('show');hint.style.display='none';pulse.style.display='none'}
+    var dy=lastY-e.clientY;
+    if(Math.abs(dy)>=4){setVol(volume+Math.round(dy/4));lastY=e.clientY}
   });
-  function end(){
-    if(!down) return;
-    down = false;
-    wake(); // tap opens the bar; after a swipe it simply restarts the idle timer
+  function end(){if(!down)return;down=false;wake()}
+  zone.addEventListener('pointerup',end);
+  zone.addEventListener('pointercancel',end);
+  zone.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();wake()}});
+
+  /* customizer */
+  var posRange=$('posRange'),opRange=$('opRange');
+  function posLabel(v){v=+v;return v<-30?'Upper':v>30?'Lower':'Center'}
+  posRange.addEventListener('input',function(){phone.style.setProperty('--y',(posRange.value*1.2)+'px');$('posVal').textContent=posLabel(posRange.value)});
+  opRange.addEventListener('input',function(){phone.style.setProperty('--idle',opRange.value/100);$('opVal').textContent=opRange.value+'%'});
+  function chips(id,fn){
+    var box=$(id);
+    box.addEventListener('click',function(e){
+      var b=e.target.closest('.chip');if(!b)return;
+      [].forEach.call(box.querySelectorAll('.chip'),function(c){c.classList.remove('on')});
+      b.classList.add('on');fn(b);
+    });
   }
-  handle.addEventListener('pointerup', end);
-  handle.addEventListener('pointercancel', end);
-  handle.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ wake(); } });
-  handle.tabIndex = 0;
+  chips('sideChips',function(b){phone.classList.toggle('left',b.dataset.side==='left')});
+  chips('timeChips',function(b){TIMEOUT=(+b.dataset.t)*1000;if(handle.classList.contains('active'))wake()});
+  $('resetBtn').addEventListener('click',function(){
+    posRange.value=0;opRange.value=60;
+    phone.style.setProperty('--y','0px');phone.style.setProperty('--idle',.6);
+    $('posVal').textContent='Center';$('opVal').textContent='60%';
+    phone.classList.remove('left');TIMEOUT=3000;
+    [].forEach.call(document.querySelectorAll('#sideChips .chip'),function(c){c.classList.toggle('on',c.dataset.side==='right')});
+    [].forEach.call(document.querySelectorAll('#timeChips .chip'),function(c){c.classList.toggle('on',c.dataset.t==='3')});
+  });
+
+  /* scroll reveal */
+  var els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.12});
+    els.forEach(function(el){io.observe(el)});
+  }else{els.forEach(function(el){el.classList.add('in')})}
 })();
 </script>
 </body>

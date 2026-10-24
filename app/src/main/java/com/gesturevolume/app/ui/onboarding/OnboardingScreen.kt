@@ -101,7 +101,7 @@ fun OnboardingScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Control your device volume with smooth screen-edge swipe gestures, even when physical buttons are broken or inaccessible.",
+                text = "Tap a tiny edge handle to open Android's own volume bar. Made for broken or hard-to-reach volume buttons.",
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(horizontal = 12.dp)
@@ -113,8 +113,8 @@ fun OnboardingScreen(
             OnboardingStepItem(
                 stepNumber = "1",
                 icon = Icons.Default.GraphicEq,
-                title = "Subtle Frosted Edge Handle",
-                description = "A compact, unobtrusive pill handle rests on your screen edge and expands when touched."
+                title = "Slim Edge Handle",
+                description = "A compact pill rests on your screen edge. Tap it to wake it up, and it shrinks back after a few seconds."
             )
 
             Spacer(modifier = Modifier.height(14.dp))
@@ -122,8 +122,8 @@ fun OnboardingScreen(
             OnboardingStepItem(
                 stepNumber = "2",
                 icon = Icons.AutoMirrored.Filled.VolumeUp,
-                title = "Swipe Up / Down",
-                description = "Slide your finger upward to increase volume, downward to decrease. Modern HUD appears instantly."
+                title = "Tap to Open Volume Bar",
+                description = "Opens the native system volume panel. Prefer sliding? Swipe the handle up or down."
             )
 
             Spacer(modifier = Modifier.height(14.dp))
@@ -166,7 +166,7 @@ fun OnboardingScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = "Android Accessibility Service is used solely to display the edge gesture trigger handle and overlay the temporary volume HUD across apps.",
+                        text = "Android Accessibility Service is used solely to draw the edge handle above other apps and open the system volume bar.",
                         style = MaterialTheme.typography.bodyMedium
                     )
 

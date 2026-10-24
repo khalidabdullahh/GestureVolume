@@ -82,7 +82,7 @@ fun DashboardScreen(
                     style = MaterialTheme.typography.headlineMedium
                 )
                 Text(
-                    text = "Native on-screen gesture utility",
+                    text = "Tap-to-open volume handle",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -138,7 +138,7 @@ fun DashboardScreen(
                             color = TextPrimary
                         )
                         Text(
-                            text = if (isServiceActive) "Edge gesture volume control running" else "Enable Accessibility Service",
+                            text = if (isServiceActive) "Edge handle is running. Tap it to open volume." else "Enable Accessibility Service",
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -252,7 +252,7 @@ fun DashboardScreen(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Test Gesture",
+                    text = "Test Handle",
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 14.sp
                 )
@@ -299,11 +299,11 @@ fun DashboardScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                GuideRow(number = "1", text = "Touch the subtle edge handle on the side of your screen over any app.")
+                GuideRow(number = "1", text = "Tap the slim white handle on your screen edge, over any app.")
                 Spacer(modifier = Modifier.height(8.dp))
-                GuideRow(number = "2", text = "Swipe finger upward to raise volume, swipe downward to lower volume.")
+                GuideRow(number = "2", text = "Android's own volume bar opens, like pressing a volume key. Or swipe the handle up / down to adjust directly.")
                 Spacer(modifier = Modifier.height(8.dp))
-                GuideRow(number = "3", text = "Lift finger — the HUD smoothly auto-dismisses after 3 seconds.")
+                GuideRow(number = "3", text = "The handle shrinks back to a faint line after a few seconds of no use.")
             }
         }
 

@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Gesture Volume</string>
     <string name="accessibility_service_label">Gesture Volume Service</string>
-    <string name="accessibility_service_description">Gesture Volume displays a discrete edge handle and temporary on-screen volume HUD for devices with broken physical volume buttons. It does not access, inspect, or store private personal information, keystrokes, or screen content.</string>
+    <string name="accessibility_service_description">Gesture Volume shows a slim edge handle. Tapping it opens the system volume bar, and swiping it adjusts volume, for devices with broken physical volume buttons. It does not access, inspect, or store private personal information, keystrokes, or screen content.</string>
 </resources>

@@ -1,10 +1,13 @@
 package com.gesturevolume.app.ui.test
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,6 +38,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -64,17 +68,41 @@ import com.gesturevolume.app.ui.theme.SuccessGreen
 import com.gesturevolume.app.ui.theme.TextPrimary
 import com.gesturevolume.app.ui.theme.TextSecondary
 import kotlin.math.abs
+import kotlinx.coroutines.delay
+
+private const val INACTIVE_AFTER_SECONDS = 3
 
 @Composable
 fun TestGestureScreen(
     volumeController: VolumeController,
     onBack: () -> Unit
 ) {
-    val volumeMapper = remember { VolumeMapper() }
     var currentVolumeState by remember { mutableStateOf(volumeController.refreshCurrentVolume()) }
     var accumulatedDeltaY by remember { mutableFloatStateOf(0f) }
-    var swipeCount by remember { mutableIntStateOf(0) }
     var isSwiping by remember { mutableStateOf(false) }
+    var isActive by remember { mutableStateOf(false) }
+    var activationId by remember { mutableIntStateOf(0) }
+    var secondsLeft by remember { mutableIntStateOf(0) }
+    var tapCount by remember { mutableIntStateOf(0) }
+
+    // Handle stays active for a few seconds after each tap / swipe, then goes inactive again
+    LaunchedEffect(activationId) {
+        if (activationId > 0) {
+            isActive = true
+            var remaining = INACTIVE_AFTER_SECONDS
+            while (remaining > 0) {
+                secondsLeft = remaining
+                delay(1000)
+                remaining--
+            }
+            secondsLeft = 0
+            isActive = false
+        }
+    }
+
+    val handleWidth by animateDpAsState(if (isActive || isSwiping) 26.dp else 8.dp, label = "handleWidth")
+    val handleHeight by animateDpAsState(if (isActive || isSwiping) 120.dp else 44.dp, label = "handleHeight")
+    val handleAlpha by animateFloatAsState(if (isActive || isSwiping) 0.96f else 0.55f, label = "handleAlpha")
 
     Column(
         modifier = Modifier
@@ -82,7 +110,6 @@ fun TestGestureScreen(
             .background(DarkBackground)
             .padding(16.dp)
     ) {
-        // Header
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -98,15 +125,17 @@ fun TestGestureScreen(
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Gesture Test Sandbox",
+                    text = "Handle Test Sandbox",
                     style = MaterialTheme.typography.titleLarge
                 )
             }
 
             IconButton(onClick = {
                 currentVolumeState = volumeController.refreshCurrentVolume()
-                swipeCount = 0
+                tapCount = 0
                 accumulatedDeltaY = 0f
+                activationId = 0
+                isActive = false
             }) {
                 Icon(
                     imageVector = Icons.Default.Refresh,
@@ -118,14 +147,13 @@ fun TestGestureScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // Status Card
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(14.dp),
             colors = CardDefaults.cardColors(containerColor = DarkSurface),
             border = androidx.compose.foundation.BorderStroke(
                 1.dp,
-                if (isSwiping) PrimaryPurple else DividerColor
+                if (isActive || isSwiping) PrimaryPurple else DividerColor
             )
         ) {
             Row(
@@ -137,13 +165,17 @@ fun TestGestureScreen(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = if (isSwiping) "Adjusting Volume..." else "Swipe Up/Down on Sandbox Below",
+                        text = when {
+                            isSwiping -> "Adjusting volume..."
+                            isActive -> "Handle active - inactive in ${secondsLeft}s"
+                            else -> "Tap the white handle on the right edge"
+                        },
                         style = MaterialTheme.typography.titleMedium,
-                        color = if (isSwiping) AccentCyan else TextPrimary
+                        color = if (isActive || isSwiping) AccentCyan else TextPrimary
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = "Slide finger upward to raise volume, downward to lower.",
+                        text = "Tap opens the real system volume bar. Drag the handle up or down to adjust directly.",
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -151,12 +183,12 @@ fun TestGestureScreen(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
-                        .background(if (isSwiping) PrimaryPurple.copy(alpha = 0.2f) else DarkSurfaceVariant)
+                        .background(if (isActive || isSwiping) PrimaryPurple.copy(alpha = 0.2f) else DarkSurfaceVariant)
                         .padding(horizontal = 10.dp, vertical = 6.dp)
                 ) {
                     Text(
                         text = "${currentVolumeState.percentage}%",
-                        color = if (isSwiping) PrimaryPurple else TextSecondary,
+                        color = if (isActive || isSwiping) PrimaryPurple else TextSecondary,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp
                     )
@@ -166,52 +198,23 @@ fun TestGestureScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Interactive Swipe Test Area
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
                 .clip(RoundedCornerShape(20.dp))
                 .background(DarkSurface)
-                .border(2.dp, if (isSwiping) PrimaryPurple else DividerColor, RoundedCornerShape(20.dp))
-                .pointerInput(Unit) {
-                    detectVerticalDragGestures(
-                        onDragStart = {
-                            isSwiping = true
-                            accumulatedDeltaY = 0f
-                        },
-                        onDragEnd = {
-                            isSwiping = false
-                            accumulatedDeltaY = 0f
-                        },
-                        onDragCancel = {
-                            isSwiping = false
-                            accumulatedDeltaY = 0f
-                        },
-                        onVerticalDrag = { change, dragAmount ->
-                            change.consume()
-                            val deltaY = -dragAmount // Upward swipe is positive
-                            accumulatedDeltaY += deltaY
-
-                            val thresholdPx = 30f
-                            if (abs(accumulatedDeltaY) >= thresholdPx) {
-                                val steps = (accumulatedDeltaY / thresholdPx).toInt()
-                                if (steps != 0) {
-                                    currentVolumeState = volumeController.adjustVolume(steps)
-                                    swipeCount++
-                                    accumulatedDeltaY -= (steps * thresholdPx)
-                                }
-                            }
-                        }
-                    )
-                },
+                .border(
+                    2.dp,
+                    if (isActive || isSwiping) PrimaryPurple else DividerColor,
+                    RoundedCornerShape(20.dp)
+                ),
             contentAlignment = Alignment.Center
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                // Simulated In-Screen Volume HUD
                 SimulatedVolumeHudCard(currentVolumeState)
 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -219,14 +222,70 @@ fun TestGestureScreen(
                 Icon(
                     imageVector = Icons.Default.TouchApp,
                     contentDescription = null,
-                    tint = if (isSwiping) AccentCyan else TextSecondary,
+                    tint = if (isActive || isSwiping) AccentCyan else TextSecondary,
                     modifier = Modifier.size(36.dp)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = if (isSwiping) "Swiping Active" else "Drag / Swipe Up & Down Anywhere Here",
+                    text = if (tapCount == 0) "Tap the handle on the right edge" else "Opened $tapCount time(s)",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = if (isSwiping) AccentCyan else TextSecondary
+                    color = if (isActive || isSwiping) AccentCyan else TextSecondary,
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            // Simulated edge handle (same behavior as the real overlay handle)
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 2.dp)
+                    .size(width = 52.dp, height = 170.dp)
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onTap = {
+                                volumeController.showSystemVolumePanel()
+                                currentVolumeState = volumeController.refreshCurrentVolume()
+                                tapCount++
+                                activationId++
+                            }
+                        )
+                    }
+                    .pointerInput(Unit) {
+                        detectVerticalDragGestures(
+                            onDragStart = {
+                                isSwiping = true
+                                accumulatedDeltaY = 0f
+                            },
+                            onDragEnd = {
+                                isSwiping = false
+                                accumulatedDeltaY = 0f
+                                activationId++
+                            },
+                            onDragCancel = {
+                                isSwiping = false
+                                accumulatedDeltaY = 0f
+                            },
+                            onVerticalDrag = { change, dragAmount ->
+                                change.consume()
+                                accumulatedDeltaY += -dragAmount // upward is positive
+                                val thresholdPx = 30f
+                                if (abs(accumulatedDeltaY) >= thresholdPx) {
+                                    val steps = (accumulatedDeltaY / thresholdPx).toInt()
+                                    if (steps != 0) {
+                                        currentVolumeState = volumeController.adjustVolume(steps)
+                                        accumulatedDeltaY -= (steps * thresholdPx)
+                                    }
+                                }
+                            }
+                        )
+                    },
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(width = handleWidth, height = handleHeight)
+                        .clip(RoundedCornerShape(50))
+                        .background(Color.White.copy(alpha = handleAlpha))
                 )
             }
         }
@@ -236,7 +295,6 @@ fun TestGestureScreen(
         Button(
             onClick = {
                 currentVolumeState = volumeController.refreshCurrentVolume()
-                swipeCount = 0
             },
             modifier = Modifier
                 .fillMaxWidth()
