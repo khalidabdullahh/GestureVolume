@@ -72,7 +72,10 @@ class EdgeHandleView(
     }
 
     // Returns the handle to its compact inactive state a few seconds after the last use
+    private var isFingerDown = false
+
     private val collapseRunnable = Runnable {
+        if (isFingerDown) return@Runnable // never collapse in the middle of a gesture
         isInteracting = false
         animateExpansion(0.0f, durationMs = 260)
         alpha = currentConfig.edgeOpacity
@@ -199,6 +202,7 @@ class EdgeHandleView(
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 removeCallbacks(collapseRunnable)
+                isFingerDown = true
                 isInteracting = true
                 isDragging = false
                 downRawY = event.rawY
@@ -234,6 +238,7 @@ class EdgeHandleView(
             }
 
             MotionEvent.ACTION_UP -> {
+                isFingerDown = false
                 if (isInteracting) {
                     if (isDragging) {
                         onGestureFinished()
@@ -248,6 +253,7 @@ class EdgeHandleView(
             }
 
             MotionEvent.ACTION_CANCEL -> {
+                isFingerDown = false
                 if (isInteracting) {
                     isDragging = false
                     removeCallbacks(collapseRunnable)

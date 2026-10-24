@@ -55,7 +55,10 @@ class GestureAccessibilityService : AccessibilityService() {
         super.onServiceConnected()
         ServiceStateHolder.setConnected(true)
         volumeController.refreshCurrentVolume()
+        attachHandle()
+    }
 
+    private fun attachHandle() {
         overlayManager.attachEdgeHandle(
             config = currentConfig,
             onVolumeSwipe = { deltaFraction ->
@@ -85,6 +88,15 @@ class GestureAccessibilityService : AccessibilityService() {
                 takeScreenshotFromHandle()
             }
         )
+    }
+
+    // Make sure the handle exists, is visible and the volume cache is fresh (after idle / screen on)
+    private fun healHandle() {
+        volumeController.refreshCurrentVolume()
+        if (!overlayManager.isHandleAttached()) {
+            attachHandle()
+        }
+        overlayManager.setEdgeHandleVisible(true)
     }
 
     // Double-tap on the handle: hide it for a moment so it is not in the shot, then take a screenshot
@@ -142,12 +154,16 @@ class GestureAccessibilityService : AccessibilityService() {
         val filter = IntentFilter().apply {
             addAction(Intent.ACTION_SCREEN_OFF)
             addAction(Intent.ACTION_USER_PRESENT)
+            addAction(Intent.ACTION_SCREEN_ON)
         }
         screenReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                if (intent?.action == Intent.ACTION_SCREEN_OFF) {
-                    timeoutJob?.cancel()
-                    overlayManager.hideHud()
+                when (intent?.action) {
+                    Intent.ACTION_SCREEN_OFF -> {
+                        timeoutJob?.cancel()
+                        overlayManager.hideHud()
+                    }
+                    Intent.ACTION_SCREEN_ON, Intent.ACTION_USER_PRESENT -> healHandle()
                 }
             }
         }
@@ -162,8 +178,9 @@ class GestureAccessibilityService : AccessibilityService() {
     }
 
     override fun onInterrupt() {
+        // The system may interrupt feedback at any time; the handle must stay alive.
         timeoutJob?.cancel()
-        overlayManager.cleanup()
+        overlayManager.hideHud()
     }
 
     override fun onUnbind(intent: Intent?): Boolean {

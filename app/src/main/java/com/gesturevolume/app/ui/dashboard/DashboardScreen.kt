@@ -62,6 +62,20 @@ fun DashboardScreen(
     onNavigateToSettings: () -> Unit
 ) {
     val scrollState = rememberScrollState()
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
+    val batteryUnrestricted = androidx.compose.runtime.remember {
+        androidx.compose.runtime.mutableStateOf(isIgnoringBatteryOptimizations(context))
+    }
+    androidx.compose.runtime.DisposableEffect(lifecycleOwner) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+                batteryUnrestricted.value = isIgnoringBatteryOptimizations(context)
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
 
     Column(
         modifier = Modifier
@@ -311,6 +325,38 @@ fun DashboardScreen(
 
         Spacer(modifier = Modifier.height(18.dp))
 
+        // Keep-alive card: some phones freeze background apps after a minute or two
+        if (!batteryUnrestricted.value) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(DarkSurface)
+                    .border(1.dp, PrimaryPurple, RoundedCornerShape(12.dp))
+                    .padding(14.dp)
+            ) {
+                Text(
+                    text = "Keep the handle responsive",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Some phones freeze background apps after a minute or two, and then the handle stops responding until you open the app. Allow unrestricted battery use to prevent that.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(
+                    onClick = { openBatterySettings(context) },
+                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryPurple),
+                    shape = RoundedCornerShape(10.dp)
+                ) {
+                    Text("Allow unrestricted battery", color = TextPrimary)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
         // Privacy Guarantee Card
         Row(
             modifier = Modifier
@@ -362,5 +408,32 @@ private fun GuideRow(number: String, text: String) {
             color = TextSecondary,
             modifier = Modifier.weight(1f)
         )
+    }
+}
+
+private fun isIgnoringBatteryOptimizations(context: android.content.Context): Boolean {
+    return try {
+        val pm = context.getSystemService(android.content.Context.POWER_SERVICE) as android.os.PowerManager
+        pm.isIgnoringBatteryOptimizations(context.packageName)
+    } catch (_: Exception) {
+        true
+    }
+}
+
+private fun openBatterySettings(context: android.content.Context) {
+    try {
+        context.startActivity(
+            android.content.Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                data = android.net.Uri.parse("package:${context.packageName}")
+                addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+        )
+    } catch (_: Exception) {
+        try {
+            context.startActivity(
+                android.content.Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                    .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        } catch (_: Exception) {}
     }
 }

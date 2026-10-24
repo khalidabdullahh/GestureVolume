@@ -19,15 +19,23 @@ class OverlayManager(private val context: Context) {
 
     private var hudView: VolumeHudView? = null
     private var isHudAttached = false
+    private var hudRemoveRunnable: Runnable? = null
 
     private var edgeHandleView: EdgeHandleView? = null
     private var isEdgeHandleAttached = false
 
     fun showHud(volumeState: VolumeState, config: GestureConfig) {
         mainHandler.post {
+            // A pending fade-out removal must never kill a HUD that is being shown again
+            hudRemoveRunnable?.let { mainHandler.removeCallbacks(it) }
+            hudRemoveRunnable = null
+            if (isHudAttached && hudView?.isAttachedToWindow != true) {
+                isHudAttached = false // stale flag, window is already gone
+            }
             if (hudView == null) {
                 hudView = VolumeHudView(context)
             }
+            hudView?.animate()?.cancel()
             hudView?.setInitial(volumeState)
 
             if (!isHudAttached && hudView != null) {
@@ -94,22 +102,33 @@ class OverlayManager(private val context: Context) {
 
     fun hideHud() {
         mainHandler.post {
-            if (isHudAttached && hudView != null) {
-                hudView?.animate()
-                    ?.alpha(0f)
-                    ?.setDuration(160)
-                    ?.withEndAction {
-                        try {
-                            if (isHudAttached && hudView != null) {
-                                windowManager.removeViewImmediate(hudView)
-                                isHudAttached = false
-                            }
-                        } catch (_: Exception) {}
-                    }
-                    ?.start()
-            }
+            val view = hudView ?: return@post
+            if (!isHudAttached) return@post
+
+            view.animate().cancel()
+            view.animate().alpha(0f).setDuration(160).start()
+
+            // Remove on a plain timer instead of an animator end action, which is skipped
+            // whenever the animation gets cancelled (that left a stuck, invisible HUD window).
+            hudRemoveRunnable?.let { mainHandler.removeCallbacks(it) }
+            val remove = Runnable { removeHudNow() }
+            hudRemoveRunnable = remove
+            mainHandler.postDelayed(remove, 200)
         }
     }
+
+    private fun removeHudNow() {
+        val view = hudView
+        if (isHudAttached && view != null) {
+            try {
+                windowManager.removeViewImmediate(view)
+            } catch (_: Exception) {}
+        }
+        isHudAttached = false
+        hudRemoveRunnable = null
+    }
+
+    fun isHandleAttached(): Boolean = isEdgeHandleAttached && edgeHandleView?.isAttachedToWindow == true
 
     fun attachEdgeHandle(
         config: GestureConfig,
@@ -120,6 +139,10 @@ class OverlayManager(private val context: Context) {
         onDoubleTap: () -> Unit
     ) {
         mainHandler.post {
+            if (isEdgeHandleAttached && edgeHandleView?.isAttachedToWindow != true) {
+                isEdgeHandleAttached = false // window was removed behind our back
+                edgeHandleView = null
+            }
             if (isEdgeHandleAttached) {
                 updateEdgeHandle(config)
                 return@post

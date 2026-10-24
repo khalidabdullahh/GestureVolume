@@ -94,6 +94,20 @@ class AndroidVolumeController(private val context: Context) : VolumeController {
             audioManager.setStreamVolume(streamType, target, 0)
         } catch (_: Exception) {}
 
+        // Some builds ignore setStreamVolume after being idle: verify and fall back to stepping
+        if (getCurrent() != target) {
+            try {
+                var guard = 0
+                while (getCurrent() != target && guard < 40) {
+                    val before = getCurrent()
+                    val direction = if (target > before) AudioManager.ADJUST_RAISE else AudioManager.ADJUST_LOWER
+                    audioManager.adjustStreamVolume(streamType, direction, 0)
+                    if (getCurrent() == before) break
+                    guard++
+                }
+            } catch (_: Exception) {}
+        }
+
         val state = computeCurrentState()
         _volumeState.value = state
         return state
