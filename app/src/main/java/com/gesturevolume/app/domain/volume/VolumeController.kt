@@ -9,4 +9,5 @@ interface VolumeController {
     fun adjustVolume(deltaLevels: Int): VolumeState
     fun setVolume(targetLevel: Int): VolumeState
     fun setVolumePercentage(percentage: Int): VolumeState
+    fun showSystemVolumePanel()
 }

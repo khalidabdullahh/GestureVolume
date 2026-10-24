@@ -25,11 +25,10 @@ Physical volume buttons wear out, break, get stuck, or are awkwardly placed on t
 
 **The Gesture Volume Solution:**
 
-1. **Draw a Circle (⭕)** anywhere on your screen over any app (YouTube, Netflix, Chrome, Games, Social Media).
-2. **Gesture Mode Activates Temporarily** — no permanent buttons, no edge activation.
-3. **Swipe Vertically (↑ / ↓)** to smoothly adjust media volume.
-4. **Modern Temporary HUD** displays volume level, icon, and numeric percentage.
-5. **Auto-Dismiss** — after 3 seconds of inactivity, everything smoothly fades away into zero memory usage.
+1. **Tap the handle** — a slim white handle sits on your screen edge over any app.
+2. **Native volume bar opens** — Android's own system volume panel appears, exactly like pressing a hardware volume key.
+3. **Swipe (optional)** — drag the handle up / down to change volume directly with a small HUD.
+4. **Auto-inactive** — after the timeout (default 3 seconds) the handle shrinks back to a faint compact line.
 
 ---
 

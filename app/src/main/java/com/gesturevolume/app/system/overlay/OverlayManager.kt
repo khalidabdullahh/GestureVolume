@@ -101,7 +101,8 @@ class OverlayManager(private val context: Context) {
         config: GestureConfig,
         onVolumeSwipe: (stepDelta: Int) -> Unit,
         onShowHudRequested: () -> Unit,
-        onGestureFinished: () -> Unit
+        onGestureFinished: () -> Unit,
+        onTap: () -> Unit
     ) {
         mainHandler.post {
             if (isEdgeHandleAttached) {
@@ -113,7 +114,8 @@ class OverlayManager(private val context: Context) {
                 context = context,
                 onVolumeSwipe = onVolumeSwipe,
                 onShowHudRequested = onShowHudRequested,
-                onGestureFinished = onGestureFinished
+                onGestureFinished = onGestureFinished,
+                onTap = onTap
             )
             view.updateConfig(config)
 

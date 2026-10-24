@@ -1,871 +1,392 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090a10">
+<title>Gesture Volume — Tap-to-Open Volume Control for Android</title>
+<meta name="description" content="Broken volume buttons? Gesture Volume adds a tiny floating handle to your screen. Tap it and Android's own volume bar opens, just like pressing a volume key. Free, offline, no account.">
+<meta name="keywords" content="broken volume button android, on-screen volume button, floating volume control android, virtual volume key, volume rocker not working fix, gesture volume, khalid abdullah">
+<meta name="author" content="Khalid Abdullah">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://khalidabdullahh.github.io/GestureVolume/">
+<link rel="icon" href="./assets/app_icon_512x512.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://khalidabdullahh.github.io/GestureVolume/">
+<meta property="og:site_name" content="Gesture Volume">
+<meta property="og:title" content="Gesture Volume — Tap the handle, get your volume bar">
+<meta property="og:description" content="A tiny on-screen handle that opens Android's native volume bar when you tap it. Made for broken or hard-to-reach volume buttons.">
+<meta property="og:image" content="https://raw.githubusercontent.com/khalidabdullahh/GestureVolume/main/docs/assets/feature_banner_1024x500.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gesture Volume — Tap the handle, get your volume bar">
+<meta name="twitter:description" content="Broken volume buttons? Tap a tiny on-screen handle to open Android's own volume bar. Free and offline.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/khalidabdullahh/GestureVolume/main/docs/assets/feature_banner_1024x500.png">
 
-    <!-- Primary SEO Meta Tags -->
-    <title>Gesture Volume — On-Screen Gesture Volume Control for Android</title>
-    <meta name="title" content="Gesture Volume — On-Screen Gesture Volume Control for Android">
-    <meta name="description" content="Gesture Volume is a free, privacy-first Android system utility for broken physical volume buttons. Draw a circle anywhere on your screen to adjust volume. 100% offline, zero ads, open source.">
-    <meta name="keywords" content="broken volume button android, gesture volume, virtual volume control android, circle gesture volume, broken volume key android fix, screen volume slider, android accessibility volume utility, no ads volume control, open source android volume, khalid abdullah">
-    <meta name="author" content="Khalid Abdullah">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <link rel="canonical" href="https://khalidabdullahh.github.io/GestureVolume/">
-
-    <!-- Open Graph / Facebook / LinkedIn Meta Tags -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://khalidabdullahh.github.io/GestureVolume/">
-    <meta property="og:site_name" content="Gesture Volume">
-    <meta property="og:title" content="Gesture Volume — Control Android Volume with a Circle Gesture">
-    <meta property="og:description" content="The ultimate Android utility for broken volume buttons. Draw a circle anywhere on top of any app to control volume. 100% offline, open source, zero ads.">
-    <meta property="og:image" content="https://raw.githubusercontent.com/khalidabdullahh/GestureVolume/main/docs/assets/og-preview.png">
-
-    <!-- Twitter Cards Meta Tags -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://khalidabdullahh.github.io/GestureVolume/">
-    <meta property="twitter:title" content="Gesture Volume — On-Screen Gesture Volume Control for Android">
-    <meta property="twitter:description" content="Broken volume buttons? Draw ⭕ on your screen to adjust volume over any app. Free, open source & 100% private.">
-    <meta property="twitter:image" content="https://raw.githubusercontent.com/khalidabdullahh/GestureVolume/main/docs/assets/og-preview.png">
-
-    <!-- Google Rich Snippet Structured Data (SoftwareApplication + FAQPage) -->
-    <script type="application/ld+json">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "SoftwareApplication",
+      "name": "Gesture Volume",
+      "operatingSystem": "Android 8.0 and up",
+      "applicationCategory": "UtilitiesApplication",
+      "applicationSubCategory": "System Utility",
+      "description": "Android utility that adds a tiny on-screen handle. Tap it to open the native system volume bar, or swipe it to change volume. Built for broken or unreachable volume buttons.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Khalid Abdullah", "url": "https://github.com/khalidabdullahh" },
+      "downloadUrl": "https://github.com/khalidabdullahh/GestureVolume/releases",
+      "featureList": [
+        "Tap the floating handle to open Android's native volume bar",
+        "Swipe the handle up or down to change media volume",
+        "Handle goes inactive automatically after a few seconds",
+        "Works over any app, fully offline, no ads inside the app"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
         {
-          "@type": "SoftwareApplication",
-          "name": "Gesture Volume",
-          "operatingSystem": "Android 8.0 and up (Android 8.0 - 15+)",
-          "applicationCategory": "UtilitiesApplication",
-          "applicationSubCategory": "System Utility",
-          "description": "Android system utility for on-screen volume control via intuitive circle gestures. Ideal for broken or unresponsive physical volume buttons.",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          },
-          "author": {
-            "@type": "Person",
-            "name": "Khalid Abdullah",
-            "url": "https://github.com/khalidabdullahh"
-          },
-          "downloadUrl": "https://github.com/khalidabdullahh/GestureVolume/releases",
-          "featureList": [
-            "Draw circle gesture anywhere over any app",
-            "Swipe vertically up/down to adjust media volume",
-            "Modern temporary volume HUD with auto-dismiss",
-            "No permanent floating buttons or edge clutters",
-            "100% Offline with zero internet permissions",
-            "Zero ads, zero tracking, open-source"
-          ]
+          "@type": "Question",
+          "name": "What happens when I tap the handle?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Android's own volume bar opens, exactly like pressing a hardware volume key. You can then use the system slider as usual." }
         },
         {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "Why does Gesture Volume need Accessibility Service permission?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Android requires Accessibility Services to detect touch gestures globally across foreground apps and display the temporary volume HUD overlay. Gesture Volume uses this strictly for circle gesture detection and never inspects or collects user text or private screen content."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Does it work if my phone volume buttons are completely broken?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes! That is the core purpose of Gesture Volume. It connects directly to Android's native AudioManager API to change media volume on-screen without requiring any physical buttons."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Is Gesture Volume completely free and open-source?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, Gesture Volume is 100% free, open-source under Apache 2.0 license, contains zero ads, zero tracking, and requires no account."
-              }
-            }
-          ]
+          "@type": "Question",
+          "name": "Why does Gesture Volume need Accessibility Service permission?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Android only lets an app draw a touch handle above other apps through an accessibility service. Gesture Volume does not read your screen, keystrokes or messages." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it work if my volume buttons are completely broken?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. That is the main purpose of the app. It talks to Android's AudioManager, so no physical button is needed." }
         }
       ]
     }
-    </script>
+  ]
+}
+</script>
 
-    <!-- Adsterra Monetization Scripts -->
-    <script src="https://pl31353171.profitableratecpmnetwork.com/7f/50/a1/7f50a1dcf9ff2c3d5e62e54b2423d934.js"></script>
-    <script src="https://pl31353173.profitableratecpmnetwork.com/72/e6/9e/72e69e989f254acdf8c56621e74251c5.js"></script>
+<!-- Adsterra Monetization Scripts -->
+<script src="https://pl31353171.profitableratecpmnetwork.com/7f/50/a1/7f50a1dcf9ff2c3d5e62e54b2423d934.js"></script>
+<script src="https://pl31353173.profitableratecpmnetwork.com/72/e6/9e/72e69e989f254acdf8c56621e74251c5.js"></script>
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#f5f3ff',
-                            100: '#ede9fe',
-                            400: '#a78bfa',
-                            500: '#8b5cf6',
-                            600: '#6366f1',
-                            700: '#4f46e5',
-                            800: '#3730a3',
-                            900: '#1e1b4b',
-                            dark: '#090a10',
-                            card: '#111422',
-                            surface: '#181b2e'
-                        },
-                        accent: {
-                            cyan: '#06b6d4',
-                            teal: '#14b8a6',
-                            green: '#10b981',
-                            amber: '#f59e0b',
-                            bmc: '#FFDD00'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            background-color: #090a10;
-            color: #f8fafc;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
-            width: 100%;
-        }
-        .glass-nav {
-            background: rgba(9, 10, 16, 0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        }
-        .glass-card {
-            background: rgba(17, 20, 34, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .glass-card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .glass-card-hover:hover {
-            transform: translateY(-3px);
-            border-color: rgba(99, 102, 241, 0.4);
-            box-shadow: 0 16px 35px -10px rgba(99, 102, 241, 0.2);
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 40%, #06b6d4 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .bmc-btn {
-            background: #FFDD00;
-            color: #000000;
-            font-weight: 700;
-            transition: all 0.2s ease;
-        }
-        .bmc-btn:hover {
-            background: #FFE433;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px -4px rgba(255, 221, 0, 0.35);
-        }
-        #gesture-canvas {
-            touch-action: none;
-        }
-    </style>
+<style>
+:root{
+  --bg:#090a10; --card:#111422; --line:rgba(255,255,255,.09);
+  --text:#f1f5f9; --muted:#aab4c5; --brand:#6366f1; --brand2:#8b5cf6; --cyan:#06b6d4;
+  --radius:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55;overflow-x:hidden;
+  padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+a{color:inherit;text-decoration:none}
+.wrap{width:100%;max-width:1040px;margin:0 auto;padding:0 18px}
+section{padding:44px 0}
+h1{font-size:clamp(2rem,9vw,3.4rem);line-height:1.08;font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.5rem,6vw,2.1rem);line-height:1.15;font-weight:800;letter-spacing:-.01em;margin-bottom:10px}
+h3{font-size:1.05rem;font-weight:700;margin-bottom:4px}
+p.lead{color:var(--muted);font-size:1.05rem;margin-top:14px}
+.grad{background:linear-gradient(120deg,#fff 0%,#c4b5fd 45%,var(--cyan) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#c4b5fd;
+  background:rgba(99,102,241,.14);border:1px solid rgba(139,92,246,.35);padding:5px 11px;border-radius:99px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+
+/* top bar */
+header{position:sticky;top:0;z-index:40;background:rgba(9,10,16,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:58px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem}
+.brand img{width:30px;height:30px;border-radius:9px}
+.brand b{color:var(--cyan)}
+.nav{display:none;gap:26px;font-size:.9rem;font-weight:600;color:var(--muted)}
+.nav a:hover{color:#fff}
+.gh{font-size:.85rem;font-weight:600;color:var(--muted);padding:8px 12px;border:1px solid var(--line);border-radius:12px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;border-radius:14px;padding:15px 22px;border:0;cursor:pointer;font-size:1rem;min-height:50px}
+.btn-main{background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 10px 28px -10px rgba(99,102,241,.7)}
+.btn-ghost{background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--text)}
+.cta{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+.fine{font-size:.8rem;color:var(--muted);margin-top:12px}
+
+/* hero layout */
+.hero{padding-top:30px;display:grid;gap:34px}
+.hero-demo{display:flex;flex-direction:column;align-items:center}
+
+/* phone demo */
+.phone{position:relative;width:min(270px,78vw);aspect-ratio:9/18.5;border-radius:38px;background:#05060a;border:7px solid #1b1f33;
+  box-shadow:0 30px 60px -20px rgba(99,102,241,.45);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+.screen{position:absolute;inset:0;background:linear-gradient(180deg,#1e2a52 0%,#16203f 55%,#0e1530 100%);padding:34px 14px 14px}
+.fake-line{height:10px;border-radius:6px;background:rgba(255,255,255,.12);margin-bottom:10px}
+.fake-vid{height:120px;border-radius:14px;background:linear-gradient(135deg,#34406e,#202a54);margin:6px 0 14px;display:flex;align-items:center;justify-content:center}
+.fake-vid i{width:0;height:0;border-left:20px solid rgba(255,255,255,.75);border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:6px}
+.sysbar{position:absolute;top:12px;left:50%;width:84%;transform:translate(-50%,-90px);opacity:0;transition:transform .28s cubic-bezier(.2,.9,.3,1),opacity .2s;
+  background:#1c1f2e;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:9px 12px;z-index:4;box-shadow:0 12px 30px -8px #000}
+.sysbar.show{transform:translate(-50%,0);opacity:1}
+.sysbar .row{display:flex;justify-content:space-between;font-size:.62rem;font-weight:600;color:#d5dbe8;margin-bottom:7px}
+.sysbar .row span:last-child{color:#a78bfa}
+.track{height:5px;border-radius:5px;background:rgba(255,255,255,.14);overflow:hidden}
+.fill{height:100%;width:30%;border-radius:5px;background:linear-gradient(90deg,var(--brand2),var(--cyan));transition:width .12s}
+.handle{position:absolute;right:2px;top:50%;margin-top:-20px;width:7px;height:40px;border-radius:99px;background:rgba(255,255,255,.62);
+  border:1px solid rgba(255,255,255,.25);z-index:3;cursor:pointer;
+  transition:width .22s ease,height .22s ease,margin-top .22s ease,background .22s ease;touch-action:none}
+.handle::before{content:"";position:absolute;inset:-14px -22px -14px -22px}
+.handle.active{width:24px;height:114px;margin-top:-57px;background:rgba(255,255,255,.95);box-shadow:0 0 22px rgba(255,255,255,.35)}
+.handle i{position:absolute;left:50%;width:9px;height:2px;margin-left:-4.5px;border-radius:2px;background:#1e293b;opacity:0;transition:opacity .2s}
+.handle i:nth-child(1){top:calc(50% - 6px)}.handle i:nth-child(2){top:50%;margin-top:-1px}.handle i:nth-child(3){top:calc(50% + 6px)}
+.handle.active i{opacity:.8}
+.hint{position:absolute;right:38px;top:50%;margin-top:-34px;font-size:.62rem;font-weight:700;color:#fff;background:rgba(99,102,241,.9);
+  padding:5px 9px;border-radius:9px;z-index:3;animation:pulse 1.6s infinite;pointer-events:none}
+.hint::after{content:"";position:absolute;right:-5px;top:50%;margin-top:-5px;border-left:6px solid rgba(99,102,241,.9);border-top:5px solid transparent;border-bottom:5px solid transparent}
+@keyframes pulse{50%{transform:translateX(5px)}}
+.state{margin-top:16px;display:flex;align-items:center;gap:9px;font-size:.85rem;font-weight:600;color:var(--muted);
+  background:rgba(255,255,255,.05);border:1px solid var(--line);padding:9px 14px;border-radius:99px}
+.dot{width:9px;height:9px;border-radius:50%;background:#64748b;transition:background .2s}
+.dot.on{background:#10b981;box-shadow:0 0 10px #10b981}
+
+/* steps */
+.steps{display:grid;gap:12px;margin-top:22px;counter-reset:s}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step::before{counter-increment:s;content:counter(s);flex:none;width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;background:linear-gradient(135deg,var(--brand),var(--cyan));color:#fff}
+.step p{color:var(--muted);font-size:.93rem}
+
+/* mechanism flow */
+.flow{display:grid;gap:8px;margin-top:20px}
+.node{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:.9rem}
+.node small{display:block;color:var(--muted);font-size:.78rem;margin-top:2px}
+.arrow{text-align:center;color:#6366f1;font-weight:800;line-height:1}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.82em;background:rgba(99,102,241,.16);padding:2px 6px;border-radius:6px;color:#c4b5fd}
+
+/* features */
+.grid{display:grid;gap:12px;margin-top:22px}
+.feat .ic{font-size:1.4rem;margin-bottom:8px}
+.feat p{color:var(--muted);font-size:.92rem}
+
+/* faq */
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 16px;margin-top:10px}
+summary{cursor:pointer;list-style:none;font-weight:700;padding:16px 0;display:flex;justify-content:space-between;gap:10px;min-height:52px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:#a78bfa;font-size:1.3rem;font-weight:500}
+details[open] summary::after{content:"–"}
+details p{color:var(--muted);font-size:.93rem;padding-bottom:16px}
+
+/* support */
+.support{display:grid;gap:10px;margin-top:18px}
+.sup{display:flex;align-items:center;justify-content:center;padding:14px;border-radius:14px;font-weight:700;border:1px solid var(--line)}
+.bmc{background:#FFDD00;color:#000;border-color:#FFDD00}
+.gs{background:rgba(236,72,153,.12);border-color:rgba(236,72,153,.4)}
+.kf{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.4)}
+
+footer{border-top:1px solid var(--line);padding:26px 0;text-align:center;color:var(--muted);font-size:.82rem}
+footer .links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-top:8px;font-weight:600}
+footer a:hover{color:#fff}
+
+/* sticky mobile download bar */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:50;padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(9,10,16,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line)}
+.dock .btn{width:100%}
+
+@media (min-width:760px){
+  .nav{display:flex}
+  .cta{flex-direction:row}
+  .hero{grid-template-columns:1.15fr .85fr;align-items:center;gap:50px;padding-top:56px}
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .steps{grid-template-columns:repeat(3,1fr)}
+  .step{flex-direction:column}
+  .flow{grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:stretch}
+  .arrow{display:flex;align-items:center}
+  .support{grid-template-columns:repeat(3,1fr)}
+  .dock{display:none}
+  body{padding-bottom:0}
+  section{padding:68px 0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
-<body class="bg-brand-dark text-slate-100 antialiased selection:bg-brand-600 selection:text-white">
-
-    <!-- Sticky Navigation Bar -->
-    <header class="fixed top-0 left-0 right-0 z-50 glass-nav">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <a href="#" class="flex items-center gap-3 group shrink-0">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-cyan flex items-center justify-center shadow-lg shadow-brand-600/25 group-hover:scale-105 transition-transform">
-                    <i data-lucide="volume-2" class="w-5 h-5 text-white"></i>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="text-xl font-extrabold tracking-tight text-white">Gesture<span class="text-accent-cyan">Volume</span></span>
-                    <span class="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold rounded-full bg-brand-600/20 text-brand-400 border border-brand-500/30 uppercase">v1.0.0</span>
-                </div>
-            </a>
-
-            <!-- Desktop Menu Links -->
-            <nav class="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-100">
-                <a href="#features" class="hover:text-accent-cyan transition-colors">Features</a>
-                <a href="#how-it-works" class="hover:text-accent-cyan transition-colors">How It Works</a>
-                <a href="#demo" class="hover:text-accent-cyan transition-colors">Live Demo</a>
-                <a href="./seo/" class="hover:text-accent-cyan transition-colors flex items-center gap-1.5 font-bold text-slate-100">
-                    <i data-lucide="book-open" class="w-4 h-4 text-accent-cyan"></i>
-                    <span>100 Guides</span>
-                </a>
-                <a href="#sponsor" class="hover:text-amber-300 transition-colors flex items-center gap-1 text-amber-400 font-bold">
-                    <i data-lucide="heart" class="w-3.5 h-3.5 fill-current"></i>
-                    <span>Sponsor</span>
-                </a>
-                <a href="#faq" class="hover:text-accent-cyan transition-colors">FAQ</a>
-            </nav>
-
-            <!-- Desktop Right CTA -->
-            <div class="hidden md:flex items-center gap-3">
-                <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-all border border-white/20 shadow-md flex items-center justify-center group" title="GitHub Repository" aria-label="GitHub Repository">
-                    <svg class="w-5 h-5 fill-white group-hover:scale-110 transition-transform" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-                    </svg>
-                </a>
-
-                <a href="./downloads/GestureVolume-v1.0.0.apk" download="GestureVolume-v1.0.0.apk" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-brand-600/25 transition-all hover:scale-[1.02] active:scale-[0.98]">
-                    <i data-lucide="download" class="w-4 h-4 text-accent-cyan"></i>
-                    <span>Download APK (1.1 MB)</span>
-                </a>
-            </div>
-
-            <!-- Mobile Hamburger Button -->
-            <div class="flex items-center gap-2 lg:hidden">
-                <a href="./downloads/GestureVolume-v1.0.0.apk" download="GestureVolume-v1.0.0.apk" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-600 text-white font-bold text-xs shadow-sm">
-                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                    <span>1.1 MB</span>
-                </a>
-                <button id="mobile-menu-btn" class="p-2.5 rounded-xl bg-slate-800/90 text-slate-300 hover:text-white border border-white/10 focus:outline-none" aria-label="Toggle Navigation Menu">
-                    <i data-lucide="menu" id="menu-icon" class="w-5 h-5"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Mobile Drawer Navigation -->
-        <div id="mobile-menu" class="hidden lg:hidden px-4 pt-3 pb-6 border-t border-white/10 bg-brand-dark/98 backdrop-blur-2xl">
-            <div class="flex flex-col gap-2.5 text-sm font-medium text-slate-200">
-                <a href="#features" class="mobile-link py-2.5 px-3.5 rounded-xl hover:bg-slate-800/70 transition-colors">Features</a>
-                <a href="#how-it-works" class="mobile-link py-2.5 px-3.5 rounded-xl hover:bg-slate-800/70 transition-colors">How It Works</a>
-                <a href="#demo" class="mobile-link py-2.5 px-3.5 rounded-xl hover:bg-slate-800/70 transition-colors">Live Interactive Demo</a>
-                <a href="./seo/" class="py-2.5 px-3.5 rounded-xl hover:bg-slate-800/70 text-accent-cyan font-semibold flex items-center gap-2">
-                    <i data-lucide="book-open" class="w-4 h-4"></i>
-                    <span>100 Troubleshooting Guides</span>
-                </a>
-                <a href="#sponsor" class="mobile-link py-2.5 px-3.5 rounded-xl hover:bg-slate-800/70 text-amber-400 font-semibold flex items-center gap-2">
-                    <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
-                    <span>Sponsor / Tip Developer</span>
-                </a>
-                <a href="#faq" class="mobile-link py-2.5 px-3.5 rounded-xl hover:bg-slate-800/70 transition-colors">FAQ</a>
-
-                <div class="pt-3 border-t border-white/10 flex flex-col gap-2.5 mt-1">
-                    <a href="./downloads/GestureVolume-v1.0.0.apk" download="GestureVolume-v1.0.0.apk" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-brand-600 text-white font-bold text-sm shadow-md">
-                        <i data-lucide="download" class="w-4 h-4"></i>
-                        <span>Download APK (v1.0.0 • 1.1 MB)</span>
-                    </a>
-                    <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bmc-btn text-xs font-bold">
-                        <i data-lucide="coffee" class="w-4 h-4 text-black"></i>
-                        <span>Buy Me a Coffee</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="relative pt-32 pb-16 sm:pt-40 sm:pb-24 overflow-hidden">
-        <!-- Glow Light Background Orbs -->
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-brand-600/15 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute top-1/3 right-4 sm:right-10 w-[200px] sm:w-[400px] h-[200px] sm:h-[400px] bg-accent-cyan/10 rounded-full blur-[100px] pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <!-- Badge -->
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-600/25 border border-brand-400/40 text-brand-300 text-xs font-bold tracking-wide uppercase mb-6 shadow-sm">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-accent-cyan"></i>
-                <span>Broken Volume Buttons? Instant Free Fix</span>
-            </div>
-            
-            <!-- Main Headline -->
-            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] mb-6 max-w-4xl mx-auto text-white">
-                Control volume with a <span class="gradient-text">simple circle gesture</span> anywhere on your screen.
-            </h1>
-
-            <!-- Subtitle -->
-            <p class="text-base sm:text-lg lg:text-xl text-slate-100 leading-relaxed font-medium mb-8 max-w-2xl mx-auto">
-                Draw <span class="inline-flex items-center justify-center w-6 h-6 rounded-full border border-accent-cyan text-accent-cyan text-xs font-bold bg-accent-cyan/20 mx-0.5 align-middle shadow-sm">⭕</span> anywhere on top of YouTube, TikTok, games, or any app. Swipe up/down to adjust, and the temporary HUD fades away automatically.
-            </p>
-
-            <!-- Dual Action CTAs -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-md mx-auto sm:max-w-none">
-                <a href="./downloads/GestureVolume-v1.0.0.apk" download="GestureVolume-v1.0.0.apk" class="w-full sm:w-auto min-w-[210px] h-13 py-3.5 px-8 rounded-xl bg-gradient-to-r from-brand-600 via-brand-700 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold text-sm sm:text-base shadow-xl shadow-brand-600/30 flex items-center justify-center gap-2.5 transition-all hover:scale-105 active:scale-95">
-                    <i data-lucide="download" class="w-5 h-5 text-accent-cyan"></i>
-                    <span>Download APK (1.1 MB)</span>
-                </a>
-                
-                <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto min-w-[210px] h-13 py-3.5 px-7 rounded-xl bmc-btn text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-md">
-                    <i data-lucide="coffee" class="w-5 h-5 text-black"></i>
-                    <span>Support / Buy Me a Coffee</span>
-                </a>
-            </div>
-
-            <!-- Trust Badges Row -->
-            <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-8 mt-10 text-xs sm:text-sm font-semibold text-slate-200">
-                <span class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-white/10"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i> 100% Offline</span>
-                <span class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-white/10"><i data-lucide="ban" class="w-4 h-4 text-cyan-400"></i> Zero Ads & Trackers</span>
-                <span class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-white/10"><i data-lucide="cpu" class="w-4 h-4 text-purple-400"></i> Zero Battery Drain</span>
-                <span class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-white/10"><i data-lucide="code-2" class="w-4 h-4 text-amber-400"></i> Open Source (Apache 2.0)</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interactive Simulator & Live Demo Showcase -->
-    <section id="demo" class="py-12 sm:py-16 relative">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="glass-card rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl relative overflow-hidden">
-                <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                    
-                    <!-- Left: Explanatory Column -->
-                    <div class="lg:col-span-5 space-y-5 text-left">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-accent-cyan/10 text-accent-cyan text-xs font-bold uppercase tracking-wider">
-                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Interactive Demo
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
-                            Experience the circle gesture right here.
-                        </h2>
-                        <p class="text-slate-300 text-sm leading-relaxed">
-                            Draw a circular motion inside the sandbox on the right with your mouse or finger, then slide up or down to adjust the volume.
-                        </p>
-                        
-                        <div class="space-y-3 pt-2 text-sm text-slate-200">
-                            <div class="flex items-start gap-3">
-                                <div class="w-5 h-5 rounded-full bg-accent-green/20 text-accent-green flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">✓</div>
-                                <span><strong>No floating bubble:</strong> 100% invisible until you draw ⭕.</span>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <div class="w-5 h-5 rounded-full bg-accent-green/20 text-accent-green flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">✓</div>
-                                <span><strong>Smart recognition:</strong> Ignores accidental taps and normal scrolling.</span>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <div class="w-5 h-5 rounded-full bg-accent-green/20 text-accent-green flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">✓</div>
-                                <span><strong>Auto-dismiss:</strong> Fades smoothly after 3s of inactivity.</span>
-                            </div>
-                        </div>
-
-                        <div class="pt-2">
-                            <a href="./downloads/GestureVolume-v1.0.0.apk" download="GestureVolume-v1.0.0.apk" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs sm:text-sm shadow-md transition-all">
-                                <i data-lucide="download" class="w-4 h-4"></i>
-                                <span>Get the Free App</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Right: Interactive Canvas Sandbox -->
-                    <div class="lg:col-span-7">
-                        <div class="bg-slate-950/90 rounded-2xl border border-white/10 p-4 sm:p-6 shadow-2xl relative">
-                            <!-- Canvas Box -->
-                            <div class="relative w-full h-64 sm:h-72 bg-slate-900/80 rounded-xl border-2 border-dashed border-slate-700/60 overflow-hidden cursor-crosshair flex items-center justify-center select-none" id="canvas-container">
-                                <canvas id="gesture-canvas" class="absolute inset-0 w-full h-full"></canvas>
-                                
-                                <!-- Guidance Watermark -->
-                                <div id="canvas-hint" class="pointer-events-none text-center select-none text-slate-500 text-xs sm:text-sm px-4">
-                                    <i data-lucide="circle-dot" class="w-8 h-8 mx-auto mb-2 opacity-60 text-brand-400"></i>
-                                    <span>Click / Touch & Draw a Circle Here (⭕)</span>
-                                </div>
-
-                                <!-- Simulated Volume HUD -->
-                                <div id="simulated-hud" class="absolute top-5 pointer-events-none hidden opacity-0 transition-opacity duration-200 bg-[#1c1f2e] border border-white/15 rounded-2xl px-5 py-3.5 shadow-2xl w-56 sm:w-64">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <div class="flex items-center gap-2">
-                                            <i data-lucide="volume-2" class="w-4 h-4 text-accent-cyan"></i>
-                                            <span class="text-xs font-semibold text-slate-200">Media Volume</span>
-                                        </div>
-                                        <span id="hud-percent" class="text-xs font-bold text-brand-400">65%</span>
-                                    </div>
-                                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                                        <div id="hud-bar" class="bg-gradient-to-r from-brand-600 to-accent-cyan h-full w-[65%] rounded-full transition-all duration-100"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Canvas Controls & Status -->
-                            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mt-4 text-xs">
-                                <div class="flex items-center gap-2">
-                                    <span id="status-badge" class="px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 font-medium">Ready</span>
-                                    <span id="confidence-text" class="text-slate-400">Draw a single continuous circle</span>
-                                </div>
-                                <button id="clear-canvas-btn" class="w-full sm:w-auto px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors">
-                                    Reset Canvas
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 100 SEO Guides Knowledge Hub Banner -->
-    <section class="py-8">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="glass-card rounded-2xl p-6 sm:p-8 border border-brand-500/25 flex flex-col md:flex-row items-center justify-between gap-6 bg-gradient-to-r from-brand-900/30 via-slate-900/50 to-brand-900/30">
-                <div class="space-y-2 text-left max-w-2xl">
-                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-cyan/10 text-accent-cyan text-xs font-bold uppercase tracking-wider">
-                        <i data-lucide="book-open" class="w-3.5 h-3.5"></i> Knowledge Hub
-                    </div>
-                    <h3 class="text-xl sm:text-2xl font-bold text-white">
-                        100 Device & Troubleshooting Guides
-                    </h3>
-                    <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                        Step-by-step solutions for Samsung, Xiaomi, Google Pixel, OnePlus, Realme, gaming setups, and media players.
-                    </p>
-                </div>
-
-                <a href="./seo/" class="shrink-0 flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan hover:from-brand-500 hover:to-accent-cyan text-white font-bold text-xs sm:text-sm shadow-lg shadow-brand-600/20 transition-all hover:scale-105">
-                    <span>Browse All 100 Guides</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="py-16 sm:py-20 relative">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
-                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-3">How Gesture Volume Works</h2>
-                <p class="text-slate-300 text-sm sm:text-base">
-                    Three natural steps. No switching apps, no fumbling with worn physical buttons.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass-card rounded-2xl p-6 sm:p-7 glass-card-hover border border-white/10 text-left">
-                    <div class="w-12 h-12 rounded-xl bg-brand-600/20 border border-brand-500/30 flex items-center justify-center text-brand-400 font-extrabold text-xl mb-5">
-                        1
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Draw Circle (⭕)</h3>
-                    <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                        Draw a quick circular stroke anywhere on the display over YouTube, TikTok, Netflix, Chrome, or inside full-screen games.
-                    </p>
-                </div>
-
-                <div class="glass-card rounded-2xl p-6 sm:p-7 glass-card-hover border border-white/10 text-left">
-                    <div class="w-12 h-12 rounded-xl bg-accent-cyan/20 border border-accent-cyan/30 flex items-center justify-center text-accent-cyan font-extrabold text-xl mb-5">
-                        2
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Swipe Up / Down (↕)</h3>
-                    <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                        Slide finger upward to raise volume, downward to lower. The sleek on-screen HUD updates smoothly in real time.
-                    </p>
-                </div>
-
-                <div class="glass-card rounded-2xl p-6 sm:p-7 glass-card-hover border border-white/10 text-left">
-                    <div class="w-12 h-12 rounded-xl bg-accent-green/20 border border-accent-green/30 flex items-center justify-center text-accent-green font-extrabold text-xl mb-5">
-                        3
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Auto Disappears (✨)</h3>
-                    <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                        Lift your finger and continue what you were doing. The volume HUD seamlessly auto-dismisses after 3 seconds of inactivity.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Core Features Grid -->
-    <section id="features" class="py-16 sm:py-20 bg-slate-900/30">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
-                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-3">Engineered for Daily Perfection</h2>
-                <p class="text-slate-100 text-sm sm:text-base font-medium">
-                    Built as a native Android utility that respects your battery, screen space, and privacy.
-                </p>
-            </div>
-
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-                <div class="glass-card rounded-2xl p-6 glass-card-hover border border-white/10">
-                    <div class="w-10 h-10 rounded-lg bg-brand-600/20 flex items-center justify-center text-brand-400 mb-4">
-                        <i data-lucide="eye-off" class="w-5 h-5"></i>
-                    </div>
-                    <h4 class="text-base font-bold text-white mb-1.5">No Permanent Bubbles</h4>
-                    <p class="text-slate-200 text-xs sm:text-sm">Zero persistent floating buttons on your screen. Gesture activates purely on demand.</p>
-                </div>
-
-                <div class="glass-card rounded-2xl p-6 glass-card-hover border border-white/10">
-                    <div class="w-10 h-10 rounded-lg bg-accent-cyan/20 flex items-center justify-center text-accent-cyan mb-4">
-                        <i data-lucide="shield-check" class="w-5 h-5"></i>
-                    </div>
-                    <h4 class="text-base font-bold text-white mb-1.5">100% Offline & Private</h4>
-                    <p class="text-slate-200 text-xs sm:text-sm">Zero internet permissions. Screen content, messages, and keystrokes are never read.</p>
-                </div>
-
-                <div class="glass-card rounded-2xl p-6 glass-card-hover border border-white/10">
-                    <div class="w-10 h-10 rounded-lg bg-accent-green/20 flex items-center justify-center text-accent-green mb-4">
-                        <i data-lucide="battery-charging" class="w-5 h-5"></i>
-                    </div>
-                    <h4 class="text-base font-bold text-white mb-1.5">Zero Idle Battery Drain</h4>
-                    <p class="text-slate-200 text-xs sm:text-sm">Event-driven architecture. Sleeps when idle with zero continuous background loops.</p>
-                </div>
-
-                <div class="glass-card rounded-2xl p-6 glass-card-hover border border-white/10">
-                    <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400 mb-4">
-                        <i data-lucide="sliders" class="w-5 h-5"></i>
-                    </div>
-                    <h4 class="text-base font-bold text-white mb-1.5">Full Customizability</h4>
-                    <p class="text-slate-200 text-xs sm:text-sm">Tune circle sensitivity, swipe speed, HUD position (Top, Center, Sides), and timeouts.</p>
-                </div>
-
-                <div class="glass-card rounded-2xl p-6 glass-card-hover border border-white/10">
-                    <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 mb-4">
-                        <i data-lucide="vibrate" class="w-5 h-5"></i>
-                    </div>
-                    <h4 class="text-base font-bold text-white mb-1.5">Haptic Tactile Clicks</h4>
-                    <p class="text-slate-200 text-xs sm:text-sm">Subtle vibration pulse on gesture trigger and distinct boundary sensations at 0% / 100%.</p>
-                </div>
-
-                <div class="glass-card rounded-2xl p-6 glass-card-hover border border-white/10">
-                    <div class="w-10 h-10 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-400 mb-4">
-                        <i data-lucide="ban" class="w-5 h-5"></i>
-                    </div>
-                    <h4 class="text-base font-bold text-white mb-1.5">No Ads, No Accounts</h4>
-                    <p class="text-slate-200 text-xs sm:text-sm">Free open-source utility without subscription locks, signup popups, or annoying banners.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Support & Sponsor Section -->
-    <section id="sponsor" class="py-16 sm:py-20 relative">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="glass-card rounded-3xl p-7 sm:p-10 border border-amber-500/30 text-center relative overflow-hidden shadow-2xl">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-accent-amber text-xs font-bold uppercase tracking-wider mb-5">
-                    <i data-lucide="heart" class="w-3.5 h-3.5 fill-current"></i>
-                    Support Open Source Development
-                </div>
-
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-3">
-                    Love Gesture Volume? Back the Project!
-                </h2>
-
-                <p class="text-slate-100 max-w-lg mx-auto text-xs sm:text-sm leading-relaxed mb-8 font-medium">
-                    Gesture Volume is 100% free, offline, ad-free, and open-source. If this utility saves you from broken buttons, consider supporting future updates!
-                </p>
-
-                <!-- Sponsor Options Grid -->
-                <div class="grid sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
-                    <!-- Buy Me a Coffee -->
-                    <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-5 rounded-2xl bg-amber-400/10 border border-amber-400/30 hover:border-amber-400 text-slate-100 hover:text-white transition-all hover:scale-105 group">
-                        <div class="w-11 h-11 rounded-xl bmc-btn flex items-center justify-center mb-3 shadow-md">
-                            <i data-lucide="coffee" class="w-5 h-5 text-black"></i>
-                        </div>
-                        <span class="font-bold text-sm text-amber-300 mb-0.5">Buy Me a Coffee</span>
-                        <span class="text-[11px] text-slate-300 font-medium">One-time tip</span>
-                    </a>
-
-                    <!-- GitHub Sponsors -->
-                    <a href="https://github.com/sponsors/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-5 rounded-2xl bg-pink-500/10 border border-pink-500/30 hover:border-pink-500 text-slate-100 hover:text-white transition-all hover:scale-105 group">
-                        <div class="w-11 h-11 rounded-xl bg-pink-500 text-white flex items-center justify-center mb-3 shadow-md shadow-pink-500/30">
-                            <i data-lucide="heart" class="w-5 h-5 fill-current"></i>
-                        </div>
-                        <span class="font-bold text-sm text-pink-400 mb-0.5">GitHub Sponsors</span>
-                        <span class="text-[11px] text-slate-300 font-medium">Custom pledge</span>
-                    </a>
-
-                    <!-- Ko-Fi -->
-                    <a href="https://ko-fi.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center p-5 rounded-2xl bg-sky-500/10 border border-sky-500/30 hover:border-sky-500 text-slate-100 hover:text-white transition-all hover:scale-105 group">
-                        <div class="w-11 h-11 rounded-xl bg-sky-500 text-white flex items-center justify-center mb-3 shadow-md shadow-sky-500/30">
-                            <i data-lucide="credit-card" class="w-5 h-5"></i>
-                        </div>
-                        <span class="font-bold text-sm text-sky-400 mb-0.5">Ko-fi Support</span>
-                        <span class="text-[11px] text-slate-300 font-medium">Direct contribution</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Adsterra Native Banner -->
-    <section class="max-w-4xl mx-auto px-4 sm:px-6 my-6 text-center">
-        <div class="glass-card rounded-2xl p-4 border border-white/10 overflow-hidden">
-            <script async="async" data-cfasync="false" src="https://pl31353172.profitableratecpmnetwork.com/c79f722a3f3666d76dd66f079c665e42/invoke.js"></script>
-            <div id="container-c79f722a3f3666d76dd66f079c665e42"></div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="faq" class="py-16 sm:py-20">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-10 sm:mb-12">
-                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-3">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="space-y-4 text-left">
-                <div class="glass-card rounded-2xl p-5 sm:p-6 border border-white/10">
-                    <h4 class="text-base font-bold text-white mb-2">Why does the app need Accessibility Service permission?</h4>
-                    <p class="text-slate-200 text-xs sm:text-sm leading-relaxed">
-                        Android requires Accessibility Services to detect touch gestures globally when other applications are active on the screen and to display the temporary volume HUD overlay. Gesture Volume uses this exclusively for the circle gesture and does not inspect or collect any user data.
-                    </p>
-                </div>
-
-                <div class="glass-card rounded-2xl p-5 sm:p-6 border border-white/10">
-                    <h4 class="text-base font-bold text-white mb-2">Does it work if my phone volume buttons are completely broken?</h4>
-                    <p class="text-slate-200 text-xs sm:text-sm leading-relaxed">
-                        Yes! That is the core purpose of Gesture Volume. It connects directly to Android's internal AudioManager API to change volume without needing any physical buttons.
-                    </p>
-                </div>
-
-                <div class="glass-card rounded-2xl p-5 sm:p-6 border border-white/10">
-                    <h4 class="text-base font-bold text-white mb-2">Does Gesture Volume drain the battery?</h4>
-                    <p class="text-slate-200 text-xs sm:text-sm leading-relaxed">
-                        No. When you are not drawing gestures, the app enters an event-driven idle state with zero background loops and zero wake-locks. It also immediately resets when the screen turns off.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Download CTA Banner -->
-    <section class="py-16 sm:py-20 relative overflow-hidden">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="glass-card rounded-3xl p-8 sm:p-12 border border-brand-500/30 text-center relative overflow-hidden">
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mb-4">
-                    Get Gesture Volume Today
-                </h2>
-                <p class="text-slate-100 max-w-md mx-auto text-xs sm:text-sm mb-8 leading-relaxed font-medium">
-                    Free, offline, privacy-first, and open-source. Download the APK directly and enjoy seamless on-screen volume control.
-                </p>
-
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-md mx-auto">
-                    <a href="./downloads/GestureVolume-v1.0.0.apk" download="GestureVolume-v1.0.0.apk" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan hover:from-brand-500 hover:to-accent-cyan text-white font-bold text-sm shadow-xl shadow-brand-600/30 flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95">
-                        <i data-lucide="download" class="w-5 h-5"></i>
-                        <span>Download APK (1.1 MB)</span>
-                    </a>
-                    <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bmc-btn font-bold text-sm flex items-center justify-center gap-2">
-                        <i data-lucide="coffee" class="w-5 h-5 text-black"></i>
-                        <span>Buy Me a Coffee</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-10 border-t border-white/10 text-center text-slate-300 text-xs">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-2 text-white">
-                <span class="font-bold text-white">Gesture Volume</span>
-                <span class="text-slate-300">• Privacy-First Android Utility</span>
-            </div>
-            <div class="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold">
-                <a href="./seo/" class="text-slate-200 hover:text-white">Guides (100)</a>
-                <span>•</span>
-                <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline flex items-center gap-1">
-                    <i data-lucide="coffee" class="w-3.5 h-3.5"></i> Sponsor
-                </a>
-                <span>•</span>
-                <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer" class="text-slate-200 hover:text-white">GitHub</a>
-                <span>•</span>
-                <span>Created by <a href="https://github.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" class="text-brand-400 hover:underline">khalidabdullahh</a></span>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Interactive Simulator & Mobile Navigation Script -->
-    <script>
-        lucide.createIcons();
-
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-        }
-
-        // Simulator Logic
-        const canvas = document.getElementById('gesture-canvas');
-        if (canvas) {
-            const ctx = canvas.getContext('2d');
-            const container = document.getElementById('canvas-container');
-            const hint = document.getElementById('canvas-hint');
-            const hud = document.getElementById('simulated-hud');
-            const hudPercent = document.getElementById('hud-percent');
-            const hudBar = document.getElementById('hud-bar');
-            const statusBadge = document.getElementById('status-badge');
-            const confidenceText = document.getElementById('confidence-text');
-            const resetBtn = document.getElementById('clear-canvas-btn');
-
-            let isDrawing = false;
-            let points = [];
-            let circleDetected = false;
-            let volume = 65;
-            let lastY = 0;
-            let timeoutTimer = null;
-
-            function resizeCanvas() {
-                if (container) {
-                    canvas.width = container.clientWidth;
-                    canvas.height = container.clientHeight;
-                }
-            }
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-
-            function getPos(e) {
-                const rect = canvas.getBoundingClientRect();
-                if (e.touches && e.touches.length > 0) {
-                    return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
-                }
-                return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-            }
-
-            function start(e) {
-                isDrawing = true;
-                if (hint) hint.style.display = 'none';
-                const pos = getPos(e);
-                if (circleDetected) {
-                    lastY = pos.y;
-                } else {
-                    points = [pos];
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                }
-            }
-
-            function move(e) {
-                if (!isDrawing) return;
-                const pos = getPos(e);
-
-                if (circleDetected) {
-                    const dy = lastY - pos.y;
-                    if (Math.abs(dy) > 3) {
-                        volume = Math.max(0, Math.min(100, volume + Math.round(dy * 0.4)));
-                        updateHud();
-                        lastY = pos.y;
-                    }
-                } else {
-                    points.push(pos);
-                    drawStroke();
-                    if (points.length > 12) {
-                        checkCircle();
-                    }
-                }
-            }
-
-            function end() {
-                if (!isDrawing) return;
-                isDrawing = false;
-                if (circleDetected) {
-                    clearTimeout(timeoutTimer);
-                    timeoutTimer = setTimeout(() => {
-                        resetSession();
-                    }, 3000);
-                }
-            }
-
-            function drawStroke() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                if (points.length < 2) return;
-                ctx.beginPath();
-                ctx.moveTo(points[0].x, points[0].y);
-                for (let i = 1; i < points.length; i++) {
-                    ctx.lineTo(points[i].x, points[i].y);
-                }
-                ctx.strokeStyle = circleDetected ? '#06b6d4' : '#6366f1';
-                ctx.lineWidth = 4;
-                ctx.lineCap = 'round';
-                ctx.lineJoin = 'round';
-                ctx.stroke();
-            }
-
-            function checkCircle() {
-                if (points.length < 10) return;
-                let sumX = 0, sumY = 0;
-                let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-                for (let p of points) {
-                    sumX += p.x; sumY += p.y;
-                    minX = Math.min(minX, p.x); maxX = Math.max(maxX, p.x);
-                    minY = Math.min(minY, p.y); maxY = Math.max(maxY, p.y);
-                }
-                const w = maxX - minX;
-                const h = maxY - minY;
-                const aspect = Math.min(w, h) / Math.max(w, h);
-                if (w < 35 || h < 35 || aspect < 0.45) return;
-
-                const startP = points[0];
-                const endP = points[points.length - 1];
-                const closureDist = Math.hypot(startP.x - endP.x, startP.y - endP.y);
-                const avgRadius = (w + h) / 4;
-
-                if (closureDist / avgRadius < 0.95) {
-                    circleDetected = true;
-                    if (statusBadge) {
-                        statusBadge.className = 'px-2.5 py-1 rounded-full bg-accent-green/20 text-accent-green font-semibold';
-                        statusBadge.textContent = 'Circle Detected! (88%)';
-                    }
-                    if (confidenceText) {
-                        confidenceText.textContent = 'Swipe UP / DOWN to adjust volume';
-                    }
-                    drawStroke();
-                    showHud();
-                }
-            }
-
-            function showHud() {
-                if (hud) {
-                    hud.classList.remove('hidden');
-                    setTimeout(() => { hud.classList.remove('opacity-0'); }, 10);
-                }
-                updateHud();
-            }
-
-            function updateHud() {
-                if (hudPercent) hudPercent.textContent = `${volume}%`;
-                if (hudBar) hudBar.style.width = `${volume}%`;
-            }
-
-            function resetSession() {
-                circleDetected = false;
-                points = [];
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                if (hud) {
-                    hud.classList.add('opacity-0');
-                    setTimeout(() => { hud.classList.add('hidden'); }, 200);
-                }
-                if (statusBadge) {
-                    statusBadge.className = 'px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 font-medium';
-                    statusBadge.textContent = 'Ready';
-                }
-                if (confidenceText) {
-                    confidenceText.textContent = 'Draw a single continuous circle';
-                }
-                if (hint) hint.style.display = 'block';
-            }
-
-            canvas.addEventListener('mousedown', start);
-            canvas.addEventListener('mousemove', move);
-            window.addEventListener('mouseup', end);
-
-            canvas.addEventListener('touchstart', (e) => { e.preventDefault(); start(e); }, { passive: false });
-            canvas.addEventListener('touchmove', (e) => { e.preventDefault(); move(e); }, { passive: false });
-            window.addEventListener('touchend', end);
-
-            if (resetBtn) resetBtn.addEventListener('click', resetSession);
-        }
-    </script>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a href="#" class="brand"><img src="./assets/app_icon_512x512.png" alt="" width="30" height="30"><span>Gesture<b>Volume</b></span></a>
+    <nav class="nav">
+      <a href="#demo">Try it</a><a href="#how">How it works</a><a href="#features">Features</a><a href="#faq">FAQ</a><a href="./seo/">Guides</a>
+    </nav>
+    <a class="gh" href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </div>
+</header>
+
+<main>
+<section class="hero wrap" id="top">
+  <div>
+    <span class="eyebrow">Free · Offline · Android 8+</span>
+    <h1>Tap the handle.<br><span class="grad">Get your volume bar.</span></h1>
+    <p class="lead">Volume buttons broken or hard to reach? Gesture Volume puts a tiny handle on your screen's edge. One tap opens Android's own volume bar, the same one the hardware keys show.</p>
+    <div class="cta">
+      <a class="btn btn-main" href="./downloads/GestureVolume-v1.0.1.apk" download>⬇ Download APK · v1.0.1</a>
+      <a class="btn btn-ghost" href="#demo">▶ Try the demo</a>
+    </div>
+    <p class="fine">No account. No internet permission. The app itself has no ads.</p>
+  </div>
+
+  <div class="hero-demo" id="demo">
+    <div class="phone" id="phone" aria-label="Interactive demo: tap the white handle on the right edge">
+      <div class="screen">
+        <div class="fake-line" style="width:55%"></div>
+        <div class="fake-vid"><i></i></div>
+        <div class="fake-line" style="width:90%"></div>
+        <div class="fake-line" style="width:72%"></div>
+        <div class="fake-line" style="width:84%"></div>
+      </div>
+      <div class="sysbar" id="sysbar">
+        <div class="row"><span>Media Volume</span><span id="pct">30%</span></div>
+        <div class="track"><div class="fill" id="fill"></div></div>
+      </div>
+      <div class="hint" id="hint">Tap me</div>
+      <div class="handle" id="handle" role="button" aria-label="Volume handle"><i></i><i></i><i></i></div>
+    </div>
+    <div class="state"><span class="dot" id="dot"></span><span id="stateText">Inactive · tap the handle</span></div>
+  </div>
+</section>
+
+<section class="wrap" id="how">
+  <h2>How it works</h2>
+  <p class="lead" style="margin-top:0">Three steps, no learning curve.</p>
+  <div class="steps">
+    <div class="card step"><div><h3>Tap the handle</h3><p>The thin white handle sits on your screen edge, over any app. Tapping it wakes it up.</p></div></div>
+    <div class="card step"><div><h3>System volume bar opens</h3><p>You get Android's native volume panel, same look and feel as pressing a volume key.</p></div></div>
+    <div class="card step"><div><h3>It goes inactive</h3><p>After about 3 seconds the handle shrinks back to a slim, faint line so it stays out of the way.</p></div></div>
+  </div>
+
+  <h2 style="margin-top:46px">What happens under the hood</h2>
+  <div class="flow">
+    <div class="node">Touch on handle<small>Overlay view added by an accessibility service</small></div><div class="arrow">↓</div>
+    <div class="node">Tap or swipe?<small>Movement under touch slop counts as a tap</small></div><div class="arrow">↓</div>
+    <div class="node">Tap → <code>FLAG_SHOW_UI</code><small>AudioManager shows the system panel without changing volume</small></div><div class="arrow">↓</div>
+    <div class="node">Idle timer<small>Handle collapses after the timeout (default 3 s)</small></div>
+  </div>
+  <p class="fine" style="margin-top:14px">Prefer sliding? Drag the handle up or down and Gesture Volume changes media volume directly, with its own small HUD.</p>
+</section>
+
+<section class="wrap" id="features">
+  <h2>Made to stay out of your way</h2>
+  <div class="grid">
+    <div class="card feat"><div class="ic">👆</div><h3>One-tap native panel</h3><p>Uses the real system volume UI, so it matches your phone and any OEM styling.</p></div>
+    <div class="card feat"><div class="ic">💤</div><h3>Auto-inactive</h3><p>Expands when used, then fades back to a tiny handle after a few seconds.</p></div>
+    <div class="card feat"><div class="ic">↕️</div><h3>Swipe to adjust</h3><p>Slide the handle for quick steps with haptic ticks at the limits.</p></div>
+    <div class="card feat"><div class="ic">🎛️</div><h3>Your placement</h3><p>Pick left or right edge, height, size, opacity and timeout in settings.</p></div>
+    <div class="card feat"><div class="ic">🔒</div><h3>Private by design</h3><p>No internet permission, no screen reading, no tracking. Works fully offline.</p></div>
+    <div class="card feat"><div class="ic">🔋</div><h3>Light on battery</h3><p>Event-driven. Nothing runs in the background loop while you are not touching it.</p></div>
+  </div>
+</section>
+
+<section class="wrap" id="faq">
+  <h2>Questions</h2>
+  <details><summary>What happens when I tap the handle?</summary><p>Android's own volume bar opens, exactly like pressing a hardware volume key. Use its slider as normal.</p></details>
+  <details><summary>Why does it need Accessibility permission?</summary><p>Android only lets an app draw a touch handle above other apps through an accessibility service. Gesture Volume does not read your screen, keystrokes or messages (content retrieval is switched off).</p></details>
+  <details><summary>Does it work if my buttons are fully broken?</summary><p>Yes, that is the whole point. It talks to Android's audio system directly, so no physical button is involved.</p></details>
+  <details><summary>Can I change how long the handle stays active?</summary><p>Yes. The timeout is a setting in the app, and 3 seconds is the default.</p></details>
+  <details><summary>Is it free?</summary><p>Yes. The app is free, works offline and has no ads inside it. This website shows ads to help cover costs. The source code is viewable on GitHub under its own license.</p></details>
+</section>
+
+<section class="wrap" id="support">
+  <h2>Like it? Support the project</h2>
+  <p class="lead" style="margin-top:0">Every coffee helps keep updates coming.</p>
+  <div class="support">
+    <a class="sup bmc" href="https://buymeacoffee.com/khalidabdullahh" target="_blank" rel="noopener noreferrer">☕ Buy me a coffee</a>
+    <a class="sup gs" href="https://github.com/sponsors/khalidabdullahh" target="_blank" rel="noopener noreferrer">GitHub Sponsors</a>
+    <a class="sup kf" href="https://ko-fi.com/khalidabdullahh" target="_blank" rel="noopener noreferrer">Ko-fi</a>
+  </div>
+</section>
+
+<!-- Adsterra Native Banner -->
+<section class="wrap" style="padding:10px 18px 30px">
+  <div class="card" style="overflow:hidden;text-align:center">
+    <script async="async" data-cfasync="false" src="https://pl31353172.profitableratecpmnetwork.com/c79f722a3f3666d76dd66f079c665e42/invoke.js"></script>
+    <div id="container-c79f722a3f3666d76dd66f079c665e42"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b style="color:#fff">Gesture Volume</b> · Privacy-first Android utility
+    <div class="links">
+      <a href="./seo/">Guides</a>
+      <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://buymeacoffee.com/khalidabdullahh" target="_blank" rel="noopener noreferrer">Sponsor</a>
+      <span>By <a href="https://github.com/khalidabdullahh" target="_blank" rel="noopener noreferrer" style="color:#a78bfa">khalidabdullahh</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="dock"><a class="btn btn-main" href="./downloads/GestureVolume-v1.0.1.apk" download>⬇ Download APK · v1.0.1</a></div>
+
+<script>
+(function(){
+  var TIMEOUT = 3000;
+  var phone = document.getElementById('phone');
+  var handle = document.getElementById('handle');
+  var sysbar = document.getElementById('sysbar');
+  var fill = document.getElementById('fill');
+  var pct = document.getElementById('pct');
+  var hint = document.getElementById('hint');
+  var dot = document.getElementById('dot');
+  var stateText = document.getElementById('stateText');
+  var volume = 30, timer = null, tick = null, downY = 0, lastY = 0, dragging = false, down = false;
+
+  function setVol(v){
+    volume = Math.max(0, Math.min(100, v));
+    fill.style.width = volume + '%';
+    pct.textContent = volume + '%';
+  }
+  function setState(on, secs){
+    dot.className = 'dot' + (on ? ' on' : '');
+    stateText.textContent = on ? 'Active · inactive in ' + secs + 's' : 'Inactive · tap the handle';
+  }
+  function wake(){
+    hint.style.display = 'none';
+    handle.classList.add('active');
+    sysbar.classList.add('show');
+    clearTimeout(timer); clearInterval(tick);
+    var left = TIMEOUT / 1000;
+    setState(true, left);
+    tick = setInterval(function(){ left = Math.max(0, left - 1); setState(true, left); }, 1000);
+    timer = setTimeout(sleep, TIMEOUT);
+  }
+  function sleep(){
+    clearInterval(tick);
+    handle.classList.remove('active');
+    sysbar.classList.remove('show');
+    setState(false);
+  }
+
+  handle.addEventListener('pointerdown', function(e){
+    down = true; dragging = false; downY = lastY = e.clientY;
+    handle.setPointerCapture(e.pointerId);
+    clearTimeout(timer); clearInterval(tick);
+    handle.classList.add('active');
+    e.preventDefault();
+  });
+  handle.addEventListener('pointermove', function(e){
+    if(!down) return;
+    if(!dragging && Math.abs(e.clientY - downY) < 6) return;
+    if(!dragging){ dragging = true; sysbar.classList.add('show'); hint.style.display = 'none'; }
+    var dy = lastY - e.clientY;
+    if(Math.abs(dy) >= 4){ setVol(volume + Math.round(dy / 4)); lastY = e.clientY; }
+  });
+  function end(){
+    if(!down) return;
+    down = false;
+    wake(); // tap opens the bar; after a swipe it simply restarts the idle timer
+  }
+  handle.addEventListener('pointerup', end);
+  handle.addEventListener('pointercancel', end);
+  handle.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ wake(); } });
+  handle.tabIndex = 0;
+})();
+</script>
 </body>
 </html>

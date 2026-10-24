@@ -9,6 +9,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import android.view.animation.DecelerateInterpolator
 import com.gesturevolume.app.data.model.EdgeSide
 import com.gesturevolume.app.data.model.GestureConfig
@@ -19,7 +20,8 @@ class EdgeHandleView(
     context: Context,
     private val onVolumeSwipe: (stepDelta: Int) -> Unit,
     private val onShowHudRequested: () -> Unit,
-    private val onGestureFinished: () -> Unit
+    private val onGestureFinished: () -> Unit,
+    private val onTap: () -> Unit
 ) : View(context) {
 
     private val pillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -38,6 +40,27 @@ class EdgeHandleView(
     private var startY = 0f
     private var accumulatedDeltaY = 0f
     private var isInteracting = false
+    private var downRawY = 0f
+    private var isDragging = false
+    private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
+
+    // Returns the handle to its compact inactive state a few seconds after the last use
+    private val collapseRunnable = Runnable {
+        isInteracting = false
+        animateExpansion(0.0f, durationMs = 240)
+        alpha = currentConfig.edgeOpacity
+    }
+
+    private fun scheduleCollapse() {
+        removeCallbacks(collapseRunnable)
+        postDelayed(collapseRunnable, currentConfig.timeoutSeconds.coerceAtLeast(1) * 1000L)
+    }
+
+    override fun onDetachedFromWindow() {
+        removeCallbacks(collapseRunnable)
+        expandAnimator?.cancel()
+        super.onDetachedFromWindow()
+    }
 
     // 0f = Idle 1/3 compact size, 1f = Active expanded full size
     private var expandProgress = 0f
@@ -134,47 +157,77 @@ class EdgeHandleView(
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                removeCallbacks(collapseRunnable)
                 isInteracting = true
+                isDragging = false
+                downRawY = event.rawY
                 startY = event.rawY
                 accumulatedDeltaY = 0f
                 alpha = 1.0f
                 animateExpansion(1.0f, durationMs = 160)
-                onShowHudRequested()
                 return true
             }
 
             MotionEvent.ACTION_MOVE -> {
-                if (isInteracting) {
-                    val currentY = event.rawY
-                    val deltaY = startY - currentY // Upward = positive (volume up)
-                    accumulatedDeltaY += deltaY
-                    startY = currentY
+                if (!isInteracting) return super.onTouchEvent(event)
 
-                    // Responsive tactile step calculation
-                    val sens = currentConfig.swipeSensitivity.coerceIn(0.4f, 3.0f)
-                    val thresholdPx = dpToPx(11f) / sens
-                    if (abs(accumulatedDeltaY) >= thresholdPx) {
-                        val steps = (accumulatedDeltaY / thresholdPx).toInt()
-                        if (steps != 0) {
-                            onVolumeSwipe(steps)
-                            accumulatedDeltaY -= (steps * thresholdPx)
-                        }
+                val currentY = event.rawY
+                if (!isDragging) {
+                    if (abs(currentY - downRawY) < touchSlop) return true
+                    // Finger moved far enough: this is a swipe, not a tap
+                    isDragging = true
+                    startY = currentY
+                    accumulatedDeltaY = 0f
+                    onShowHudRequested()
+                    return true
+                }
+
+                val deltaY = startY - currentY // Upward = positive (volume up)
+                accumulatedDeltaY += deltaY
+                startY = currentY
+
+                val sens = currentConfig.swipeSensitivity.coerceIn(0.4f, 3.0f)
+                val thresholdPx = dpToPx(11f) / sens
+                if (abs(accumulatedDeltaY) >= thresholdPx) {
+                    val steps = (accumulatedDeltaY / thresholdPx).toInt()
+                    if (steps != 0) {
+                        onVolumeSwipe(steps)
+                        accumulatedDeltaY -= (steps * thresholdPx)
                     }
+                }
+                return true
+            }
+
+            MotionEvent.ACTION_UP -> {
+                if (isInteracting) {
+                    if (isDragging) {
+                        onGestureFinished()
+                    } else {
+                        performClick()
+                        onTap()
+                    }
+                    isDragging = false
+                    scheduleCollapse()
                     return true
                 }
             }
 
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+            MotionEvent.ACTION_CANCEL -> {
                 if (isInteracting) {
-                    isInteracting = false
-                    animateExpansion(0.0f, durationMs = 240)
-                    alpha = currentConfig.edgeOpacity
+                    isDragging = false
+                    removeCallbacks(collapseRunnable)
+                    collapseRunnable.run()
                     onGestureFinished()
                     return true
                 }
             }
         }
         return super.onTouchEvent(event)
+    }
+
+    override fun performClick(): Boolean {
+        super.performClick()
+        return true
     }
 
     private fun dpToPx(dp: Float): Float {

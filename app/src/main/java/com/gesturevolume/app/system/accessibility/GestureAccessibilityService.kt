@@ -68,6 +68,14 @@ class GestureAccessibilityService : AccessibilityService() {
             },
             onGestureFinished = {
                 restartTimeout()
+            },
+            onTap = {
+                // Tap on the white handle -> open the native system volume bar
+                if (currentConfig.hapticFeedback) {
+                    hapticHelper.triggerGestureActivated()
+                }
+                overlayManager.hideHud()
+                volumeController.showSystemVolumePanel()
             }
         )
     }

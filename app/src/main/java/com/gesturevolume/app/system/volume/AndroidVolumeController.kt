@@ -110,4 +110,19 @@ class AndroidVolumeController(private val context: Context) : VolumeController {
         val target = (min + ((max - min) * (percentage.coerceIn(0, 100) / 100f))).toInt()
         return setVolume(target)
     }
+
+    /**
+     * Opens the phone's native volume bar (same panel shown by the hardware volume keys)
+     * without changing the volume.
+     */
+    override fun showSystemVolumePanel() {
+        try {
+            audioManager.adjustStreamVolume(
+                streamType,
+                AudioManager.ADJUST_SAME,
+                AudioManager.FLAG_SHOW_UI
+            )
+        } catch (_: Exception) {}
+        refreshCurrentVolume()
+    }
 }
