@@ -90,7 +90,7 @@ body{background:var(--bg);color:var(--text);font-family:"Plus Jakarta Sans",syst
 a{color:inherit;text-decoration:none}
 button{font-family:inherit}
 .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 20px}
-section{padding:56px 0;position:relative}
+section{padding:44px 0;position:relative}
 h1{font-size:clamp(2.35rem,10.5vw,4.1rem);line-height:1.04;font-weight:800;letter-spacing:-.035em}
 h2{font-size:clamp(1.65rem,6.6vw,2.5rem);line-height:1.12;font-weight:800;letter-spacing:-.025em}
 h3{font-size:1.05rem;font-weight:700;letter-spacing:-.01em}
@@ -99,7 +99,7 @@ h3{font-size:1.05rem;font-weight:700;letter-spacing:-.01em}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#c7d2fe;
   background:rgba(99,102,241,.13);border:1px solid rgba(129,140,248,.32);padding:6px 13px;border-radius:99px}
 .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
-.sec-head{margin-bottom:30px}
+.sec-head{margin-bottom:24px}
 .sec-head .tag{color:#a5b4fc;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;display:block}
 .glass{background:var(--card);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 
@@ -134,16 +134,17 @@ header{position:sticky;top:0;z-index:60;background:rgba(6,7,12,.72);backdrop-fil
 .btn-ghost{background:var(--card);border:1px solid var(--line);color:var(--text)}
 .btn-ghost:hover{background:var(--card2)}
 .btn svg{width:18px;height:18px;flex:none}
-.cta{display:flex;flex-direction:row;gap:10px;margin-top:28px}
+.cta{display:flex;flex-direction:row;gap:10px;margin-top:24px}
 .cta .btn{padding:15px 14px;font-size:.98rem;white-space:nowrap;min-width:0}
 .cta .btn-main{flex:1.5}.cta .btn-ghost{flex:1}
 @media (max-width:339px){.cta{flex-direction:column}}
 .fine{font-size:.82rem;color:var(--muted);margin-top:14px;display:flex;flex-wrap:wrap;gap:6px 14px}
-.fine span::before{content:"\2713";color:var(--green);font-weight:800;margin-right:6px}
+.fine span{display:inline-flex;align-items:center;gap:6px}
+.fine .ico{color:var(--green);width:16px;height:16px;stroke-width:3}
 
 /* hero */
-.hero{padding-top:34px;padding-bottom:36px;overflow:hidden}
-.hero-grid{position:relative;z-index:1;display:grid;gap:44px}
+.hero{padding-top:26px;padding-bottom:20px;overflow:hidden}
+.hero-grid{position:relative;z-index:1;display:grid;gap:30px}
 .hero-copy{display:flex;flex-direction:column;align-items:flex-start}
 .hero h1{margin-top:20px}
 
@@ -201,7 +202,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(6,7,12,.72);backdrop-fil
 .dot.on{background:var(--green);box-shadow:0 0 12px var(--green)}
 
 /* customizer */
-.custom{width:100%;max-width:420px;margin-top:22px;padding:18px;display:grid;gap:16px}
+.custom{width:100%;max-width:520px;margin:0 auto;padding:20px;display:grid;gap:16px}
 .custom h4{font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;color:#a5b4fc;display:flex;justify-content:space-between;align-items:center}
 .ctl label{display:flex;justify-content:space-between;font-size:.84rem;font-weight:600;margin-bottom:8px}
 .ctl label span{color:#c7d2fe}
@@ -236,6 +237,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82em;backgroun
 .bento{display:grid;gap:14px}
 .tile{padding:24px;position:relative;overflow:hidden;transition:transform .25s,border-color .25s}
 .tile:hover{transform:translateY(-3px);border-color:rgba(129,140,248,.4)}
+.tile .ic .ico{width:24px;height:24px;color:#a5b4fc}
 .tile .ic{width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:rgba(99,102,241,.16);border:1px solid rgba(129,140,248,.28);margin-bottom:14px}
 .tile p{color:var(--muted);font-size:.93rem;margin-top:6px}
 .tile.big{background:linear-gradient(150deg,rgba(99,102,241,.2),rgba(34,211,238,.08))}
@@ -284,19 +286,22 @@ footer a:hover{color:#fff}
 @media (min-width:820px){
   .nav{display:flex}
   .hero{padding-top:70px}
-  .hero-grid{grid-template-columns:1.1fr .9fr;align-items:center;gap:56px}
+  .hero-grid{grid-template-columns:1.05fr .95fr;grid-template-areas:"copy stage" "custom stage";align-items:start;column-gap:56px;row-gap:26px}
+  .hero-copy{grid-area:copy}
+  .stage{grid-area:stage;position:sticky;top:92px}
+  .custom{grid-area:custom;max-width:none;margin:0}
   .stats{grid-template-columns:repeat(4,1fr)}
   .steps{grid-template-columns:repeat(3,1fr)}
   .step{flex-direction:column}
   .flow{grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:stretch}
-  .arr{display:flex;align-items:center}
-  .arr::after{content:"\2192"}.arr span{display:none}
+  .arr{display:flex;align-items:center;justify-content:center}
+  .arr .ico{transform:rotate(-90deg)}
   .bento{grid-template-columns:repeat(6,1fr)}
   .tile{grid-column:span 2}.tile.big{grid-column:span 4}.tile.wide{grid-column:span 3}
   .trust{grid-template-columns:repeat(3,1fr)}
   .dock{display:none}
   body{padding-bottom:0}
-  section{padding:84px 0}
+  section{padding:68px 0}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 /* Fonts: Chelsea Market (body) + Cabin Sketch (display) */
@@ -312,9 +317,19 @@ h2{font-size:clamp(1.9rem,8vw,2.9rem);letter-spacing:0;line-height:1.08}
 h3{letter-spacing:0}
 .lead{font-size:1rem}
 .phone,.phone *{font-family:system-ui,-apple-system,Roboto,"Segoe UI",sans-serif}
+/* icons */
+.ico{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.125em}
+.trust h3{display:flex;align-items:center;gap:10px}
+.ico.lead{width:22px;height:22px;color:#a5b4fc}
+.cell{display:inline-flex;align-items:center;gap:7px}.cell .ico{width:16px;height:16px;stroke-width:3}
+.toast{display:flex;align-items:center;gap:6px;white-space:nowrap}.toast .ico{width:14px;height:14px;color:var(--cyan)}
+.arr .ico{width:22px;height:22px}
+@media (min-width:820px){h1{font-size:clamp(2.8rem,5vw,4.2rem)}h2{font-size:clamp(2rem,3.6vw,2.7rem)}}
 </style>
 </head>
 <body>
+<!-- Lucide icons (ISC license) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-pointer" viewBox="0 0 24 24"><path d="M22 14a8 8 0 0 1-8 8" /> <path d="M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2" /> <path d="M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1" /> <path d="M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10" /> <path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" /></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></symbol><symbol id="i-arrow-up-down" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4" /> <path d="M17 20V4" /> <path d="m3 8 4-4 4 4" /> <path d="M7 4v16" /></symbol><symbol id="i-sliders-horizontal" viewBox="0 0 24 24"><path d="M10 5H3" /> <path d="M12 19H3" /> <path d="M14 3v4" /> <path d="M16 17v4" /> <path d="M21 12h-9" /> <path d="M21 19h-5" /> <path d="M21 5h-7" /> <path d="M8 10v4" /> <path d="M8 12H3" /></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /> <path d="M7 11V7a5 5 0 0 1 10 0v4" /></symbol><symbol id="i-battery-charging" viewBox="0 0 24 24"><path d="m11 7-3 5h4l-3 5" /> <path d="M14.856 6H16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.935" /> <path d="M22 14v-4" /> <path d="M5.14 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2.936" /></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z" /> <circle cx="12" cy="13" r="3" /></symbol><symbol id="i-flask-conical" viewBox="0 0 24 24"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2" /> <path d="M6.453 15h11.094" /> <path d="M8.5 2h7" /></symbol><symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M12 20h.01" /> <path d="M8.5 16.429a5 5 0 0 1 7 0" /> <path d="M5 12.859a10 10 0 0 1 5.17-2.69" /> <path d="M19 12.859a10 10 0 0 0-2.007-1.523" /> <path d="M2 8.82a15 15 0 0 1 4.177-2.643" /> <path d="M22 8.82a15 15 0 0 0-11.288-3.764" /> <path d="m2 2 20 20" /></symbol><symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49" /> <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" /> <path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143" /> <path d="m2 2 20 20" /></symbol><symbol id="i-megaphone-off" viewBox="0 0 24 24"><path d="M11.636 6A13 13 0 0 0 19.4 3.2 1 1 0 0 1 21 4v11.344" /> <path d="M14.378 14.357A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1" /> <path d="m2 2 20 20" /> <path d="M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14" /> <path d="M8 8v6" /></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 15V3" /> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /> <path d="m7 10 5 5 5-5" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18" /> <path d="m6 6 12 12" /></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol><symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></symbol></svg>
 <header>
   <div class="wrap bar">
     <a href="#" class="brand"><img src="./assets/app_icon_512x512.png" alt="" width="32" height="32"><span>Gesture<b>Volume</b></span></a>
@@ -333,10 +348,10 @@ h3{letter-spacing:0}
       <p class="lead">Volume buttons broken or too far to reach? Gesture Volume puts a slim handle on your screen edge. One tap opens Android's own volume bar, exactly like a hardware key.</p>
       <div class="cta">
         <a class="btn btn-main" href="./downloads/GestureVolume-latest.apk" download="GestureVolume.apk">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>Download APK</a>
+          <svg class="ico" aria-hidden="true"><use href="#i-download"/></svg>Download APK</a>
         <a class="btn btn-ghost" href="#demo">Try demo</a>
       </div>
-      <p class="fine"><span>No account</span><span>No internet permission</span><span>No ads in the app</span></p>
+      <p class="fine"><span><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>No account</span><span><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>No internet permission</span><span><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>No ads in the app</span></p>
     </div>
 
     <div class="stage" id="demo">
@@ -355,7 +370,7 @@ h3{letter-spacing:0}
         </div>
         <div class="hud" id="hud"><small id="hudArrow">&nbsp;</small><b id="hudPct">30%</b></div>
         <div class="flash" id="flash"></div>
-        <div class="toast" id="toast">📸 Screenshot saved</div>
+        <div class="toast" id="toast"><svg class="ico" aria-hidden="true"><use href="#i-camera"/></svg>Screenshot saved</div>
         <div class="zone" id="zone" role="button" tabindex="0" aria-label="Volume handle">
           <div class="hint" id="hint">Tap me</div>
           <div class="handle" id="handle"><i></i><i></i><i></i></div>
@@ -366,6 +381,9 @@ h3{letter-spacing:0}
 
       <p class="tip"><b>Tip:</b> double-tap the handle to take a screenshot.</p>
 
+      
+    </div>
+
       <div class="custom glass">
         <h4>Customize your handle <button class="chip" id="resetBtn" style="flex:none;min-width:0;padding:6px 12px;font-size:.72rem">Reset</button></h4>
         <div class="ctl"><label>Screen edge</label>
@@ -375,7 +393,6 @@ h3{letter-spacing:0}
         <div class="ctl"><label>Go inactive after</label>
           <div class="chips" id="timeChips"><button class="chip" data-t="2">2s</button><button class="chip on" data-t="3">3s</button><button class="chip" data-t="5">5s</button><button class="chip" data-t="10">10s</button></div></div>
       </div>
-    </div>
   </div>
 </section>
 
@@ -398,9 +415,9 @@ h3{letter-spacing:0}
 
   <div class="sec-head reveal" style="margin-top:56px"><span class="tag">Under the hood</span><h2>What happens when you tap</h2></div>
   <div class="flow">
-    <div class="node glass reveal">Touch on handle<small>Overlay drawn by an accessibility service</small></div><div class="arr"><span>&darr;</span></div>
-    <div class="node glass reveal">Tap or swipe?<small>Tiny movement counts as a tap</small></div><div class="arr"><span>&darr;</span></div>
-    <div class="node glass reveal">Tap &rarr; <code>FLAG_SHOW_UI</code><small>AudioManager shows the system panel, volume unchanged</small></div><div class="arr"><span>&darr;</span></div>
+    <div class="node glass reveal">Touch on handle<small>Overlay drawn by an accessibility service</small></div><div class="arr"><svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg></div>
+    <div class="node glass reveal">Tap or swipe?<small>Tiny movement counts as a tap</small></div><div class="arr"><svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg></div>
+    <div class="node glass reveal">Tap, then <code>FLAG_SHOW_UI</code><small>AudioManager shows the system panel, volume unchanged</small></div><div class="arr"><svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg></div>
     <div class="node glass reveal">Idle timer<small>Handle collapses after your timeout</small></div>
   </div>
   <p class="lead reveal" style="font-size:.92rem;margin-top:16px">Prefer sliding? Drag the handle up or down and Gesture Volume changes media volume directly, with a small HUD.</p>
@@ -409,14 +426,14 @@ h3{letter-spacing:0}
 <section id="features"><div class="wrap">
   <div class="sec-head reveal"><span class="tag">Features</span><h2>Small handle. <span class="grad">Big difference.</span></h2></div>
   <div class="bento">
-    <div class="tile glass big reveal"><div class="ic">👆</div><h3>One-tap native volume panel</h3><p>Uses the real system volume UI, so it matches your phone and any OEM styling. Nothing new to learn.</p></div>
-    <div class="tile glass reveal"><div class="ic">💤</div><h3>Auto-inactive</h3><p>Expands when used, then fades back to a tiny line.</p></div>
-    <div class="tile glass reveal"><div class="ic">↕️</div><h3>Swipe to adjust</h3><p>Slide the handle for quick steps with haptic ticks at the limits.</p></div>
-    <div class="tile glass reveal"><div class="ic">🎛️</div><h3>Make it yours</h3><p>Pick the edge, height, size, transparency and timeout in Settings.</p></div>
-    <div class="tile glass reveal"><div class="ic">🔒</div><h3>Private by design</h3><p>No internet permission, no screen reading, no tracking.</p></div>
-    <div class="tile glass reveal"><div class="ic">📸</div><h3>Double-tap screenshot</h3><p>Double-tap the handle to grab a screenshot. Switch it off in Settings anytime.</p></div>
-    <div class="tile glass reveal"><div class="ic">🔋</div><h3>Light on battery</h3><p>Event-driven. Nothing loops in the background while you are not touching it.</p></div>
-    <div class="tile glass reveal"><div class="ic">🧪</div><h3>Built-in test sandbox</h3><p>Try the handle inside the app before you use it over other apps.</p></div>
+    <div class="tile glass big reveal"><div class="ic"><svg class="ico" aria-hidden="true"><use href="#i-pointer"/></svg></div><h3>One-tap native volume panel</h3><p>Uses the real system volume UI, so it matches your phone and any OEM styling. Nothing new to learn.</p></div>
+    <div class="tile glass reveal"><div class="ic"><svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg></div><h3>Auto-inactive</h3><p>Expands when used, then fades back to a tiny line.</p></div>
+    <div class="tile glass reveal"><div class="ic"><svg class="ico" aria-hidden="true"><use href="#i-arrow-up-down"/></svg></div><h3>Swipe to adjust</h3><p>Slide the handle for quick steps with haptic ticks at the limits.</p></div>
+    <div class="tile glass reveal"><div class="ic"><svg class="ico" aria-hidden="true"><use href="#i-sliders-horizontal"/></svg></div><h3>Make it yours</h3><p>Pick the edge, height, size, transparency and timeout in Settings.</p></div>
+    <div class="tile glass reveal"><div class="ic"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg></div><h3>Private by design</h3><p>No internet permission, no screen reading, no tracking.</p></div>
+    <div class="tile glass reveal"><div class="ic"><svg class="ico" aria-hidden="true"><use href="#i-camera"/></svg></div><h3>Double-tap screenshot</h3><p>Double-tap the handle to grab a screenshot. Switch it off in Settings anytime.</p></div>
+    <div class="tile glass reveal"><div class="ic"><svg class="ico" aria-hidden="true"><use href="#i-battery-charging"/></svg></div><h3>Light on battery</h3><p>Event-driven. Nothing loops in the background while you are not touching it.</p></div>
+    <div class="tile glass reveal"><div class="ic"><svg class="ico" aria-hidden="true"><use href="#i-flask-conical"/></svg></div><h3>Built-in test sandbox</h3><p>Try the handle inside the app before you use it over other apps.</p></div>
   </div>
 </div></section>
 
@@ -424,20 +441,20 @@ h3{letter-spacing:0}
   <div class="sec-head reveal"><span class="tag">Compare</span><h2>Why not a floating bubble?</h2></div>
   <div class="cmp glass reveal"><table>
     <tr><th></th><th>Hardware keys</th><th>Floating bubble apps</th><th class="us">Gesture Volume</th></tr>
-    <tr><td>Works when keys are broken</td><td class="n">No</td><td class="y">Yes</td><td class="us y">Yes</td></tr>
-    <tr><td>Uses native volume bar</td><td class="y">Yes</td><td class="n">Rarely</td><td class="us y">Yes</td></tr>
-    <tr><td>Screen clutter</td><td class="y">None</td><td class="n">Big bubble</td><td class="us y">Slim line</td></tr>
-    <tr><td>Hides when idle</td><td class="y">Yes</td><td class="m">Sometimes</td><td class="us y">Automatically</td></tr>
-    <tr><td>Internet access</td><td class="y">None</td><td class="m">Often</td><td class="us y">None</td></tr>
+    <tr><td>Works when keys are broken</td><td class="n"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>No</span></td><td class="y"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Yes</span></td><td class="us y"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Yes</span></td></tr>
+    <tr><td>Uses native volume bar</td><td class="y"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Yes</span></td><td class="n"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Rarely</span></td><td class="us y"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Yes</span></td></tr>
+    <tr><td>Screen clutter</td><td class="y"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>None</span></td><td class="n"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Big bubble</span></td><td class="us y"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Slim line</span></td></tr>
+    <tr><td>Hides when idle</td><td class="y"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Yes</span></td><td class="m"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>Sometimes</span></td><td class="us y"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Automatically</span></td></tr>
+    <tr><td>Internet access</td><td class="y"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>None</span></td><td class="m"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>Often</span></td><td class="us y"><span class="cell"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>None</span></td></tr>
   </table></div>
 </div></section>
 
 <section><div class="wrap">
   <div class="sec-head reveal"><span class="tag">Privacy</span><h2>Quiet by design</h2></div>
   <div class="trust">
-    <div class="t glass reveal"><h3>🚫 No internet</h3><p>The app does not request internet permission. It cannot send anything anywhere.</p></div>
-    <div class="t glass reveal"><h3>👁️ No screen reading</h3><p>Accessibility is used only to draw the handle. Content retrieval is switched off.</p></div>
-    <div class="t glass reveal"><h3>📵 No ads in the app</h3><p>No trackers or analytics inside the Android app. Only this website shows ads.</p></div>
+    <div class="t glass reveal"><h3><svg class="ico lead" aria-hidden="true"><use href="#i-wifi-off"/></svg>No internet</h3><p>The app does not request internet permission. It cannot send anything anywhere.</p></div>
+    <div class="t glass reveal"><h3><svg class="ico lead" aria-hidden="true"><use href="#i-eye-off"/></svg>No screen reading</h3><p>Accessibility is used only to draw the handle. Content retrieval is switched off.</p></div>
+    <div class="t glass reveal"><h3><svg class="ico lead" aria-hidden="true"><use href="#i-megaphone-off"/></svg>No ads in the app</h3><p>No trackers or analytics inside the Android app. Only this website shows ads.</p></div>
   </div>
 </div></section>
 
@@ -449,7 +466,7 @@ h3{letter-spacing:0}
     <div class="istep"><b>2</b><span>Open Gesture Volume and turn on its Accessibility Service.</span></div>
     <div class="istep"><b>3</b><span>Tap the handle on your screen edge. Done.</span></div>
     <div class="cta"><a class="btn btn-main" href="./downloads/GestureVolume-latest.apk" download="GestureVolume.apk">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>Download APK</a>
+      <svg class="ico" aria-hidden="true"><use href="#i-download"/></svg>Download APK</a>
       <a class="btn btn-ghost" href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer">View on GitHub</a></div>
   </div>
 </div></section>
@@ -480,7 +497,7 @@ h3{letter-spacing:0}
 </div></footer>
 
 <div class="dock"><a class="btn btn-main" href="./downloads/GestureVolume-latest.apk" download="GestureVolume.apk">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>Download APK</a>
+  <svg class="ico" aria-hidden="true"><use href="#i-download"/></svg>Download APK</a>
   <a class="btn btn-ghost" href="#demo">Try demo</a></div>
 
 <script>
