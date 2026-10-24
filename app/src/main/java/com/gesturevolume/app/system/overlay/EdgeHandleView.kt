@@ -15,13 +15,16 @@ import com.gesturevolume.app.data.model.EdgeSide
 import com.gesturevolume.app.data.model.GestureConfig
 import kotlin.math.abs
 
+private const val DOUBLE_TAP_WINDOW_MS = 280L
+
 @SuppressLint("ViewConstructor")
 class EdgeHandleView(
     context: Context,
     private val onVolumeSwipe: (stepDelta: Int) -> Unit,
     private val onShowHudRequested: () -> Unit,
     private val onGestureFinished: () -> Unit,
-    private val onTap: () -> Unit
+    private val onTap: () -> Unit,
+    private val onDoubleTap: () -> Unit
 ) : View(context) {
 
     private val pillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -43,6 +46,28 @@ class EdgeHandleView(
     private var downRawY = 0f
     private var isDragging = false
     private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
+    private var pendingTap: Runnable? = null
+
+    // A single tap waits briefly so a second tap can turn it into a double tap (screenshot)
+    private fun handleTap() {
+        if (!currentConfig.doubleTapScreenshot) {
+            onTap()
+            return
+        }
+        val pending = pendingTap
+        if (pending != null) {
+            removeCallbacks(pending)
+            pendingTap = null
+            onDoubleTap()
+        } else {
+            val task = Runnable {
+                pendingTap = null
+                onTap()
+            }
+            pendingTap = task
+            postDelayed(task, DOUBLE_TAP_WINDOW_MS)
+        }
+    }
 
     // Returns the handle to its compact inactive state a few seconds after the last use
     private val collapseRunnable = Runnable {
@@ -58,6 +83,8 @@ class EdgeHandleView(
 
     override fun onDetachedFromWindow() {
         removeCallbacks(collapseRunnable)
+        pendingTap?.let { removeCallbacks(it) }
+        pendingTap = null
         expandAnimator?.cancel()
         super.onDetachedFromWindow()
     }
@@ -204,7 +231,7 @@ class EdgeHandleView(
                         onGestureFinished()
                     } else {
                         performClick()
-                        onTap()
+                        handleTap()
                     }
                     isDragging = false
                     scheduleCollapse()

@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
+import android.widget.Toast
 import android.view.accessibility.AccessibilityEvent
 import com.gesturevolume.app.data.model.GestureConfig
 import com.gesturevolume.app.data.preferences.GesturePreferences
@@ -76,8 +78,30 @@ class GestureAccessibilityService : AccessibilityService() {
                 }
                 overlayManager.hideHud()
                 volumeController.showSystemVolumePanel()
+            },
+            onDoubleTap = {
+                takeScreenshotFromHandle()
             }
         )
+    }
+
+    // Double-tap on the handle: hide it for a moment so it is not in the shot, then take a screenshot
+    private fun takeScreenshotFromHandle() {
+        if (currentConfig.hapticFeedback) {
+            hapticHelper.triggerGestureActivated()
+        }
+        overlayManager.hideHud()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            Toast.makeText(this, "Screenshot needs Android 9 or newer", Toast.LENGTH_SHORT).show()
+            return
+        }
+        overlayManager.setEdgeHandleVisible(false)
+        serviceScope.launch {
+            delay(350)
+            performGlobalAction(GLOBAL_ACTION_TAKE_SCREENSHOT)
+            delay(1200)
+            overlayManager.setEdgeHandleVisible(true)
+        }
     }
 
     private fun handleVolumeStep(stepDelta: Int) {

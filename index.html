@@ -39,6 +39,7 @@
       "featureList": [
         "Tap the floating handle to open Android's native volume bar",
         "Swipe the handle up or down to change media volume",
+        "Double-tap the handle to take a screenshot",
         "Handle goes inactive automatically after a few seconds",
         "Works over any app, fully offline, no ads inside the app"
       ]
@@ -180,6 +181,12 @@ header{position:sticky;top:0;z-index:60;background:rgba(6,7,12,.72);backdrop-fil
 .phone.left .hint{right:auto;left:38px}
 @keyframes nudge{50%{transform:translateX(6px)}}
 .phone.left .hint{animation-name:nudge-l}@keyframes nudge-l{50%{transform:translateX(-6px)}}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:9}
+.flash.go{animation:shot .5s ease-out}
+@keyframes shot{0%{opacity:.85}100%{opacity:0}}
+.toast{position:absolute;left:50%;bottom:22px;transform:translate(-50%,24px);opacity:0;z-index:8;pointer-events:none;font-size:.68rem;font-weight:800;background:rgba(28,31,46,.97);border:1px solid rgba(255,255,255,.16);padding:8px 14px;border-radius:99px;transition:.3s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.tip{margin-top:12px;font-size:.8rem;color:var(--muted);text-align:center}.tip b{color:#c7d2fe}
 .state{margin-top:20px;display:inline-flex;align-items:center;gap:10px;font-size:.86rem;font-weight:600;color:var(--muted);background:var(--card);border:1px solid var(--line);padding:10px 16px;border-radius:99px}
 .dot{width:9px;height:9px;border-radius:50%;background:#64748b;transition:.2s}
 .dot.on{background:var(--green);box-shadow:0 0 12px var(--green)}
@@ -323,6 +330,8 @@ footer a:hover{color:#fff}
           <div class="row"><em>Media Volume</em><span id="pct">30%</span></div>
           <div class="track"><div class="fill" id="fill"></div></div>
         </div>
+        <div class="flash" id="flash"></div>
+        <div class="toast" id="toast">📸 Screenshot saved</div>
         <div class="zone" id="zone" role="button" tabindex="0" aria-label="Volume handle">
           <div class="hint" id="hint">Tap me</div>
           <div class="handle" id="handle"><i></i><i></i><i></i></div>
@@ -330,6 +339,8 @@ footer a:hover{color:#fff}
         </div>
       </div>
       <div class="state"><span class="dot" id="dot"></span><span id="stateText">Inactive · tap the handle</span></div>
+
+      <p class="tip"><b>Tip:</b> double-tap the handle to take a screenshot.</p>
 
       <div class="custom glass">
         <h4>Customize your handle <button class="chip" id="resetBtn" style="flex:none;min-width:0;padding:6px 12px;font-size:.72rem">Reset</button></h4>
@@ -379,8 +390,9 @@ footer a:hover{color:#fff}
     <div class="tile glass reveal"><div class="ic">↕️</div><h3>Swipe to adjust</h3><p>Slide the handle for quick steps with haptic ticks at the limits.</p></div>
     <div class="tile glass reveal"><div class="ic">🎛️</div><h3>Make it yours</h3><p>Pick the edge, height, size, transparency and timeout in Settings.</p></div>
     <div class="tile glass reveal"><div class="ic">🔒</div><h3>Private by design</h3><p>No internet permission, no screen reading, no tracking.</p></div>
-    <div class="tile glass wide reveal"><div class="ic">🔋</div><h3>Light on battery</h3><p>Event-driven. Nothing loops in the background while you are not touching it.</p></div>
-    <div class="tile glass wide reveal"><div class="ic">🧪</div><h3>Built-in test sandbox</h3><p>Try the handle inside the app before you use it over other apps.</p></div>
+    <div class="tile glass reveal"><div class="ic">📸</div><h3>Double-tap screenshot</h3><p>Double-tap the handle to grab a screenshot. Switch it off in Settings anytime.</p></div>
+    <div class="tile glass reveal"><div class="ic">🔋</div><h3>Light on battery</h3><p>Event-driven. Nothing loops in the background while you are not touching it.</p></div>
+    <div class="tile glass reveal"><div class="ic">🧪</div><h3>Built-in test sandbox</h3><p>Try the handle inside the app before you use it over other apps.</p></div>
   </div>
 </div></section>
 
@@ -424,6 +436,7 @@ footer a:hover{color:#fff}
   <details class="reveal"><summary>Why does it need Accessibility permission?</summary><p>Android only lets an app draw a touch handle above other apps through an accessibility service. Gesture Volume does not read your screen, keystrokes or messages.</p></details>
   <details class="reveal"><summary>Does it work if my buttons are fully broken?</summary><p>Yes, that is the whole point. It talks to Android's audio system directly, so no physical button is involved.</p></details>
   <details class="reveal"><summary>Can I change how long the handle stays active?</summary><p>Yes. Pick 2, 3, 5 or 10 seconds in Settings. Try it in the demo above.</p></details>
+  <details class="reveal"><summary>How does the double-tap screenshot work?</summary><p>Double-tap the handle and Gesture Volume briefly hides it, then asks Android to take a screenshot (Android 9 or newer). You can turn it off in Settings.</p></details>
   <details class="reveal"><summary>Is it free?</summary><p>Yes. The app is free, works offline and has no ads inside it. This website shows ads to help cover costs. The source is viewable on GitHub under its own license.</p></details>
 </div></section>
 
@@ -478,7 +491,20 @@ footer a:hover{color:#fff}
     var dy=lastY-e.clientY;
     if(Math.abs(dy)>=4){setVol(volume+Math.round(dy/4));lastY=e.clientY}
   });
-  function end(){if(!down)return;down=false;wake()}
+  var pendingTap=null,flash=$('flash'),toast=$('toast');
+  function shot(){
+    hint.style.display='none';pulse.style.display='none';
+    flash.classList.remove('go');void flash.offsetWidth;flash.classList.add('go');
+    toast.classList.add('show');setTimeout(function(){toast.classList.remove('show')},1500);
+    stopTimers();handle.classList.add('active');
+    tick=null;timer=setTimeout(sleep,TIMEOUT);setState(true,Math.round(TIMEOUT/1000));
+  }
+  function end(){
+    if(!down)return;down=false;
+    if(dragging){wake();return}
+    if(pendingTap){clearTimeout(pendingTap);pendingTap=null;shot();return}
+    pendingTap=setTimeout(function(){pendingTap=null;wake()},280);
+  }
   zone.addEventListener('pointerup',end);
   zone.addEventListener('pointercancel',end);
   zone.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();wake()}});

@@ -304,6 +304,8 @@ fun DashboardScreen(
                 GuideRow(number = "2", text = "Android's own volume bar opens, like pressing a volume key. Or swipe the handle up / down to adjust directly.")
                 Spacer(modifier = Modifier.height(8.dp))
                 GuideRow(number = "3", text = "The handle shrinks back to a faint line after a few seconds of no use.")
+                Spacer(modifier = Modifier.height(8.dp))
+                GuideRow(number = "4", text = "Double-tap the handle to take a screenshot (Android 9+).")
             }
         }
 

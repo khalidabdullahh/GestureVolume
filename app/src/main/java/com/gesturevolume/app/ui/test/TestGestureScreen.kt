@@ -84,6 +84,7 @@ fun TestGestureScreen(
     var activationId by remember { mutableIntStateOf(0) }
     var secondsLeft by remember { mutableIntStateOf(0) }
     var tapCount by remember { mutableIntStateOf(0) }
+    var doubleTapCount by remember { mutableIntStateOf(0) }
 
     // Handle stays active for a few seconds after each tap / swipe, then goes inactive again
     LaunchedEffect(activationId) {
@@ -133,6 +134,7 @@ fun TestGestureScreen(
             IconButton(onClick = {
                 currentVolumeState = volumeController.refreshCurrentVolume()
                 tapCount = 0
+                doubleTapCount = 0
                 accumulatedDeltaY = 0f
                 activationId = 0
                 isActive = false
@@ -227,7 +229,7 @@ fun TestGestureScreen(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = if (tapCount == 0) "Tap the handle on the right edge" else "Opened $tapCount time(s)",
+                    text = if (tapCount == 0 && doubleTapCount == 0) "Tap the handle on the right edge\nDouble-tap = screenshot (works over other apps)" else "Taps: $tapCount  |  Double-taps: $doubleTapCount\n(Double-tap takes a real screenshot over other apps)",
                     style = MaterialTheme.typography.bodyMedium,
                     color = if (isActive || isSwiping) AccentCyan else TextSecondary,
                     textAlign = TextAlign.Center
@@ -242,6 +244,10 @@ fun TestGestureScreen(
                     .size(width = 52.dp, height = 170.dp)
                     .pointerInput(Unit) {
                         detectTapGestures(
+                            onDoubleTap = {
+                                doubleTapCount++
+                                activationId++
+                            },
                             onTap = {
                                 volumeController.showSystemVolumePanel()
                                 currentVolumeState = volumeController.refreshCurrentVolume()

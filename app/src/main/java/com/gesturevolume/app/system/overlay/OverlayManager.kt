@@ -5,6 +5,7 @@ import android.graphics.PixelFormat
 import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
+import android.view.View
 import android.view.WindowManager
 import com.gesturevolume.app.data.model.EdgeSide
 import com.gesturevolume.app.data.model.GestureConfig
@@ -102,7 +103,8 @@ class OverlayManager(private val context: Context) {
         onVolumeSwipe: (stepDelta: Int) -> Unit,
         onShowHudRequested: () -> Unit,
         onGestureFinished: () -> Unit,
-        onTap: () -> Unit
+        onTap: () -> Unit,
+        onDoubleTap: () -> Unit
     ) {
         mainHandler.post {
             if (isEdgeHandleAttached) {
@@ -115,7 +117,8 @@ class OverlayManager(private val context: Context) {
                 onVolumeSwipe = onVolumeSwipe,
                 onShowHudRequested = onShowHudRequested,
                 onGestureFinished = onGestureFinished,
-                onTap = onTap
+                onTap = onTap,
+                onDoubleTap = onDoubleTap
             )
             view.updateConfig(config)
 
@@ -178,6 +181,12 @@ class OverlayManager(private val context: Context) {
                     windowManager.updateViewLayout(edgeHandleView, params)
                 } catch (_: Exception) {}
             }
+        }
+    }
+
+    fun setEdgeHandleVisible(visible: Boolean) {
+        mainHandler.post {
+            edgeHandleView?.visibility = if (visible) View.VISIBLE else View.INVISIBLE
         }
     }
 

@@ -393,6 +393,34 @@ fun SettingsScreen(
                         )
                     )
                 }
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                // Double-tap screenshot Switch
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "Double-tap for Screenshot",
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Text(
+                            text = "Double-tap the handle to take a screenshot (Android 9+). When on, a single tap waits a split second to tell the two apart.",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                    Switch(
+                        checked = config.doubleTapScreenshot,
+                        onCheckedChange = { onUpdateConfig(config.copy(doubleTapScreenshot = it)) },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = TextPrimary,
+                            checkedTrackColor = PrimaryPurple
+                        )
+                    )
+                }
             }
         }
 

@@ -25,6 +25,7 @@ class GesturePreferences(private val context: Context) {
         private val KEY_SWIPE_SENSITIVITY = floatPreferencesKey("swipe_sensitivity")
         private val KEY_SHOW_PERCENTAGE = booleanPreferencesKey("show_percentage")
         private val KEY_HAPTIC_FEEDBACK = booleanPreferencesKey("haptic_feedback")
+        private val KEY_DOUBLE_TAP_SCREENSHOT = booleanPreferencesKey("double_tap_screenshot")
         private val KEY_HUD_POSITION = stringPreferencesKey("hud_position")
         private val KEY_EDGE_SIDE = stringPreferencesKey("edge_side")
         private val KEY_EDGE_OPACITY = floatPreferencesKey("edge_opacity")
@@ -56,6 +57,7 @@ class GesturePreferences(private val context: Context) {
             swipeSensitivity = preferences[KEY_SWIPE_SENSITIVITY] ?: 1.0f,
             showPercentage = preferences[KEY_SHOW_PERCENTAGE] ?: true,
             hapticFeedback = preferences[KEY_HAPTIC_FEEDBACK] ?: true,
+            doubleTapScreenshot = preferences[KEY_DOUBLE_TAP_SCREENSHOT] ?: true,
             hudPosition = position,
             edgeSide = edgeSide,
             edgeOpacity = preferences[KEY_EDGE_OPACITY] ?: 0.55f,
@@ -76,6 +78,7 @@ class GesturePreferences(private val context: Context) {
             preferences[KEY_SWIPE_SENSITIVITY] = config.swipeSensitivity
             preferences[KEY_SHOW_PERCENTAGE] = config.showPercentage
             preferences[KEY_HAPTIC_FEEDBACK] = config.hapticFeedback
+            preferences[KEY_DOUBLE_TAP_SCREENSHOT] = config.doubleTapScreenshot
             preferences[KEY_HUD_POSITION] = config.hudPosition.name
             preferences[KEY_EDGE_SIDE] = config.edgeSide.name
             preferences[KEY_EDGE_OPACITY] = config.edgeOpacity

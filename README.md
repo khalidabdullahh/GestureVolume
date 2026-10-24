@@ -28,7 +28,8 @@ Physical volume buttons wear out, break, get stuck, or are awkwardly placed on t
 1. **Tap the handle** — a slim white handle sits on your screen edge over any app.
 2. **Native volume bar opens** — Android's own system volume panel appears, exactly like pressing a hardware volume key.
 3. **Swipe (optional)** — drag the handle up / down to change volume directly with a small HUD.
-4. **Auto-inactive** — after the timeout (default 3 seconds) the handle shrinks back to a faint compact line.
+4. **Double-tap for screenshot** — double-tap the handle to take a screenshot (Android 9+, can be turned off in Settings).
+5. **Auto-inactive** — after the timeout (default 3 seconds) the handle shrinks back to a faint compact line.
 
 ---
 

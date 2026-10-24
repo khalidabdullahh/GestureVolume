@@ -25,6 +25,7 @@ data class GestureConfig(
     val swipeSensitivity: Float = 1.0f,   // Vertical swipe sensitivity multiplier
     val showPercentage: Boolean = true,
     val hapticFeedback: Boolean = true,
+    val doubleTapScreenshot: Boolean = true, // Double-tap the handle to take a screenshot (Android 9+)
     val hudPosition: HudPosition = HudPosition.CENTER,
     val edgeSide: EdgeSide = EdgeSide.RIGHT,
     val edgeOpacity: Float = 0.55f,       // Opacity of the edge trigger handle
