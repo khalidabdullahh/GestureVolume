@@ -74,7 +74,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Chelsea+Market&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#06070c; --bg2:#0b0d16; --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.07);
@@ -133,8 +133,11 @@ header{position:sticky;top:0;z-index:60;background:rgba(6,7,12,.72);backdrop-fil
 .btn-main:hover{transform:translateY(-2px);box-shadow:0 18px 40px -12px rgba(99,102,241,1)}
 .btn-ghost{background:var(--card);border:1px solid var(--line);color:var(--text)}
 .btn-ghost:hover{background:var(--card2)}
-.btn svg{width:20px;height:20px;flex:none}
-.cta{display:flex;flex-direction:column;gap:12px;margin-top:28px}
+.btn svg{width:18px;height:18px;flex:none}
+.cta{display:flex;flex-direction:row;gap:10px;margin-top:28px}
+.cta .btn{padding:15px 14px;font-size:.98rem;white-space:nowrap;min-width:0}
+.cta .btn-main{flex:1.5}.cta .btn-ghost{flex:1}
+@media (max-width:339px){.cta{flex-direction:column}}
 .fine{font-size:.82rem;color:var(--muted);margin-top:14px;display:flex;flex-wrap:wrap;gap:6px 14px}
 .fine span::before{content:"\2713";color:var(--green);font-weight:800;margin-right:6px}
 
@@ -271,14 +274,15 @@ footer a:hover{color:#fff}
 
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:70;padding:10px 16px calc(10px + env(safe-area-inset-bottom));
   background:rgba(6,7,12,.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid var(--line)}
-.dock .btn{width:100%}
+.dock{display:flex;gap:10px}
+.dock .btn{padding:14px;font-size:.95rem;white-space:nowrap;min-width:0}
+.dock .btn-main{flex:1.5}.dock .btn-ghost{flex:1;background:rgba(255,255,255,.1)}
 
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
 .reveal.in{opacity:1;transform:none}
 
 @media (min-width:820px){
   .nav{display:flex}
-  .cta{flex-direction:row}
   .hero{padding-top:70px}
   .hero-grid{grid-template-columns:1.1fr .9fr;align-items:center;gap:56px}
   .stats{grid-template-columns:repeat(4,1fr)}
@@ -295,6 +299,19 @@ footer a:hover{color:#fff}
   section{padding:84px 0}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+/* Fonts: Chelsea Market (body) + Cabin Sketch (display) */
+html{font-synthesis:none}
+body{font-family:"Chelsea Market",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+h1,h2,.brand,.eyebrow,.sec-head .tag,.stat b,.num,.istep b{font-family:"Cabin Sketch","Chelsea Market",system-ui,sans-serif;font-weight:700}
+h1{font-size:clamp(2.6rem,12vw,4.6rem);letter-spacing:0;line-height:1.02}
+h2{font-size:clamp(1.9rem,8vw,2.9rem);letter-spacing:0;line-height:1.08}
+.brand{font-size:1.3rem;letter-spacing:0}
+.eyebrow,.sec-head .tag{letter-spacing:.05em}
+.stat b{font-size:2rem;letter-spacing:0}
+.num{font-size:1.4rem}
+h3{letter-spacing:0}
+.lead{font-size:1rem}
+.phone,.phone *{font-family:system-ui,-apple-system,Roboto,"Segoe UI",sans-serif}
 </style>
 </head>
 <body>
@@ -317,7 +334,7 @@ footer a:hover{color:#fff}
       <div class="cta">
         <a class="btn btn-main" href="./downloads/GestureVolume-latest.apk" download="GestureVolume.apk">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>Download APK</a>
-        <a class="btn btn-ghost" href="#demo">Try the live demo</a>
+        <a class="btn btn-ghost" href="#demo">Try demo</a>
       </div>
       <p class="fine"><span>No account</span><span>No internet permission</span><span>No ads in the app</span></p>
     </div>
@@ -463,7 +480,8 @@ footer a:hover{color:#fff}
 </div></footer>
 
 <div class="dock"><a class="btn btn-main" href="./downloads/GestureVolume-latest.apk" download="GestureVolume.apk">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>Download APK</a></div>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>Download APK</a>
+  <a class="btn btn-ghost" href="#demo">Try demo</a></div>
 
 <script>
 (function(){
