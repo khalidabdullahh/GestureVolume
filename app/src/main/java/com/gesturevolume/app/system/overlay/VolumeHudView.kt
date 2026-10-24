@@ -8,6 +8,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.gesturevolume.app.R
 import com.gesturevolume.app.data.model.VolumeState
 
 /**
@@ -45,7 +46,11 @@ class VolumeHudView @JvmOverloads constructor(
             textSize = 40f
             gravity = Gravity.CENTER
             includeFontPadding = false
-            typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+            typeface = try {
+                resources.getFont(R.font.cabin_sketch_bold)
+            } catch (_: Exception) {
+                Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+            }
             setTextColor(Color.WHITE)
             setShadowLayer(dp(9f), 0f, dp(2f), Color.argb(200, 0, 0, 0))
             minWidth = dp(96f).toInt()
@@ -53,6 +58,15 @@ class VolumeHudView @JvmOverloads constructor(
 
         addView(arrowText)
         addView(percentText)
+    }
+
+    fun setTextSizeSp(sizeSp: Int) {
+        val size = sizeSp.coerceIn(20, 90).toFloat()
+        percentText.textSize = size
+        percentText.minWidth = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_SP, size * 2.4f, resources.displayMetrics
+        ).toInt()
+        arrowText.textSize = (size * 0.32f).coerceIn(10f, 22f)
     }
 
     /** Called when the HUD appears: show the current value without an arrow. */

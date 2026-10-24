@@ -26,6 +26,10 @@ class GesturePreferences(private val context: Context) {
         private val KEY_SHOW_PERCENTAGE = booleanPreferencesKey("show_percentage")
         private val KEY_HAPTIC_FEEDBACK = booleanPreferencesKey("haptic_feedback")
         private val KEY_DOUBLE_TAP_SCREENSHOT = booleanPreferencesKey("double_tap_screenshot")
+        private val KEY_HUD_PLACEMENT = stringPreferencesKey("hud_placement")
+        private val KEY_HUD_SIZE_SP = intPreferencesKey("hud_size_sp")
+        private val KEY_HUD_OFFSET_X_DP = intPreferencesKey("hud_offset_x_dp")
+        private val KEY_HUD_OFFSET_Y_DP = intPreferencesKey("hud_offset_y_dp")
         private val KEY_HUD_POSITION = stringPreferencesKey("hud_position")
         private val KEY_EDGE_SIDE = stringPreferencesKey("edge_side")
         private val KEY_EDGE_OPACITY = floatPreferencesKey("edge_opacity")
@@ -52,6 +56,14 @@ class GesturePreferences(private val context: Context) {
             com.gesturevolume.app.data.model.EdgeSide.RIGHT
         }
 
+        val placement = try {
+            com.gesturevolume.app.data.model.HudPlacement.valueOf(
+                preferences[KEY_HUD_PLACEMENT] ?: com.gesturevolume.app.data.model.HudPlacement.BESIDE_HANDLE.name
+            )
+        } catch (_: Exception) {
+            com.gesturevolume.app.data.model.HudPlacement.BESIDE_HANDLE
+        }
+
         GestureConfig(
             timeoutSeconds = preferences[KEY_TIMEOUT_SECONDS] ?: 3,
             swipeSensitivity = preferences[KEY_SWIPE_SENSITIVITY] ?: 1.0f,
@@ -59,6 +71,10 @@ class GesturePreferences(private val context: Context) {
             hapticFeedback = preferences[KEY_HAPTIC_FEEDBACK] ?: true,
             doubleTapScreenshot = preferences[KEY_DOUBLE_TAP_SCREENSHOT] ?: true,
             hudPosition = position,
+            hudPlacement = placement,
+            hudSizeSp = preferences[KEY_HUD_SIZE_SP] ?: 40,
+            hudOffsetXDp = preferences[KEY_HUD_OFFSET_X_DP] ?: 0,
+            hudOffsetYDp = preferences[KEY_HUD_OFFSET_Y_DP] ?: 0,
             edgeSide = edgeSide,
             edgeOpacity = preferences[KEY_EDGE_OPACITY] ?: 0.55f,
             edgeLengthDp = preferences[KEY_EDGE_LENGTH_DP] ?: 120,
@@ -80,6 +96,10 @@ class GesturePreferences(private val context: Context) {
             preferences[KEY_HAPTIC_FEEDBACK] = config.hapticFeedback
             preferences[KEY_DOUBLE_TAP_SCREENSHOT] = config.doubleTapScreenshot
             preferences[KEY_HUD_POSITION] = config.hudPosition.name
+            preferences[KEY_HUD_PLACEMENT] = config.hudPlacement.name
+            preferences[KEY_HUD_SIZE_SP] = config.hudSizeSp
+            preferences[KEY_HUD_OFFSET_X_DP] = config.hudOffsetXDp
+            preferences[KEY_HUD_OFFSET_Y_DP] = config.hudOffsetYDp
             preferences[KEY_EDGE_SIDE] = config.edgeSide.name
             preferences[KEY_EDGE_OPACITY] = config.edgeOpacity
             preferences[KEY_EDGE_LENGTH_DP] = config.edgeLengthDp

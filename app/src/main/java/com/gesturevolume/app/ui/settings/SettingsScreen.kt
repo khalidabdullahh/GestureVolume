@@ -1,5 +1,12 @@
 package com.gesturevolume.app.ui.settings
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
+import com.gesturevolume.app.data.model.HudPlacement
+import com.gesturevolume.app.ui.theme.CabinSketch
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -311,6 +318,136 @@ fun SettingsScreen(
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
+
+                // Swipe percentage HUD: size and position
+                Text(
+                    text = "Swipe Percentage",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "The transparent percentage shown while you drag the handle.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(DarkSurfaceVariant)
+                        .padding(vertical = 12.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "42%",
+                        color = Color.White,
+                        fontFamily = CabinSketch,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = config.hudSizeSp.sp
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    HudPlacement.entries.forEach { placement ->
+                        FilterChip(
+                            selected = config.hudPlacement == placement,
+                            onClick = { onUpdateConfig(config.copy(hudPlacement = placement)) },
+                            label = {
+                                Text(
+                                    when (placement) {
+                                        HudPlacement.BESIDE_HANDLE -> "Beside handle"
+                                        HudPlacement.CENTER -> "Center"
+                                        HudPlacement.TOP -> "Top"
+                                    }
+                                )
+                            },
+                            colors = FilterChipDefaults.filterChipColors(
+                                selectedContainerColor = PrimaryPurple,
+                                selectedLabelColor = TextPrimary,
+                                containerColor = DarkSurfaceVariant,
+                                labelColor = TextSecondary
+                            )
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Size", style = MaterialTheme.typography.titleMedium)
+                    Text(text = "${config.hudSizeSp} sp", color = PrimaryPurple)
+                }
+                Slider(
+                    value = config.hudSizeSp.toFloat(),
+                    onValueChange = { onUpdateConfig(config.copy(hudSizeSp = it.toInt())) },
+                    valueRange = 24f..72f,
+                    colors = SliderDefaults.colors(
+                        thumbColor = PrimaryPurple,
+                        activeTrackColor = PrimaryPurple,
+                        inactiveTrackColor = DarkSurfaceVariant
+                    )
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Move left / right", style = MaterialTheme.typography.titleMedium)
+                    Text(text = "${config.hudOffsetXDp} dp", color = PrimaryPurple)
+                }
+                Slider(
+                    value = config.hudOffsetXDp.toFloat(),
+                    onValueChange = { onUpdateConfig(config.copy(hudOffsetXDp = it.toInt())) },
+                    valueRange = -100f..100f,
+                    colors = SliderDefaults.colors(
+                        thumbColor = PrimaryPurple,
+                        activeTrackColor = PrimaryPurple,
+                        inactiveTrackColor = DarkSurfaceVariant
+                    )
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Move up / down", style = MaterialTheme.typography.titleMedium)
+                    Text(text = "${config.hudOffsetYDp} dp", color = PrimaryPurple)
+                }
+                Slider(
+                    value = config.hudOffsetYDp.toFloat(),
+                    onValueChange = { onUpdateConfig(config.copy(hudOffsetYDp = it.toInt())) },
+                    valueRange = -200f..200f,
+                    colors = SliderDefaults.colors(
+                        thumbColor = PrimaryPurple,
+                        activeTrackColor = PrimaryPurple,
+                        inactiveTrackColor = DarkSurfaceVariant
+                    )
+                )
+
+                TextButton(
+                    onClick = {
+                        onUpdateConfig(
+                            config.copy(
+                                hudPlacement = HudPlacement.BESIDE_HANDLE,
+                                hudSizeSp = 40,
+                                hudOffsetXDp = 0,
+                                hudOffsetYDp = 0
+                            )
+                        )
+                    }
+                ) {
+                    Text("Reset percentage position", color = PrimaryPurple)
+                }
+
+                Spacer(modifier = Modifier.height(14.dp))
 
                 // Haptic Feedback Switch
                 Row(

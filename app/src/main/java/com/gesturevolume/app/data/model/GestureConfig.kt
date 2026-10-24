@@ -7,6 +7,12 @@ enum class HudPosition {
     LEFT
 }
 
+enum class HudPlacement {
+    BESIDE_HANDLE,
+    CENTER,
+    TOP
+}
+
 enum class EdgeSide {
     RIGHT,
     LEFT
@@ -27,6 +33,10 @@ data class GestureConfig(
     val hapticFeedback: Boolean = true,
     val doubleTapScreenshot: Boolean = true, // Double-tap the handle to take a screenshot (Android 9+)
     val hudPosition: HudPosition = HudPosition.CENTER,
+    val hudPlacement: HudPlacement = HudPlacement.BESIDE_HANDLE, // Where the swipe percentage appears
+    val hudSizeSp: Int = 40,              // Size of the swipe percentage text
+    val hudOffsetXDp: Int = 0,            // Extra horizontal shift of the percentage
+    val hudOffsetYDp: Int = 0,            // Extra vertical shift of the percentage
     val edgeSide: EdgeSide = EdgeSide.RIGHT,
     val edgeOpacity: Float = 0.55f,       // Opacity of the edge trigger handle
     val edgeLengthDp: Int = 120,          // Length of the edge trigger handle

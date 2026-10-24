@@ -324,6 +324,7 @@ private fun SimulatedVolumeHudCard(volumeState: VolumeState) {
     Text(
         text = "${volumeState.percentage}%",
         color = Color.White,
+        fontFamily = com.gesturevolume.app.ui.theme.CabinSketch,
         fontWeight = FontWeight.Bold,
         fontSize = 44.sp,
         modifier = Modifier.padding(16.dp)

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.WindowManager
 import com.gesturevolume.app.data.model.EdgeSide
 import com.gesturevolume.app.data.model.GestureConfig
+import com.gesturevolume.app.data.model.HudPlacement
 import com.gesturevolume.app.data.model.VolumeState
 
 class OverlayManager(private val context: Context) {
@@ -31,9 +32,28 @@ class OverlayManager(private val context: Context) {
 
             if (!isHudAttached && hudView != null) {
                 val isRight = config.edgeSide == EdgeSide.RIGHT
-                val sideGravity = if (isRight) Gravity.END else Gravity.START
+                hudView?.setTextSizeSp(config.hudSizeSp)
 
-                // Appears right beside the handle and follows its height
+                val dx = config.hudOffsetXDp
+                val dy = config.hudOffsetYDp
+                val (hudGravity, hudX, hudY) = when (config.hudPlacement) {
+                    HudPlacement.BESIDE_HANDLE -> Triple(
+                        (if (isRight) Gravity.END else Gravity.START) or Gravity.CENTER_VERTICAL,
+                        dpToPx((44 + dx).coerceAtLeast(0).toFloat()).toInt(),
+                        dpToPx((config.edgeYOffsetDp + dy).toFloat()).toInt()
+                    )
+                    HudPlacement.CENTER -> Triple(
+                        Gravity.CENTER,
+                        dpToPx(dx.toFloat()).toInt(),
+                        dpToPx(dy.toFloat()).toInt()
+                    )
+                    HudPlacement.TOP -> Triple(
+                        Gravity.TOP or Gravity.CENTER_HORIZONTAL,
+                        dpToPx(dx.toFloat()).toInt(),
+                        dpToPx((60 + dy).coerceAtLeast(0).toFloat()).toInt()
+                    )
+                }
+
                 val params = WindowManager.LayoutParams(
                     WindowManager.LayoutParams.WRAP_CONTENT,
                     WindowManager.LayoutParams.WRAP_CONTENT,
@@ -44,9 +64,9 @@ class OverlayManager(private val context: Context) {
                             WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
                     PixelFormat.TRANSLUCENT
                 ).apply {
-                    this.gravity = sideGravity or Gravity.CENTER_VERTICAL
-                    this.x = dpToPx(44f).toInt()
-                    this.y = dpToPx(config.edgeYOffsetDp.toFloat()).toInt()
+                    this.gravity = hudGravity
+                    this.x = hudX
+                    this.y = hudY
                 }
 
                 hudView?.alpha = 0f
