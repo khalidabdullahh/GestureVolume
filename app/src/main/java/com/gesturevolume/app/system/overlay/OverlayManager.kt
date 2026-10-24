@@ -68,8 +68,7 @@ class OverlayManager(private val context: Context) {
                     WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
-                            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-                            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
                     PixelFormat.TRANSLUCENT
                 ).apply {
                     this.gravity = hudGravity
@@ -172,8 +171,7 @@ class OverlayManager(private val context: Context) {
                 heightPx,
                 WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-                        WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
                 PixelFormat.TRANSLUCENT
             ).apply {
                 this.gravity = gravity
@@ -207,8 +205,7 @@ class OverlayManager(private val context: Context) {
                     heightPx,
                     WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-                            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
                     PixelFormat.TRANSLUCENT
                 ).apply {
                     this.gravity = gravity

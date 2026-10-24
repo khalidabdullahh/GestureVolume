@@ -32,6 +32,7 @@ class GestureAccessibilityService : AccessibilityService() {
     private var currentConfig = GestureConfig()
     private var timeoutJob: Job? = null
     private var swipeFraction = 0f
+    private var lastSwipeLevel = 0
     private var screenReceiver: BroadcastReceiver? = null
 
     override fun onCreate() {
@@ -67,6 +68,7 @@ class GestureAccessibilityService : AccessibilityService() {
             onShowHudRequested = {
                 val volState = volumeController.refreshCurrentVolume()
                 swipeFraction = volState.progress
+                lastSwipeLevel = volState.currentVolume
                 if (currentConfig.hapticFeedback) {
                     hapticHelper.triggerGestureActivated()
                 }
@@ -127,9 +129,10 @@ class GestureAccessibilityService : AccessibilityService() {
         if (range <= 0) return
 
         val target = state.minVolume + Math.round(swipeFraction * range)
-        if (target == state.currentVolume) return
+        if (target == lastSwipeLevel) return
 
         val newState = volumeController.setVolume(target)
+        lastSwipeLevel = newState.currentVolume
         if (currentConfig.hapticFeedback) {
             if (newState.currentVolume == newState.maxVolume || newState.currentVolume == newState.minVolume) {
                 hapticHelper.triggerVolumeBoundary()
