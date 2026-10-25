@@ -180,11 +180,11 @@ header{position:sticky;top:0;z-index:60;background:rgba(6,7,12,.72);backdrop-fil
 .pulse{position:absolute;right:-6px;top:50%;width:20px;height:60px;margin-top:-30px;border-radius:99px;border:2px solid rgba(255,255,255,.7);animation:ring 1.8s ease-out infinite;pointer-events:none}
 .phone.left .pulse{right:auto;left:-6px}
 @keyframes ring{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.7,1.35);opacity:0}}
-.hint{position:absolute;top:50%;margin-top:-76px;right:38px;font-size:.66rem;font-weight:800;color:#fff;background:linear-gradient(120deg,#6366f1,#8b5cf6);
-  padding:6px 11px;border-radius:10px;z-index:4;pointer-events:none;box-shadow:0 8px 18px -6px rgba(99,102,241,.9);animation:nudge 1.5s ease-in-out infinite}
-.phone.left .hint{right:auto;left:38px}
-@keyframes nudge{50%{transform:translateX(6px)}}
-.phone.left .hint{animation-name:nudge-l}@keyframes nudge-l{50%{transform:translateX(-6px)}}
+.hint{position:absolute;top:calc(50% + 30px);right:2px;display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-size:.76rem;font-weight:700;color:#fff;white-space:nowrap;
+  z-index:4;pointer-events:none;text-shadow:0 2px 10px rgba(0,0,0,.7);animation:nudge 1.5s ease-in-out infinite}
+.hint svg{width:22px;height:26px;margin-right:2px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.phone.left .hint{right:auto;left:2px;align-items:flex-start}.phone.left .hint svg{transform:scaleX(-1)}
+@keyframes nudge{50%{transform:translateY(-6px)}}
 .hud{position:absolute;top:calc(50% + var(--y));right:52px;transform:translateY(-50%) translateX(10px);opacity:0;z-index:6;pointer-events:none;text-align:center;transition:opacity .15s,transform .15s}
 .phone.left .hud{right:auto;left:52px;transform:translateY(-50%) translateX(-10px)}
 .hud.show{opacity:1;transform:translateY(-50%)}
@@ -327,7 +327,7 @@ h3{letter-spacing:0}
 /* Demo swipe percentage uses the same font as the app HUD (Cabin Sketch Bold) */
 .phone .hud b,.phone .hud small{font-family:"Cabin Sketch","Chelsea Market",system-ui,sans-serif;font-weight:700}
 /* Demo "Tap me" label uses Cabin Sketch Bold too */
-.phone .hint{font-family:"Cabin Sketch","Chelsea Market",system-ui,sans-serif;font-weight:700;font-size:.76rem;letter-spacing:.02em}
+.phone .hint{font-family:"Cabin Sketch","Chelsea Market",system-ui,sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.02em}
 .hud b{font-size:2.5rem;line-height:1;letter-spacing:.01em;text-shadow:0 2px 12px rgba(0,0,0,.75)}
 .hud small{font-size:.7rem}
 @media (min-width:820px){h1{font-size:clamp(2.8rem,5vw,4.2rem)}h2{font-size:clamp(2rem,3.6vw,2.7rem)}}
@@ -378,7 +378,7 @@ h3{letter-spacing:0}
         <div class="flash" id="flash"></div>
         <div class="toast" id="toast"><svg class="ico" aria-hidden="true"><use href="#i-camera"/></svg>Screenshot saved</div>
         <div class="zone" id="zone" role="button" tabindex="0" aria-label="Volume handle">
-          <div class="hint" id="hint">Tap me</div>
+          <div class="hint" id="hint"><svg viewBox="0 0 22 26" aria-hidden="true"><path d="M9 24C9 16 15 13 14 3"/><path d="M9 8l5-5 5 5"/></svg><span>Tap Me</span></div>
           <div class="handle" id="handle"><i></i><i></i><i></i></div>
           <div class="pulse" id="pulse"></div>
         </div>
