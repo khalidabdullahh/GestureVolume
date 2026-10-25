@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06070c">
+<title>Gesture Volume Blog — Android Audio Guides, Tips &amp; Fixes</title>
+<meta name="description" content="In-depth tutorials, expert guides, and technical walkthroughs on controlling Android audio, fixing broken physical buttons, and maximizing mobile accessibility.">
+<meta name="keywords" content="gesture volume blog, android volume guides, fix broken volume button, on screen volume control, android tips">
+<meta name="author" content="Khalid Abdullah">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://khalidabdullahh.github.io/GestureVolume/blog/">
+<link rel="icon" href="../assets/app_icon_512x512.png">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://khalidabdullahh.github.io/GestureVolume/blog/">
+<meta property="og:site_name" content="Gesture Volume">
+<meta property="og:title" content="Gesture Volume Blog — Android Audio Guides &amp; Fixes">
+<meta property="og:description" content="Expert guides and tutorials on controlling Android audio when physical buttons are broken or inaccessible.">
+<meta property="og:image" content="https://raw.githubusercontent.com/khalidabdullahh/GestureVolume/main/docs/assets/feature_banner_1024x500.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Chelsea+Market&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #06070c;
+  --bg2: #0b0d16;
+  --card: rgba(255, 255, 255, 0.045);
+  --card2: rgba(255, 255, 255, 0.075);
+  --line: rgba(255, 255, 255, 0.09);
+  --text: #f4f6fb;
+  --muted: #a3adc2;
+  --subtle: #6b7280;
+  --brand: #6366f1;
+  --cyan: #22d3ee;
+  --green: #34d399;
+  --grad: linear-gradient(120deg, #6366f1 0%, #8b5cf6 50%, #22d3ee 100%);
+  --r: 20px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  padding-bottom: 60px;
+}
+a { color: inherit; text-decoration: none; }
+.wrap { width: 100%; max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+h1, h2, h3, .brand { font-family: "Cabin Sketch", "Chelsea Market", system-ui, sans-serif; font-weight: 700; }
+h1 { font-size: clamp(2.3rem, 7vw, 3.6rem); margin-bottom: 16px; line-height: 1.1; }
+p.lead { color: var(--muted); font-size: 1.15rem; max-width: 640px; margin-bottom: 40px; }
+
+header {
+  position: sticky; top: 0; z-index: 60;
+  background: rgba(6, 7, 12, 0.85);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-bar { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; font-size: 1.25rem; font-weight: 800; }
+.brand img { width: 34px; height: 34px; border-radius: 10px; box-shadow: 0 4px 14px -3px rgba(99,102,241,0.6); }
+.brand b { color: var(--cyan); }
+.nav-links { display: flex; gap: 24px; font-size: 0.92rem; font-weight: 600; color: var(--muted); align-items: center; }
+.nav-links a:hover { color: #ffffff; }
+
+.post-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 32px;
+  margin-bottom: 30px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  display: block;
+}
+.post-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+.post-badge {
+  display: inline-block;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(129, 140, 248, 0.35);
+  color: #c7d2fe;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+.post-title {
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 14px;
+  line-height: 1.25;
+}
+.post-snippet {
+  color: #cbd5e1;
+  font-size: 1.05rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+.post-meta span.author { color: #fff; font-weight: 600; }
+
+footer {
+  border-top: 1px solid var(--line);
+  padding-top: 40px;
+  margin-top: 60px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.footer-links { display: flex; gap: 20px; }
+.footer-links a:hover { color: #fff; }
+
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .post-card { padding: 22px 18px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-bar">
+    <a href="../" class="brand">
+      <img src="../assets/app_icon_512x512.png" alt="Gesture Volume Logo" width="34" height="34">
+      <span>Gesture<b>Volume</b></span>
+    </a>
+    <nav class="nav-links">
+      <a href="../">Home</a>
+      <a href="../#features">Features</a>
+      <a href="../#demo">Live Demo</a>
+      <a href="../seo/">Device Guides</a>
+      <a href="./" style="color:var(--cyan)">Blog</a>
+      <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" style="padding-top:48px;">
+  <span class="post-badge">Engineering &amp; Tutorials</span>
+  <h1>Gesture Volume <span class="grad">Blog &amp; Knowledge Base</span></h1>
+  <p class="lead">
+    Practical tutorials, technical breakdowns, and deep dives into Android volume control, hardware repair alternatives, and mobile accessibility.
+  </p>
+
+  <a href="./how-to-control-volume-on-android-without-physical-buttons.html" class="post-card">
+    <span class="post-badge">Pillar Guide · 2,400+ Words</span>
+    <h2 class="post-title">How to Control Volume on Android Without Physical Buttons: 5 Working Methods (2026 Guide)</h2>
+    <p class="post-snippet">
+      Broken or sticky volume rocker? Discover the 5 proven ways to control your Android volume without pressing hardware keys. From the lightweight Gesture Volume tap-to-open handle and Android's built-in Accessibility Menu to voice actions and OEM-specific settings.
+    </p>
+    <div class="post-meta">
+      <span class="author">Khalid Abdullah</span>
+      <span>·</span>
+      <span>October 2026</span>
+      <span>·</span>
+      <span>12 min read</span>
+      <span>·</span>
+      <span style="color:var(--cyan); font-weight:700;">Read Full Guide &rarr;</span>
+    </div>
+  </a>
+
+  <!-- Additional Hub Links -->
+  <div style="background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:28px; margin-top:40px;">
+    <h3 style="margin-top:0; color:#fff; font-size:1.3rem;">Looking for Device-Specific Troubleshooting?</h3>
+    <p style="color:var(--muted); margin-bottom:16px;">
+      Explore our comprehensive database of over 100 tailored guides covering Samsung Galaxy, Xiaomi/Redmi, Google Pixel, OnePlus, Motorola, and more.
+    </p>
+    <a href="../seo/" style="color:var(--cyan); font-weight:700;">Browse All 100 Device Guides &rarr;</a>
+  </div>
+</main>
+
+<footer class="wrap">
+  <div class="footer-row">
+    <div>
+      <b style="color:#fff">Gesture Volume</b> · Privacy-first Android utility
+    </div>
+    <div class="footer-links">
+      <a href="../">Home</a>
+      <a href="./">Blog</a>
+      <a href="../seo/">Guides</a>
+      <a href="https://www.amazon.com/dp/B0HKC7R38G" target="_blank" rel="noopener noreferrer">Amazon Appstore</a>
+      <a href="https://github.com/khalidabdullahh/GestureVolume" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
