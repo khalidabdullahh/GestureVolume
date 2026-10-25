@@ -92,14 +92,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Chelsea+Market&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    fontFamily: { sans: ['"Chelsea Market"', 'sans-serif'] },
                     colors: {
                         brand: {
                             400: '#a78bfa', 500: '#8b5cf6', 600: '#6c5ce7', 700: '#5843e0',
@@ -112,7 +112,9 @@
         }
     </script>
     <style>
-        body { background-color: #0a0c14; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        body { background-color: #0a0c14; color: #f8fafc; font-family: 'Chelsea Market', sans-serif; overflow-x: hidden; }
+        html { font-synthesis: none; }
+        h1, h2 { font-family: 'Cabin Sketch', 'Chelsea Market', sans-serif; font-weight: 700; }
         .glass-card { background: rgba(19, 22, 34, 0.75); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .glass-nav { background: rgba(10, 12, 20, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
         .bmc-btn { background: #FFDD00; color: #000; font-weight: 700; }
