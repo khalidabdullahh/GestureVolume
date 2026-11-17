@@ -151,7 +151,7 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    text = "Custom uses one colour you pick. Adaptive draws a light handle with a dark outline, so it stays visible on both white and black backgrounds.",
+                    text = "Custom uses one colour you pick. Adaptive turns the handle black on light backgrounds and white on dark ones automatically (Android 11+; older phones get a light handle with a dark outline).",
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -208,7 +208,7 @@ fun SettingsScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    listOf(Color.White, Color.Black).forEach { bg ->
+                    listOf(Color.White to true, Color.Black to false).forEach { (bg, bgIsLight) ->
                         Box(
                             modifier = Modifier
                                 .weight(1f)
@@ -218,7 +218,7 @@ fun SettingsScreen(
                                 .border(1.dp, DividerColor, RoundedCornerShape(12.dp)),
                             contentAlignment = Alignment.CenterEnd
                         ) {
-                            HandlePreview(config)
+                            HandlePreview(config, bgIsLight)
                         }
                     }
                 }
@@ -681,11 +681,14 @@ private fun SettingsSectionHeader(title: String, icon: ImageVector) {
 
 // Small static preview of the edge handle using the same colour rules as the real overlay
 @Composable
-private fun HandlePreview(config: GestureConfig) {
+private fun HandlePreview(config: GestureConfig, backgroundIsLight: Boolean) {
     val adaptive = config.handleColorMode == HandleColorMode.ADAPTIVE
-    val fill = if (adaptive) Color.White else Color(config.handleColor)
+    val fill = when {
+        adaptive -> if (backgroundIsLight) Color(0xFF121212) else Color.White
+        else -> Color(config.handleColor)
+    }
     val lum = 0.299f * fill.red + 0.587f * fill.green + 0.114f * fill.blue
-    val outline = if (adaptive || lum > 0.5f) Color(0xFF0F172A) else Color.White
+    val outline = if (lum > 0.5f) Color(0xFF0F172A) else Color.White
     Box(
         modifier = Modifier
             .padding(end = 4.dp)
@@ -694,8 +697,8 @@ private fun HandlePreview(config: GestureConfig) {
             .clip(RoundedCornerShape(7.dp))
             .background(fill.copy(alpha = 0.95f))
             .border(
-                width = if (adaptive) 1.5.dp else 1.dp,
-                color = outline.copy(alpha = if (adaptive) 0.85f else 0.45f),
+                width = 1.dp,
+                color = if (adaptive) Color.Transparent else outline.copy(alpha = 0.45f),
                 shape = RoundedCornerShape(7.dp)
             )
     )

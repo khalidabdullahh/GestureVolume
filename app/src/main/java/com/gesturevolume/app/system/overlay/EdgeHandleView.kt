@@ -53,12 +53,53 @@ class EdgeHandleView(
     private var pendingTap: Runnable? = null
     private var longPressFired = false
 
+    // Smart adaptive colour: true once the service can measure the background brightness (Android 11+)
+    private var smartAdaptive = false
+    private var toneProgress = 1f // 0 = black handle (light background), 1 = white handle (dark background)
+    private var toneAnimator: ValueAnimator? = null
+
+    fun setAdaptiveSampling(enabled: Boolean) {
+        if (smartAdaptive == enabled) return
+        smartAdaptive = enabled
+        invalidate()
+    }
+
+    fun setBackgroundIsLight(isLight: Boolean) {
+        val target = if (isLight) 0f else 1f
+        toneAnimator?.cancel()
+        toneAnimator = ValueAnimator.ofFloat(toneProgress, target).apply {
+            duration = 260
+            addUpdateListener {
+                toneProgress = it.animatedValue as Float
+                invalidate()
+            }
+            start()
+        }
+    }
+
+    // Smoothly fades the handle away, then runs the action (used right before the screen is locked)
+    private fun fadeOutThen(action: () -> Unit) {
+        animateExpansion(0f, durationMs = 160)
+        animate().cancel()
+        animate().alpha(0f).setDuration(160).withEndAction { action() }.start()
+    }
+
+    // Brings the handle back after a fade-out (screen on again, or the lock did not happen)
+    fun restoreAfterFade() {
+        animate().cancel()
+        visibility = VISIBLE
+        isInteracting = false
+        animateExpansion(0f, durationMs = 200)
+        alpha = currentConfig.edgeOpacity
+    }
+
     // Press & hold (without moving) -> turn the screen off
     private val longPressRunnable = Runnable {
         if (!isFingerDown || isDragging || !currentConfig.longPressScreenOff) return@Runnable
         longPressFired = true
         performHapticFeedback(android.view.HapticFeedbackConstants.LONG_PRESS)
-        onLongPress()
+        // Fade the handle out first so there is no bright flash right before the screen turns off
+        fadeOutThen { onLongPress() }
     }
 
     // A single tap waits briefly so a second tap can turn it into a double tap (screenshot)
@@ -103,6 +144,7 @@ class EdgeHandleView(
         pendingTap?.let { removeCallbacks(it) }
         pendingTap = null
         expandAnimator?.cancel()
+        toneAnimator?.cancel()
         super.onDetachedFromWindow()
     }
 
@@ -169,19 +211,28 @@ class EdgeHandleView(
 
         // ---- Colours: CUSTOM = one fixed colour, ADAPTIVE = light fill + dark outline (visible on any background)
         val adaptive = currentConfig.handleColorMode == HandleColorMode.ADAPTIVE
-        val baseColor = if (adaptive) Color.WHITE else currentConfig.handleColor
+        // smart = real adaptive: black handle on light backgrounds, white handle on dark backgrounds
+        val smart = adaptive && smartAdaptive
+        val baseColor = when {
+            smart -> {
+                val v = (18 + (255 - 18) * toneProgress).toInt().coerceIn(0, 255)
+                Color.rgb(v, v, v)
+            }
+            adaptive -> Color.WHITE
+            else -> currentConfig.handleColor
+        }
         val r = Color.red(baseColor)
         val g = Color.green(baseColor)
         val b = Color.blue(baseColor)
         val lum = (0.299f * r + 0.587f * g + 0.114f * b) / 255f
-        // Outline: dark slate for light colours, white for dark colours (always contrasts with the fill)
+        val twoTone = adaptive && !smart // fallback for Android 10 and older: light fill + dark outline
         val outlineR: Int; val outlineG: Int; val outlineB: Int
-        if (adaptive || lum > 0.5f) { outlineR = 15; outlineG = 23; outlineB = 42 } else { outlineR = 255; outlineG = 255; outlineB = 255 }
+        if (twoTone || lum > 0.5f) { outlineR = 15; outlineG = 23; outlineB = 42 } else { outlineR = 255; outlineG = 255; outlineB = 255 }
 
         // Soft glow behind the pill while it is awake
         val glowAlpha = (50 * expandProgress).toInt().coerceIn(0, 255)
         if (glowAlpha > 0) {
-            if (adaptive) glowPaint.color = Color.argb(glowAlpha, outlineR, outlineG, outlineB)
+            if (twoTone) glowPaint.color = Color.argb(glowAlpha, outlineR, outlineG, outlineB)
             else glowPaint.color = Color.argb(glowAlpha, r, g, b)
             val gl = dpToPx(2.5f)
             glowRect.set(pillRect.left - gl, pillRect.top - gl, pillRect.right + gl, pillRect.bottom + gl)
@@ -193,12 +244,14 @@ class EdgeHandleView(
         pillPaint.color = Color.argb(baseAlpha, r, g, b)
         canvas.drawRoundRect(pillRect, cornerRadius, cornerRadius, pillPaint)
 
-        // Outline (stronger in adaptive mode so the handle never disappears on a white background)
-        val borderAlpha = if (adaptive) (190 + (65 * expandProgress)).toInt().coerceIn(0, 255)
-                          else (60 + (90 * expandProgress)).toInt().coerceIn(0, 255)
-        borderPaint.strokeWidth = dpToPx(if (adaptive) 1.5f else 1f)
-        borderPaint.color = Color.argb(borderAlpha, outlineR, outlineG, outlineB)
-        canvas.drawRoundRect(pillRect, cornerRadius, cornerRadius, borderPaint)
+        // Outline: strong only in the two-tone fallback, none in smart adaptive mode
+        if (!smart) {
+            val borderAlpha = if (twoTone) (190 + (65 * expandProgress)).toInt().coerceIn(0, 255)
+                              else (60 + (90 * expandProgress)).toInt().coerceIn(0, 255)
+            borderPaint.strokeWidth = dpToPx(if (twoTone) 1.5f else 1f)
+            borderPaint.color = Color.argb(borderAlpha, outlineR, outlineG, outlineB)
+            canvas.drawRoundRect(pillRect, cornerRadius, cornerRadius, borderPaint)
+        }
 
         // Draw tactile center notches (fades in as it expands)
         if (expandProgress > 0.25f) {

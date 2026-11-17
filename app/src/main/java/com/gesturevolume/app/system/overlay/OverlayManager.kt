@@ -23,6 +23,22 @@ class OverlayManager(private val context: Context) {
 
     private var edgeHandleView: EdgeHandleView? = null
     private var isEdgeHandleAttached = false
+    private var smartAdaptive = false
+    private var backgroundIsLight: Boolean? = null
+
+    fun setAdaptiveSampling(enabled: Boolean) {
+        mainHandler.post {
+            smartAdaptive = enabled
+            edgeHandleView?.setAdaptiveSampling(enabled)
+        }
+    }
+
+    fun setHandleBackgroundLight(isLight: Boolean) {
+        mainHandler.post {
+            backgroundIsLight = isLight
+            edgeHandleView?.setBackgroundIsLight(isLight)
+        }
+    }
 
     fun showHud(volumeState: VolumeState, config: GestureConfig) {
         mainHandler.post {
@@ -158,6 +174,8 @@ class OverlayManager(private val context: Context) {
                 onLongPress = onLongPress
             )
             view.updateConfig(config)
+            view.setAdaptiveSampling(smartAdaptive)
+            backgroundIsLight?.let { view.setBackgroundIsLight(it) }
 
             val widthPx = dpToPx(32f).toInt()
             val heightPx = dpToPx(config.edgeLengthDp.toFloat()).toInt()
@@ -223,7 +241,8 @@ class OverlayManager(private val context: Context) {
 
     fun setEdgeHandleVisible(visible: Boolean) {
         mainHandler.post {
-            edgeHandleView?.visibility = if (visible) View.VISIBLE else View.INVISIBLE
+            if (visible) edgeHandleView?.restoreAfterFade()
+            else edgeHandleView?.visibility = View.INVISIBLE
         }
     }
 

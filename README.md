@@ -58,7 +58,7 @@ Gesture Volume is 100% free, offline, ad-free, and open-source. If this project 
 
 - **Zero Permanent Screen Clutter**: No persistent floating bubbles or edges.
 - **Global In-App Activation**: Works seamlessly across any foreground Android application.
-- **Handle Colour**: pick any custom colour, or use *Adaptive* (light fill + dark outline) so the handle stays visible on both white and black backgrounds.
+- **Handle Colour**: pick any custom colour, or use *Adaptive*: the handle turns black on light backgrounds and white on dark ones (Android 11+; it only measures a few pixels next to the handle on-device, nothing is stored or sent).
 - **Press & Hold = Screen Off**: lock the screen straight from the handle.
 - **Tap or Swipe**: Tap the handle to open the native volume bar, or swipe it up/down to change volume directly. Taps are told apart from swipes using the system touch slop.
 - **Smooth AudioManager Integration**: Native `STREAM_MUSIC` control respecting real device limits.

@@ -6,5 +6,7 @@
     android:accessibilityFlags="flagDefault"
     android:canRetrieveWindowContent="false"
     android:canPerformGestures="false"
+    android:canTakeScreenshot="true"
+    android:accessibilityEventTypes="typeWindowStateChanged|typeWindowContentChanged|typeViewScrolled"
     android:settingsActivity="com.gesturevolume.app.ui.MainActivity" />
 

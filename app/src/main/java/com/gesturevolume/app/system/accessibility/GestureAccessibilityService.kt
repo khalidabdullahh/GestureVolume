@@ -5,7 +5,15 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
 import android.os.Build
+import android.os.PowerManager
+import android.os.SystemClock
+import android.view.Display
+import androidx.annotation.RequiresApi
+import com.gesturevolume.app.data.model.EdgeSide
+import com.gesturevolume.app.data.model.HandleColorMode
+import kotlinx.coroutines.withContext
 import android.widget.Toast
 import android.view.accessibility.AccessibilityEvent
 import com.gesturevolume.app.data.model.GestureConfig
@@ -46,6 +54,7 @@ class GestureAccessibilityService : AccessibilityService() {
             gesturePreferences.configFlow.collect { config ->
                 currentConfig = config
                 overlayManager.updateEdgeHandle(config)
+                requestBackgroundSample()
             }
         }
 
@@ -57,6 +66,7 @@ class GestureAccessibilityService : AccessibilityService() {
         ServiceStateHolder.setConnected(true)
         volumeController.refreshCurrentVolume()
         attachHandle()
+        requestBackgroundSample()
     }
 
     private fun attachHandle() {
@@ -102,6 +112,7 @@ class GestureAccessibilityService : AccessibilityService() {
             attachHandle()
         }
         overlayManager.setEdgeHandleVisible(true)
+        requestBackgroundSample()
     }
 
     // Press & hold on the handle: lock the screen / turn it off (Android 9+)
@@ -110,9 +121,129 @@ class GestureAccessibilityService : AccessibilityService() {
         overlayManager.hideHud()
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
             Toast.makeText(this, "Screen off needs Android 9 or newer", Toast.LENGTH_SHORT).show()
+            overlayManager.setEdgeHandleVisible(true)
             return
         }
-        performGlobalAction(GLOBAL_ACTION_LOCK_SCREEN)
+        // The handle has already faded out smoothly, so the screen turns off without a flash
+        if (!performGlobalAction(GLOBAL_ACTION_LOCK_SCREEN)) {
+            overlayManager.setEdgeHandleVisible(true)
+        }
+    }
+
+    // ---- Adaptive handle colour: measure the brightness next to the handle (Android 11+) ----
+    private var lastSampleAt = 0L
+    private var sampleScheduled = false
+    private var backgroundLight: Boolean? = null
+    private var sampleFailures = 0
+
+    private fun requestBackgroundSample() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
+        if (currentConfig.handleColorMode != HandleColorMode.ADAPTIVE) return
+        if (sampleScheduled) return
+        val wait = (1200L - (SystemClock.uptimeMillis() - lastSampleAt)).coerceAtLeast(200L)
+        sampleScheduled = true
+        serviceScope.launch {
+            delay(wait)
+            sampleScheduled = false
+            sampleBackground()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun sampleBackground() {
+        val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+        if (!pm.isInteractive) return
+        lastSampleAt = SystemClock.uptimeMillis()
+        val config = currentConfig
+        try {
+            takeScreenshot(Display.DEFAULT_DISPLAY, mainExecutor, object : TakeScreenshotCallback {
+                override fun onSuccess(screenshot: ScreenshotResult) {
+                    serviceScope.launch {
+                        val lum = withContext(Dispatchers.Default) { measureBackground(screenshot, config) }
+                        if (lum == null) onSampleFailed() else onSampleMeasured(lum)
+                    }
+                }
+
+                override fun onFailure(errorCode: Int) {
+                    onSampleFailed()
+                }
+            })
+        } catch (_: Exception) {
+            onSampleFailed()
+        }
+    }
+
+    // Average brightness (0..1) of a few pixels right next to the handle. Nothing is stored or sent.
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun measureBackground(screenshot: ScreenshotResult, config: GestureConfig): Float? {
+        val buffer = screenshot.hardwareBuffer
+        try {
+            val hw = Bitmap.wrapHardwareBuffer(buffer, screenshot.colorSpace) ?: return null
+            val sw = hw.copy(Bitmap.Config.ARGB_8888, false)
+            hw.recycle()
+            if (sw == null) return null
+
+            val density = resources.displayMetrics.density
+            val w = sw.width
+            val h = sw.height
+            val windowPx = 32f * density
+            val x0: Int
+            val x1: Int
+            if (config.edgeSide == EdgeSide.RIGHT) {
+                x1 = (w - windowPx - 2f * density).toInt()
+                x0 = (x1 - 14f * density).toInt()
+            } else {
+                x0 = (windowPx + 2f * density).toInt()
+                x1 = (x0 + 14f * density).toInt()
+            }
+            val cy = h / 2f + config.edgeYOffsetDp * density
+            val half = config.edgeLengthDp * density / 2f
+            val y0 = (cy - half).toInt().coerceIn(0, h - 1)
+            val y1 = (cy + half).toInt().coerceIn(0, h - 1)
+            val cx0 = x0.coerceIn(0, w - 1)
+            val cx1 = x1.coerceIn(0, w - 1)
+
+            var sum = 0.0
+            var n = 0
+            val stepsX = 4
+            val stepsY = 12
+            for (i in 0..stepsY) {
+                val y = y0 + (y1 - y0) * i / stepsY
+                for (j in 0..stepsX) {
+                    val x = cx0 + (cx1 - cx0) * j / stepsX
+                    val px = sw.getPixel(x, y)
+                    sum += 0.299 * android.graphics.Color.red(px) +
+                        0.587 * android.graphics.Color.green(px) +
+                        0.114 * android.graphics.Color.blue(px)
+                    n++
+                }
+            }
+            sw.recycle()
+            return if (n == 0) null else (sum / n / 255.0).toFloat()
+        } catch (_: Exception) {
+            return null
+        } finally {
+            try { buffer.close() } catch (_: Exception) {}
+        }
+    }
+
+    private fun onSampleMeasured(lum: Float) {
+        sampleFailures = 0
+        // Hysteresis so the handle does not flicker on mid-grey backgrounds
+        val light = when {
+            lum > 0.58f -> true
+            lum < 0.42f -> false
+            else -> backgroundLight ?: (lum > 0.5f)
+        }
+        backgroundLight = light
+        overlayManager.setAdaptiveSampling(true)
+        overlayManager.setHandleBackgroundLight(light)
+    }
+
+    private fun onSampleFailed() {
+        sampleFailures++
+        // If measuring keeps failing, fall back to the light handle with a dark outline
+        if (sampleFailures >= 3) overlayManager.setAdaptiveSampling(false)
     }
 
     // Double-tap on the handle: hide it for a moment so it is not in the shot, then take a screenshot
@@ -190,8 +321,10 @@ class GestureAccessibilityService : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        // No scraping or inspecting accessibility content.
-        // Pure event pass-through to strictly comply with Android privacy and Play Protect policies.
+        // No scraping or inspecting accessibility content: events are only used as a signal that
+        // the screen changed, so the handle colour can be re-measured (throttled to ~1 per second).
+        if (event == null || event.packageName == packageName) return
+        requestBackgroundSample()
     }
 
     override fun onInterrupt() {
