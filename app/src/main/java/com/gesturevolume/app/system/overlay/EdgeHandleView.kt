@@ -98,8 +98,8 @@ class EdgeHandleView(
         if (!isFingerDown || isDragging || !currentConfig.longPressScreenOff) return@Runnable
         longPressFired = true
         performHapticFeedback(android.view.HapticFeedbackConstants.LONG_PRESS)
-        // Fade the handle out first so there is no bright flash right before the screen turns off
-        fadeOutThen { onLongPress() }
+        // The service fades the whole screen to black (covers the handle) and then locks
+        onLongPress()
     }
 
     // A single tap waits briefly so a second tap can turn it into a double tap (screenshot)

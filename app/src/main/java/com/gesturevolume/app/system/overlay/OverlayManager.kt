@@ -23,8 +23,64 @@ class OverlayManager(private val context: Context) {
 
     private var edgeHandleView: EdgeHandleView? = null
     private var isEdgeHandleAttached = false
+    private var blackoutView: View? = null
     private var smartAdaptive = false
     private var backgroundIsLight: Boolean? = null
+
+    // Fades the whole screen to black (like the screen switching off), then calls onFull
+    fun fadeToBlack(durationMs: Long, onFull: () -> Unit) {
+        mainHandler.post {
+            removeBlackoutNow()
+            val v = View(context).apply {
+                setBackgroundColor(android.graphics.Color.BLACK)
+                alpha = 0f
+            }
+            val params = WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
+                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                PixelFormat.TRANSLUCENT
+            )
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                params.layoutInDisplayCutoutMode =
+                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+            }
+            try {
+                windowManager.addView(v, params)
+                blackoutView = v
+                v.animate().alpha(1f).setDuration(durationMs)
+                    .setInterpolator(android.view.animation.DecelerateInterpolator(1.2f))
+                    .withEndAction { onFull() }
+                    .start()
+            } catch (_: Exception) {
+                onFull()
+            }
+        }
+    }
+
+    // Removes the black cover (fade = true fades it back out smoothly, e.g. when locking did not happen)
+    fun clearBlackout(fade: Boolean) {
+        mainHandler.post {
+            val v = blackoutView ?: return@post
+            if (fade) {
+                v.animate().cancel()
+                v.animate().alpha(0f).setDuration(200).withEndAction { removeBlackoutNow() }.start()
+            } else {
+                removeBlackoutNow()
+            }
+        }
+    }
+
+    private fun removeBlackoutNow() {
+        val v = blackoutView ?: return
+        v.animate().cancel()
+        try { windowManager.removeViewImmediate(v) } catch (_: Exception) {}
+        blackoutView = null
+    }
 
     fun setAdaptiveSampling(enabled: Boolean) {
         mainHandler.post {
@@ -259,6 +315,7 @@ class OverlayManager(private val context: Context) {
     }
 
     fun cleanup() {
+        removeBlackoutNow()
         hideHud()
         detachEdgeHandle()
     }

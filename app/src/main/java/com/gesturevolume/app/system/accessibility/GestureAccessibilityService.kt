@@ -107,6 +107,7 @@ class GestureAccessibilityService : AccessibilityService() {
 
     // Make sure the handle exists, is visible and the volume cache is fresh (after idle / screen on)
     private fun healHandle() {
+        overlayManager.clearBlackout(false)
         volumeController.refreshCurrentVolume()
         if (!overlayManager.isHandleAttached()) {
             attachHandle()
@@ -115,7 +116,7 @@ class GestureAccessibilityService : AccessibilityService() {
         requestBackgroundSample()
     }
 
-    // Press & hold on the handle: lock the screen / turn it off (Android 9+)
+    // Press & hold on the handle: fade the screen to black, then lock (Android 9+)
     private fun turnScreenOffFromHandle() {
         timeoutJob?.cancel()
         overlayManager.hideHud()
@@ -124,9 +125,25 @@ class GestureAccessibilityService : AccessibilityService() {
             overlayManager.setEdgeHandleVisible(true)
             return
         }
-        // The handle has already faded out smoothly, so the screen turns off without a flash
-        if (!performGlobalAction(GLOBAL_ACTION_LOCK_SCREEN)) {
-            overlayManager.setEdgeHandleVisible(true)
+        // No colour measuring while the screen is going off
+        lastSampleAt = SystemClock.uptimeMillis() + 3000L
+        overlayManager.fadeToBlack(220) {
+            if (!performGlobalAction(GLOBAL_ACTION_LOCK_SCREEN)) {
+                overlayManager.clearBlackout(true)
+                overlayManager.setEdgeHandleVisible(true)
+                return@fadeToBlack
+            }
+            // Keep the black cover until the display is really off so the lock screen never flashes
+            serviceScope.launch {
+                delay(1800)
+                val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+                if (pm.isInteractive) {
+                    overlayManager.clearBlackout(true)
+                    overlayManager.setEdgeHandleVisible(true)
+                } else {
+                    overlayManager.clearBlackout(false)
+                }
+            }
         }
     }
 
