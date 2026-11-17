@@ -14,6 +14,7 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import com.gesturevolume.app.data.model.EdgeSide
 import com.gesturevolume.app.data.model.GestureConfig
+import com.gesturevolume.app.data.model.HandleColorMode
 import kotlin.math.abs
 
 private const val DOUBLE_TAP_WINDOW_MS = 200L
@@ -25,7 +26,8 @@ class EdgeHandleView(
     private val onShowHudRequested: () -> Unit,
     private val onGestureFinished: () -> Unit,
     private val onTap: () -> Unit,
-    private val onDoubleTap: () -> Unit
+    private val onDoubleTap: () -> Unit,
+    private val onLongPress: () -> Unit
 ) : View(context) {
 
     private val pillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -49,6 +51,15 @@ class EdgeHandleView(
     private var isDragging = false
     private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
     private var pendingTap: Runnable? = null
+    private var longPressFired = false
+
+    // Press & hold (without moving) -> turn the screen off
+    private val longPressRunnable = Runnable {
+        if (!isFingerDown || isDragging || !currentConfig.longPressScreenOff) return@Runnable
+        longPressFired = true
+        performHapticFeedback(android.view.HapticFeedbackConstants.LONG_PRESS)
+        onLongPress()
+    }
 
     // A single tap waits briefly so a second tap can turn it into a double tap (screenshot)
     private fun handleTap() {
@@ -88,6 +99,7 @@ class EdgeHandleView(
 
     override fun onDetachedFromWindow() {
         removeCallbacks(collapseRunnable)
+        removeCallbacks(longPressRunnable)
         pendingTap?.let { removeCallbacks(it) }
         pendingTap = null
         expandAnimator?.cancel()
@@ -155,29 +167,43 @@ class EdgeHandleView(
 
         val cornerRadius = currentWidth / 2f
 
+        // ---- Colours: CUSTOM = one fixed colour, ADAPTIVE = light fill + dark outline (visible on any background)
+        val adaptive = currentConfig.handleColorMode == HandleColorMode.ADAPTIVE
+        val baseColor = if (adaptive) Color.WHITE else currentConfig.handleColor
+        val r = Color.red(baseColor)
+        val g = Color.green(baseColor)
+        val b = Color.blue(baseColor)
+        val lum = (0.299f * r + 0.587f * g + 0.114f * b) / 255f
+        // Outline: dark slate for light colours, white for dark colours (always contrasts with the fill)
+        val outlineR: Int; val outlineG: Int; val outlineB: Int
+        if (adaptive || lum > 0.5f) { outlineR = 15; outlineG = 23; outlineB = 42 } else { outlineR = 255; outlineG = 255; outlineB = 255 }
+
         // Soft glow behind the pill while it is awake
         val glowAlpha = (50 * expandProgress).toInt().coerceIn(0, 255)
         if (glowAlpha > 0) {
-            glowPaint.color = Color.argb(glowAlpha, 255, 255, 255)
-            val g = dpToPx(2.5f)
-            glowRect.set(pillRect.left - g, pillRect.top - g, pillRect.right + g, pillRect.bottom + g)
-            canvas.drawRoundRect(glowRect, cornerRadius + g, cornerRadius + g, glowPaint)
+            if (adaptive) glowPaint.color = Color.argb(glowAlpha, outlineR, outlineG, outlineB)
+            else glowPaint.color = Color.argb(glowAlpha, r, g, b)
+            val gl = dpToPx(2.5f)
+            glowRect.set(pillRect.left - gl, pillRect.top - gl, pillRect.right + gl, pillRect.bottom + gl)
+            canvas.drawRoundRect(glowRect, cornerRadius + gl, cornerRadius + gl, glowPaint)
         }
 
-        // Translucent frosted white pill
+        // Pill fill
         val baseAlpha = (160 + (85 * expandProgress)).toInt().coerceIn(0, 255)
-        pillPaint.color = Color.argb(baseAlpha, 255, 255, 255)
+        pillPaint.color = Color.argb(baseAlpha, r, g, b)
         canvas.drawRoundRect(pillRect, cornerRadius, cornerRadius, pillPaint)
 
-        // Subtle glowing border
-        val borderAlpha = (60 + (90 * expandProgress)).toInt().coerceIn(0, 255)
-        borderPaint.color = Color.argb(borderAlpha, 255, 255, 255)
+        // Outline (stronger in adaptive mode so the handle never disappears on a white background)
+        val borderAlpha = if (adaptive) (190 + (65 * expandProgress)).toInt().coerceIn(0, 255)
+                          else (60 + (90 * expandProgress)).toInt().coerceIn(0, 255)
+        borderPaint.strokeWidth = dpToPx(if (adaptive) 1.5f else 1f)
+        borderPaint.color = Color.argb(borderAlpha, outlineR, outlineG, outlineB)
         canvas.drawRoundRect(pillRect, cornerRadius, cornerRadius, borderPaint)
 
         // Draw tactile center notches (fades in as it expands)
         if (expandProgress > 0.25f) {
             val notchAlpha = ((expandProgress - 0.25f) / 0.75f * 200).toInt().coerceIn(0, 255)
-            notchPaint.color = Color.argb(notchAlpha, 30, 41, 59) // Dark slate for clean contrast on white pill
+            notchPaint.color = Color.argb(notchAlpha, outlineR, outlineG, outlineB) // Always contrasts with the fill
 
             val cy = fullHeight / 2f
             val notchLen = dpToPx(7f)
@@ -205,11 +231,15 @@ class EdgeHandleView(
                 isFingerDown = true
                 isInteracting = true
                 isDragging = false
+                longPressFired = false
                 downRawY = event.rawY
                 startY = event.rawY
                 alpha = 1.0f
                 // Instant, springy feedback the moment the finger lands
                 animateExpansion(1.0f, durationMs = 220)
+                if (currentConfig.longPressScreenOff) {
+                    postDelayed(longPressRunnable, ViewConfiguration.getLongPressTimeout().toLong())
+                }
                 return true
             }
 
@@ -221,6 +251,7 @@ class EdgeHandleView(
                     if (abs(currentY - downRawY) < touchSlop) return true
                     // Finger moved far enough: this is a swipe, not a tap
                     isDragging = true
+                    removeCallbacks(longPressRunnable)
                     startY = currentY
                     onShowHudRequested()
                     return true
@@ -239,8 +270,11 @@ class EdgeHandleView(
 
             MotionEvent.ACTION_UP -> {
                 isFingerDown = false
+                removeCallbacks(longPressRunnable)
                 if (isInteracting) {
-                    if (isDragging) {
+                    if (longPressFired) {
+                        longPressFired = false // long press already handled, no tap
+                    } else if (isDragging) {
                         onGestureFinished()
                     } else {
                         performClick()
@@ -254,6 +288,8 @@ class EdgeHandleView(
 
             MotionEvent.ACTION_CANCEL -> {
                 isFingerDown = false
+                removeCallbacks(longPressRunnable)
+                longPressFired = false
                 if (isInteracting) {
                     isDragging = false
                     removeCallbacks(collapseRunnable)

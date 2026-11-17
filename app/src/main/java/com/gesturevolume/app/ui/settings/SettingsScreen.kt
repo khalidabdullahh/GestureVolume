@@ -8,6 +8,10 @@ import androidx.compose.ui.unit.sp
 import com.gesturevolume.app.data.model.HudPlacement
 import com.gesturevolume.app.ui.theme.CabinSketch
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
+import com.gesturevolume.app.data.model.HandleColorMode
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -62,6 +66,7 @@ import com.gesturevolume.app.ui.theme.PrimaryPurple
 import com.gesturevolume.app.ui.theme.TextPrimary
 import com.gesturevolume.app.ui.theme.TextSecondary
 
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 fun SettingsScreen(
     config: GestureConfig,
@@ -135,6 +140,86 @@ fun SettingsScreen(
                                 labelColor = TextSecondary
                             )
                         )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                // Handle colour: Custom colour or Adaptive (visible on white AND black backgrounds)
+                Text(
+                    text = "Handle Colour",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Custom uses one colour you pick. Adaptive draws a light handle with a dark outline, so it stays visible on both white and black backgrounds.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    HandleColorMode.entries.forEach { mode ->
+                        FilterChip(
+                            selected = config.handleColorMode == mode,
+                            onClick = { onUpdateConfig(config.copy(handleColorMode = mode)) },
+                            label = { Text(if (mode == HandleColorMode.CUSTOM) "Custom Colour" else "Adaptive") },
+                            colors = FilterChipDefaults.filterChipColors(
+                                selectedContainerColor = PrimaryPurple,
+                                selectedLabelColor = TextPrimary,
+                                containerColor = DarkSurfaceVariant,
+                                labelColor = TextSecondary
+                            )
+                        )
+                    }
+                }
+
+                if (config.handleColorMode == HandleColorMode.CUSTOM) {
+                    Spacer(modifier = Modifier.height(10.dp))
+                    val swatches = listOf(
+                        0xFFFFFFFF, 0xFFEF4444, 0xFFF97316, 0xFFF59E0B, 0xFF10B981,
+                        0xFF00CEC9, 0xFF3B82F6, 0xFF6C5CE7, 0xFFEC4899, 0xFF000000
+                    ).map { it.toInt() }
+                    androidx.compose.foundation.layout.FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        swatches.forEach { argb ->
+                            val selected = config.handleColor == argb
+                            Box(
+                                modifier = Modifier
+                                    .size(36.dp)
+                                    .clip(CircleShape)
+                                    .background(Color(argb))
+                                    .border(
+                                        width = if (selected) 3.dp else 1.dp,
+                                        color = if (selected) AccentCyan else DividerColor,
+                                        shape = CircleShape
+                                    )
+                                    .clickable { onUpdateConfig(config.copy(handleColor = argb)) }
+                            )
+                        }
+                    }
+                }
+
+                // Live preview on a white and a black background
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    listOf(Color.White, Color.Black).forEach { bg ->
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(56.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(bg)
+                                .border(1.dp, DividerColor, RoundedCornerShape(12.dp)),
+                            contentAlignment = Alignment.CenterEnd
+                        ) {
+                            HandlePreview(config)
+                        }
                     }
                 }
 
@@ -502,6 +587,34 @@ fun SettingsScreen(
                         )
                     )
                 }
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                // Long-press screen off Switch
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "Press & Hold to Turn Screen Off",
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Text(
+                            text = "Press and hold the handle to lock the screen (Android 9+). Fingerprint/PIN is needed afterwards, like pressing the power button.",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                    Switch(
+                        checked = config.longPressScreenOff,
+                        onCheckedChange = { onUpdateConfig(config.copy(longPressScreenOff = it)) },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = TextPrimary,
+                            checkedTrackColor = PrimaryPurple
+                        )
+                    )
+                }
             }
         }
 
@@ -564,4 +677,26 @@ private fun SettingsSectionHeader(title: String, icon: ImageVector) {
             color = TextPrimary
         )
     }
+}
+
+// Small static preview of the edge handle using the same colour rules as the real overlay
+@Composable
+private fun HandlePreview(config: GestureConfig) {
+    val adaptive = config.handleColorMode == HandleColorMode.ADAPTIVE
+    val fill = if (adaptive) Color.White else Color(config.handleColor)
+    val lum = 0.299f * fill.red + 0.587f * fill.green + 0.114f * fill.blue
+    val outline = if (adaptive || lum > 0.5f) Color(0xFF0F172A) else Color.White
+    Box(
+        modifier = Modifier
+            .padding(end = 4.dp)
+            .width(14.dp)
+            .height(40.dp)
+            .clip(RoundedCornerShape(7.dp))
+            .background(fill.copy(alpha = 0.95f))
+            .border(
+                width = if (adaptive) 1.5.dp else 1.dp,
+                color = outline.copy(alpha = if (adaptive) 0.85f else 0.45f),
+                shape = RoundedCornerShape(7.dp)
+            )
+    )
 }

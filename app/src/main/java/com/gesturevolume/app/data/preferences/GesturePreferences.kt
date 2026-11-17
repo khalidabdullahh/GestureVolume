@@ -26,6 +26,9 @@ class GesturePreferences(private val context: Context) {
         private val KEY_SHOW_PERCENTAGE = booleanPreferencesKey("show_percentage")
         private val KEY_HAPTIC_FEEDBACK = booleanPreferencesKey("haptic_feedback")
         private val KEY_DOUBLE_TAP_SCREENSHOT = booleanPreferencesKey("double_tap_screenshot")
+        private val KEY_LONG_PRESS_SCREEN_OFF = booleanPreferencesKey("long_press_screen_off")
+        private val KEY_HANDLE_COLOR_MODE = stringPreferencesKey("handle_color_mode")
+        private val KEY_HANDLE_COLOR = intPreferencesKey("handle_color")
         private val KEY_HUD_PLACEMENT = stringPreferencesKey("hud_placement")
         private val KEY_HUD_SIZE_SP = intPreferencesKey("hud_size_sp")
         private val KEY_HUD_OFFSET_X_DP = intPreferencesKey("hud_offset_x_dp")
@@ -64,12 +67,23 @@ class GesturePreferences(private val context: Context) {
             com.gesturevolume.app.data.model.HudPlacement.BESIDE_HANDLE
         }
 
+        val colorMode = try {
+            com.gesturevolume.app.data.model.HandleColorMode.valueOf(
+                preferences[KEY_HANDLE_COLOR_MODE] ?: com.gesturevolume.app.data.model.HandleColorMode.ADAPTIVE.name
+            )
+        } catch (_: Exception) {
+            com.gesturevolume.app.data.model.HandleColorMode.ADAPTIVE
+        }
+
         GestureConfig(
             timeoutSeconds = preferences[KEY_TIMEOUT_SECONDS] ?: 3,
             swipeSensitivity = preferences[KEY_SWIPE_SENSITIVITY] ?: 1.0f,
             showPercentage = preferences[KEY_SHOW_PERCENTAGE] ?: true,
             hapticFeedback = preferences[KEY_HAPTIC_FEEDBACK] ?: true,
             doubleTapScreenshot = preferences[KEY_DOUBLE_TAP_SCREENSHOT] ?: true,
+            longPressScreenOff = preferences[KEY_LONG_PRESS_SCREEN_OFF] ?: true,
+            handleColorMode = colorMode,
+            handleColor = preferences[KEY_HANDLE_COLOR] ?: 0xFFFFFFFF.toInt(),
             hudPosition = position,
             hudPlacement = placement,
             hudSizeSp = preferences[KEY_HUD_SIZE_SP] ?: 40,
@@ -95,6 +109,9 @@ class GesturePreferences(private val context: Context) {
             preferences[KEY_SHOW_PERCENTAGE] = config.showPercentage
             preferences[KEY_HAPTIC_FEEDBACK] = config.hapticFeedback
             preferences[KEY_DOUBLE_TAP_SCREENSHOT] = config.doubleTapScreenshot
+            preferences[KEY_LONG_PRESS_SCREEN_OFF] = config.longPressScreenOff
+            preferences[KEY_HANDLE_COLOR_MODE] = config.handleColorMode.name
+            preferences[KEY_HANDLE_COLOR] = config.handleColor
             preferences[KEY_HUD_POSITION] = config.hudPosition.name
             preferences[KEY_HUD_PLACEMENT] = config.hudPlacement.name
             preferences[KEY_HUD_SIZE_SP] = config.hudSizeSp

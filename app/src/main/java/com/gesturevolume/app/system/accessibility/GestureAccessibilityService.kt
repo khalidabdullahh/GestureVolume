@@ -88,6 +88,9 @@ class GestureAccessibilityService : AccessibilityService() {
             },
             onDoubleTap = {
                 takeScreenshotFromHandle()
+            },
+            onLongPress = {
+                turnScreenOffFromHandle()
             }
         )
     }
@@ -99,6 +102,17 @@ class GestureAccessibilityService : AccessibilityService() {
             attachHandle()
         }
         overlayManager.setEdgeHandleVisible(true)
+    }
+
+    // Press & hold on the handle: lock the screen / turn it off (Android 9+)
+    private fun turnScreenOffFromHandle() {
+        timeoutJob?.cancel()
+        overlayManager.hideHud()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            Toast.makeText(this, "Screen off needs Android 9 or newer", Toast.LENGTH_SHORT).show()
+            return
+        }
+        performGlobalAction(GLOBAL_ACTION_LOCK_SCREEN)
     }
 
     // Double-tap on the handle: hide it for a moment so it is not in the shot, then take a screenshot

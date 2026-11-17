@@ -29,7 +29,8 @@ Physical volume buttons wear out, break, get stuck, or are awkwardly placed on t
 2. **Native volume bar opens** — Android's own system volume panel appears, exactly like pressing a hardware volume key.
 3. **Swipe (optional)** — drag the handle up / down to change volume directly with a small HUD.
 4. **Double-tap for screenshot** — double-tap the handle to take a screenshot (Android 9+, can be turned off in Settings).
-5. **Auto-inactive** — after the timeout (default 3 seconds) the handle shrinks back to a faint compact line.
+5. **Press & hold to turn the screen off** — hold the handle to lock the screen (Android 9+, can be turned off in Settings).
+6. **Auto-inactive** — after the timeout (default 3 seconds) the handle shrinks back to a faint compact line.
 
 ---
 
@@ -57,6 +58,8 @@ Gesture Volume is 100% free, offline, ad-free, and open-source. If this project 
 
 - **Zero Permanent Screen Clutter**: No persistent floating bubbles or edges.
 - **Global In-App Activation**: Works seamlessly across any foreground Android application.
+- **Handle Colour**: pick any custom colour, or use *Adaptive* (light fill + dark outline) so the handle stays visible on both white and black backgrounds.
+- **Press & Hold = Screen Off**: lock the screen straight from the handle.
 - **Tap or Swipe**: Tap the handle to open the native volume bar, or swipe it up/down to change volume directly. Taps are told apart from swipes using the system touch slop.
 - **Smooth AudioManager Integration**: Native `STREAM_MUSIC` control respecting real device limits.
 - **Subtle Haptic Feedback**: Tactile vibration clicks on gesture activation and 0%/100% boundaries.

@@ -135,7 +135,8 @@ class OverlayManager(private val context: Context) {
         onShowHudRequested: () -> Unit,
         onGestureFinished: () -> Unit,
         onTap: () -> Unit,
-        onDoubleTap: () -> Unit
+        onDoubleTap: () -> Unit,
+        onLongPress: () -> Unit
     ) {
         mainHandler.post {
             if (isEdgeHandleAttached && edgeHandleView?.isAttachedToWindow != true) {
@@ -153,7 +154,8 @@ class OverlayManager(private val context: Context) {
                 onShowHudRequested = onShowHudRequested,
                 onGestureFinished = onGestureFinished,
                 onTap = onTap,
-                onDoubleTap = onDoubleTap
+                onDoubleTap = onDoubleTap,
+                onLongPress = onLongPress
             )
             view.updateConfig(config)
 
