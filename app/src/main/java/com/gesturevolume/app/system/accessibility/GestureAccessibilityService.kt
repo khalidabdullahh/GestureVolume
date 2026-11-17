@@ -257,10 +257,12 @@ class GestureAccessibilityService : AccessibilityService() {
             return
         }
         overlayManager.setEdgeHandleVisible(false)
+        // Pause colour measuring so it never competes with the screenshot
+        lastSampleAt = SystemClock.uptimeMillis() + 2000L
         serviceScope.launch {
-            delay(350)
+            delay(90) // just enough frames for the handle to disappear from the capture
             performGlobalAction(GLOBAL_ACTION_TAKE_SCREENSHOT)
-            delay(1200)
+            delay(700)
             overlayManager.setEdgeHandleVisible(true)
         }
     }
